@@ -50,6 +50,13 @@ void frame_border_handler::hide_borders (const std::vector<frame_border_handler:
   apply ();
 }
 
+void frame_border_handler::show_borders(const std::vector<frame_border_handler::border> &borders)
+{
+  for (border b: borders)
+    m_borders_visible.set (b, true);
+  apply ();
+}
+
 void frame_border_handler::apply ()
 {
   if (!m_parent)

@@ -33,6 +33,11 @@ frame_border_handler &sticker_body_collapsed::borders ()
   return m_borders;
 }
 
+void sticker_body_collapsed::mouseDoubleClickEvent (QMouseEvent *event)
+{
+  double_clicked ();
+}
+
 void sticker_body_collapsed::init ()
 {
   m_borders.set_parent (this);

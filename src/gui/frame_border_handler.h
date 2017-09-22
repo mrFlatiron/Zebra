@@ -34,6 +34,7 @@ public:
   void set_shadow (QFrame::Shadow shadow);
   void set_parent (QFrame *parent);
   void hide_borders (const std::vector<border> &borders);
+  void show_borders (const std::vector<border> &borders);
 private:
   void apply ();
   QMargins construct_margins ();
