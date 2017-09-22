@@ -78,8 +78,9 @@ void sticker_widget::set_layout ()
 //  empty_1->setFrameShape(QFrame::NoFrame);
 //  empty_1->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Expanding);
 
-//  m_icon->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+  m_icon->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Preferred);
   m_icon->setMinimumHeight (60);
+  m_icon->setMinimumWidth (15);
 //  m_colorline->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
   m_colorline->setMinimumHeight (60);
 //  m_body_collapsed->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
