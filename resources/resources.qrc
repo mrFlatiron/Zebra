@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>lamp.png</file>
+        <file>bug.png</file>
+        <file>clipboard.png</file>
+        <file>question_mark.png</file>
+        <file>bug_64.png</file>
+        <file>bug_32.png</file>
+        <file>bug2_32.png</file>
+        <file>bug3_32.png</file>
+        <file>check_mark.png</file>
+        <file>check_mark_grey.png</file>
+        <file>r_arrow.png</file>
+        <file>trash.png</file>
+    </qresource>
+</RCC>

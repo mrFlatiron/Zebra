@@ -1,0 +1,84 @@
+#include "style_utils.h"
+#include <QWidget>
+
+QString style_settings::get_styled_string (const QString &src, styled_string obj)
+{
+  switch (obj)
+    {
+    case styled_string::title:
+      return QString ("<h2><b>%1</b></h2>").arg (src);
+    case styled_string::hash:
+      return QString ("<p><span style=\"color: %1;\"><strong><em>%2</em></strong></span></p>")
+          .arg (QColor (86, 82, 82).name (QColor::HexRgb), src);
+    case styled_string::COUNT:
+      DEBUG_PAUSE ("Shouldn't happen");
+      return "";
+    }
+  return "";
+}
+
+QString style_settings::get_icon_path (style_settings::common_icons type)
+{
+  switch (type)
+    {
+    case common_icons::bug:
+      return ":/icons/bug3_32.png";
+    case common_icons::check_mark:
+      return ":/icons/check_mark.png";
+    case common_icons::clipboard:
+      return ":/icons/clipboard.png";
+    case common_icons::lamp:
+      return ":/icons/lamp.png";
+    case common_icons::question_mark:
+      return ":/icons/question_mark.png";
+    case common_icons::r_arrow:
+      return ":/icons/r_arrow.png";
+    case common_icons::trash:
+      return ":/icons/trash.png";
+    case common_icons::COUNT:
+      DEBUG_PAUSE ("Shouldn't happen");
+    }
+  return "";
+}
+
+QColor style_settings::get_color (common_colors color)
+{
+  switch (color)
+    {
+    case common_colors::peach:
+      return QColor (248, 203, 173);
+    case common_colors::cream:
+      return QColor (255, 230, 153);
+    case common_colors::mint:
+      return QColor (197, 224, 180);
+    case common_colors::lightblue:
+      return QColor (189, 215, 238);
+    case common_colors::lilac:
+      return QColor (217, 179, 255);
+    case common_colors::cloud:
+      return QColor (217, 217, 217);
+    case common_colors::red:
+      return QColor (255, 0, 0);
+    case common_colors::green:
+      return QColor (112, 173, 71);
+    case common_colors::yellow:
+      return QColor (255, 192, 0);
+    case common_colors::orange:
+      return QColor (246, 182, 99);
+    case common_colors::COUNT:
+      DEBUG_PAUSE ("Shouldn't happen");
+    }
+  return QColor ();
+}
+
+void style_settings::set_background_color (QWidget *widget, const QColor &color)
+{
+  QPalette pal = widget->palette ();
+  pal.setBrush (widget->backgroundRole (), QBrush (color));
+  widget->setPalette (pal);
+}
+
+void style_settings::set_background_color (QWidget *widget, common_colors color)
+{
+  set_background_color (widget, get_color (color));
+}
