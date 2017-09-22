@@ -37,15 +37,23 @@ void sticker_next_button::mousePressEvent (QMouseEvent *ev)
 //  m_borders.show_borders (vector_of (frame_border_handler::border ()));
   m_saved_pixmap = m_pixmap;
   set_icon (m_pixmap.scaled (QSize (30, 30)));
-  m_borders.set_shadow (QFrame::Sunken);
+//  m_border_handler.set_width (1, 0);
+  m_border_handler.set_shadow (QFrame::Sunken);
+
 }
 
 void sticker_next_button::mouseReleaseEvent(QMouseEvent *ev)
 {
   (void)ev;
 //  m_borders.hide_borders (vector_of (frame_border_handler::border ()));
-  m_borders.set_shadow (QFrame::Plain);
+  m_border_handler.set_shadow (QFrame::Plain);
   set_icon (m_saved_pixmap);
+//  m_border_handler.set_width (2, 2);
+}
+
+QSize sticker_next_button::sizeHint () const
+{
+  return sticker_icon::sizeHint ();
 }
 
 void sticker_next_button::hover_enter_animation ()
@@ -64,5 +72,5 @@ void sticker_next_button::hover_leave_animation ()
 void sticker_next_button::init ()
 {
   m_saved_color = m_background_color;
-  m_borders.set_parent (this);
+  m_border_handler.set_parent (this);
 }

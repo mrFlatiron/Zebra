@@ -43,6 +43,12 @@ void frame_border_handler::set_parent (QFrame *parent)
   apply ();
 }
 
+void frame_border_handler::set_mid_width (const int mid_width)
+{
+  m_border_mid_width = mid_width;
+  apply ();
+}
+
 void frame_border_handler::hide_borders (const std::vector<frame_border_handler::border> &borders)
 {
   for (border b : borders)

@@ -33,6 +33,7 @@ public:
   void set_shape (QFrame::Shape shape);
   void set_shadow (QFrame::Shadow shadow);
   void set_parent (QFrame *parent);
+  void set_mid_width (const int mid_width);
   void hide_borders (const std::vector<border> &borders);
   void show_borders (const std::vector<border> &borders);
 private:
