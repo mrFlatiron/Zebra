@@ -19,14 +19,14 @@ namespace style_settings
 
 class sticker_icon : public QLabel
 {
-private:
+protected:
   QPixmap m_pixmap;
 
   frame_border_handler m_border_handler;
   QColor m_background_color;
 public:
   sticker_icon (QWidget *parent = nullptr);
-  ~sticker_icon ();
+  virtual ~sticker_icon ();
 
 
   void set_icon (const QString &path);

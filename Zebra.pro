@@ -27,7 +27,8 @@ SOURCES += src/main/main.cpp\
     src/gui/style_utils.cpp \
     src/gui/frame_border_handler.cpp \
     src/gui/sticker_button.cpp \
-    src/gui/sticker_body_expanded.cpp
+    src/gui/sticker_body_expanded.cpp \
+    src/gui/sticker_next_button.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -46,7 +47,8 @@ HEADERS  += src/gui/main_window.h \
     src/gui/style_utils.h \
     src/gui/frame_border_handler.h \
     src/gui/sticker_button.h \
-    src/gui/sticker_body_expanded.h
+    src/gui/sticker_body_expanded.h \
+    src/gui/sticker_next_button.h
 
 INCLUDEPATH += src
 

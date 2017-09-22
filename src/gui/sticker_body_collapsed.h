@@ -5,7 +5,7 @@
 #include "frame_border_handler.h"
 
 class QLabel;
-class sticker_button;
+class sticker_next_button;
 
 class sticker_body_collapsed : public QFrame
 {
@@ -13,7 +13,7 @@ class sticker_body_collapsed : public QFrame
 private:
   QLabel *m_title;
   QLabel *m_hashtags;
-  sticker_button *m_next_button;
+  sticker_next_button *m_next_button;
   frame_border_handler m_borders;
 public:
   sticker_body_collapsed (QWidget *parent = nullptr);
