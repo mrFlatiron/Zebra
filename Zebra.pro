@@ -29,6 +29,9 @@ SOURCES += src/main/main.cpp\
     src/gui/sticker_button.cpp \
     src/gui/sticker_body_expanded.cpp \
     src/gui/sticker_next_button.cpp \
+    src/gui/sticker_column_internal.cpp \
+    src/gui/sticker_add_button.cpp \
+    src/gui/sticker_column_scroll.cpp \
     src/gui/sticker_column.cpp
 
 HEADERS  += src/gui/main_window.h \
@@ -50,6 +53,9 @@ HEADERS  += src/gui/main_window.h \
     src/gui/sticker_button.h \
     src/gui/sticker_body_expanded.h \
     src/gui/sticker_next_button.h \
+    src/gui/sticker_column_internal.h \
+    src/gui/sticker_add_button.h \
+    src/gui/sticker_column_scroll.h \
     src/gui/sticker_column.h
 
 INCLUDEPATH += src

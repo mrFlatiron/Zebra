@@ -26,7 +26,7 @@ sticker_body_collapsed::~sticker_body_collapsed ()
 
 QSize sticker_body_collapsed::sizeHint () const
 {
-  return QSize (300, 80);
+  return QSize (300, style_settings::collapsed_height);
 }
 
 QSize sticker_body_collapsed::minimumSizeHint () const

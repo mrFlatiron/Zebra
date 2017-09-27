@@ -23,6 +23,8 @@ enum class common_colors
 
 namespace style_settings
 {
+  const int collapsed_height = 80;
+
   enum class styled_string
   {
     title,

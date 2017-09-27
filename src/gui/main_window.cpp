@@ -6,40 +6,15 @@
 #include <QScrollArea>
 #include "sticker_widget.h"
 #include  "sticker_column.h"
+#include "common/enum_misc.h"
 
 main_window::main_window(QWidget *parent)
   : QDialog (parent)
 {
-  setWindowFlags (Qt::Window |
-                  Qt::CustomizeWindowHint |
-                  Qt::MaximizeUsingFullscreenGeometryHint |
-                  Qt::WindowMaximizeButtonHint |
-                  Qt::WindowCloseButtonHint);
-  sticker_column *sticker_c = new sticker_column (this);
-  sticker_c->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
-  QScrollArea *area_c = new QScrollArea (this);
-  area_c->setWidget (sticker_c);
-  area_c->setWidgetResizable (true);
-  area_c->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOn);
-  sticker_column *sticker_c1 = new sticker_column (this);
-  sticker_c1->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
-  sticker_column *sticker_c2 = new sticker_column (this);
-  sticker_c2->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
-  QHBoxLayout *layout = new QHBoxLayout;
-  {
-    layout->setSpacing (0);
-
-    layout->addWidget (area_c);
-    layout->addWidget (sticker_c1);
-    layout->addWidget (sticker_c2);
-  }
-  setLayout (layout);
-
-//  QHBoxLayout *hlo_0 = new QHBoxLayout;
-//  {
-
-//  }
-//  setLayout (hlo_0);
+  init ();
+  create_widgets ();
+  set_layout ();
+  make_connections ();
 }
 
 main_window::~main_window ()
@@ -50,4 +25,41 @@ main_window::~main_window ()
 QSize main_window::sizeHint () const
 {
   return QSize (1300, 1300);
+}
+
+void main_window::init ()
+{
+  setWindowFlags (Qt::Window |
+                  Qt::CustomizeWindowHint |
+                  Qt::MaximizeUsingFullscreenGeometryHint |
+                  Qt::WindowMaximizeButtonHint |
+                  Qt::WindowCloseButtonHint);
+}
+
+void main_window::create_widgets ()
+{
+  for (int i = 0; i < 3; i++)
+    m_columns.emplace_back (new sticker_column (this));
+}
+
+void main_window::set_layout ()
+{
+  QHBoxLayout *hlo_0 = new QHBoxLayout;
+  {
+    hlo_0->setSpacing (0);
+    for (int i = 0; i < 3; i++)
+      {
+        m_columns[i]->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
+        if (i != 2)
+          m_columns[i]->borders ().hide_borders ({frame_border_handler::border::right});
+//        m_columns[i]->borders ().hide_borders (vector_of (frame_border_handler::border ()));
+        hlo_0->addWidget (m_columns[i]);
+      }
+  }
+  setLayout (hlo_0);
+}
+
+void main_window::make_connections()
+{
+
 }

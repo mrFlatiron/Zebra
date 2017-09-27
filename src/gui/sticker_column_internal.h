@@ -1,14 +1,15 @@
-#ifndef STICKER_COLUMN_H
-#define STICKER_COLUMN_H
+#ifndef STICKER_COLUMN_INTERNAL_H
+#define STICKER_COLUMN_INTERNAL_H
 
 #include <QLabel>
+#include <QScrollArea>
 #include "frame_border_handler.h"
 
 class sticker_widget;
 class QScrollArea;
 class QVBoxLayout;
 
-class sticker_column : public QLabel
+class sticker_column_internal : public QLabel
 {
   Q_OBJECT
 private:
@@ -16,9 +17,11 @@ private:
   std::vector<sticker_widget *> m_stickers;
   QVBoxLayout *m_vlo_0;
 public:
-  sticker_column (QWidget *parent = nullptr);
-  ~sticker_column ();
+  sticker_column_internal (QWidget *parent = nullptr);
+  ~sticker_column_internal ();
 
+
+  frame_border_handler &borders ();
   QSize sizeHint () const override;
 
 private:
@@ -30,4 +33,4 @@ private slots:
   void reset_layout ();
 };
 
-#endif // STICKER_COLUMN_H
+#endif // STICKER_COLUMN_INTERNAL_H

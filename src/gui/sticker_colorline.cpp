@@ -35,7 +35,7 @@ void sticker_colorline::set_color (priority type)
 
 QSize sticker_colorline::sizeHint () const
 {
-  return QSize (15, 80);
+  return QSize (15, style_settings::collapsed_height);
 }
 
 QSize sticker_colorline::minimumSizeHint () const

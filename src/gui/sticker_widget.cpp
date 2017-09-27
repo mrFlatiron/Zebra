@@ -27,9 +27,9 @@ sticker_widget::~sticker_widget ()
 QSize sticker_widget::sizeHint () const
 {
   if (m_is_expanded)
-    return QSize (300, 80 + 300);
+    return QSize (300, style_settings::collapsed_height + 300);
   else
-    return QSize (300, 80);
+    return QSize (300, style_settings::collapsed_height);
 }
 
 QSize sticker_widget::minimumSizeHint () const
@@ -104,8 +104,12 @@ void sticker_widget::set_layout ()
       hlo_0->addWidget (m_colorline);
       hlo_0->addWidget (m_icon);
       hlo_0->addWidget (m_body_collapsed);
+//      m_icon->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+//      m_colorline->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+//      m_body_collapsed->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
     }
     m_main_layout->addLayout (hlo_0);
+    m_main_layout->addStretch ();
 //    m_main_layout->setSpacing (0);
 //    m_main_layout->addWidget (m_colorline, 0, 0);
 //    m_main_layout->addWidget (m_icon, 0, 1);
