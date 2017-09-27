@@ -6,7 +6,7 @@ QString style_settings::get_styled_string (const QString &src, styled_string obj
   switch (obj)
     {
     case styled_string::title:
-      return QString ("<h2><b>%1</b></h2>").arg (src);
+      return QString ("<h4><b>%1</b></h4>").arg (src);
     case styled_string::hash:
       return QString ("<p><span style=\"color: %1;\"><strong><em>%2</em></strong></span></p>")
           .arg (QColor (86, 82, 82).name (QColor::HexRgb), src);

@@ -16,9 +16,7 @@ sticker_colorline::~sticker_colorline ()
 void sticker_colorline::init ()
 {
   m_borders.set_parent (this);
-  m_preferred_width = 15;
   set_color (priority::mid);
-  setMaximumWidth (m_preferred_width);
 }
 
 void sticker_colorline::set_color (const QColor &color)
@@ -37,7 +35,12 @@ void sticker_colorline::set_color (priority type)
 
 QSize sticker_colorline::sizeHint () const
 {
-  return QSize (m_preferred_width, 50);
+  return QSize (15, 80);
+}
+
+QSize sticker_colorline::minimumSizeHint () const
+{
+  return sizeHint ();
 }
 
 frame_border_handler &sticker_colorline::borders ()

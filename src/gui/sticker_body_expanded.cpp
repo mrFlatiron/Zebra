@@ -26,7 +26,7 @@ frame_border_handler &sticker_body_expanded::borders ()
 
 QSize sticker_body_expanded::sizeHint() const
 {
-  return QSize (300, 300);
+  return QSize (500, 300);
 }
 
 void sticker_body_expanded::init ()
@@ -49,9 +49,11 @@ void sticker_body_expanded::set_layout ()
   QVBoxLayout *vlo_0 = new QVBoxLayout;
   {
     vlo_0->addWidget (m_title_lbl, 1, Qt::AlignLeft);
-    vlo_0->addWidget (m_title, 2, Qt::AlignLeft);
+    vlo_0->addWidget (m_title, 2);
+    m_title->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
     vlo_0->addWidget (m_desc_lbl, 1, Qt::AlignLeft);
-    vlo_0->addWidget (m_desc, 4, Qt::AlignLeft);
+    vlo_0->addWidget (m_desc, 4);
+    m_desc->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
   }
   setLayout (vlo_0);
 }

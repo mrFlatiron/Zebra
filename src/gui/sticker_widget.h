@@ -9,6 +9,7 @@ class sticker_body_collapsed;
 class sticker_body_expanded;
 class frame_border_handler;
 class QGridLayout;
+class QVBoxLayout;
 
 class sticker_widget : public QWidget
 {
@@ -20,18 +21,21 @@ private:
   sticker_icon *m_icon;
   sticker_body_collapsed *m_body_collapsed;
   sticker_body_expanded *m_body_expanded;
-  int m_preferred_height = 50;
 
   bool m_is_expanded;
 
-  QGridLayout *m_main_layout;
+  QVBoxLayout *m_main_layout;
 public:
   sticker_widget (QWidget *parent = nullptr);
   ~sticker_widget ();
   QSize sizeHint () const override;
 
+  QSize minimumSizeHint () const override;
 public slots:
   void resize_body ();
+signals:
+  void body_expanded ();
+  void body_collapsed ();
 private:
   void create_widgets ();
   void set_layout ();

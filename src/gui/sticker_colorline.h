@@ -16,7 +16,6 @@ namespace style_settings
 class sticker_colorline : public QFrame
 {
 private:
-  int m_preferred_width;
   QColor m_color;
 
   frame_border_handler m_borders;
@@ -29,6 +28,7 @@ public:
   void set_color (priority type);
 
   QSize sizeHint () const override;
+  QSize minimumSizeHint () const override;
 
   frame_border_handler &borders ();
 };

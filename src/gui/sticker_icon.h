@@ -36,6 +36,7 @@ public:
   void set_background_color (const QColor &color);
 
   QSize sizeHint () const override;
+  QSize minimumSizeHint () const override;
 
   frame_border_handler &borders ();
 

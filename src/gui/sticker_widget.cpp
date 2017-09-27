@@ -26,7 +26,15 @@ sticker_widget::~sticker_widget ()
 
 QSize sticker_widget::sizeHint () const
 {
-  return QSize (300, m_preferred_height);
+  if (m_is_expanded)
+    return QSize (300, 80 + 300);
+  else
+    return QSize (300, 80);
+}
+
+QSize sticker_widget::minimumSizeHint () const
+{
+  return sizeHint ();
 }
 
 void sticker_widget::resize_body()
@@ -34,9 +42,10 @@ void sticker_widget::resize_body()
   if (!m_is_expanded)
     {
       m_body_expanded->show ();
-      m_main_layout->addWidget (m_body_expanded, 1, 2);
+      m_main_layout->addWidget (m_body_expanded);
       m_body_collapsed->borders ().hide_borders ({fbh::border::bottom});
       m_is_expanded = true;
+      body_expanded ();
     }
   else
     {
@@ -44,7 +53,9 @@ void sticker_widget::resize_body()
       m_main_layout->removeWidget (m_body_expanded);
       m_body_collapsed->borders ().show_borders ({fbh::border::bottom});
       m_is_expanded = false;
+      body_collapsed ();
     }
+
 }
 
 void sticker_widget::create_widgets ()
@@ -67,7 +78,6 @@ void sticker_widget::set_layout ()
 
   m_colorline->borders ().hide_borders      ({fbh::border::right});
   m_icon->borders ().hide_borders           ({fbh::border::right});
-//  m_body_collapsed->borders ().hide_borders ({fbh::border::bottom});
   m_body_expanded->borders ().hide_borders  ({fbh::border::top});
   m_body_expanded->hide ();
 //  QFrame *empty_0 = new QFrame (this);
@@ -78,28 +88,33 @@ void sticker_widget::set_layout ()
 //  empty_1->setFrameShape(QFrame::NoFrame);
 //  empty_1->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Expanding);
 
-  m_icon->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Preferred);
-  m_icon->setMinimumHeight (60);
-  m_icon->setMinimumWidth (15);
-//  m_colorline->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-  m_colorline->setMinimumHeight (60);
+//  m_icon->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Preferred);
+//  m_colorline->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
 //  m_body_collapsed->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
 
 //  style_settings::set_background_color (empty_0, common_colors::red);
 //  style_settings::set_background_color (empty_1, common_colors::mint);
 
-  m_main_layout = new QGridLayout;
+  m_main_layout = new QVBoxLayout;
   {
     m_main_layout->setSpacing (0);
-//    m_main_layout->setContentsMargins (0, 0, 0, 0);
-    m_main_layout->addWidget (m_colorline, 0, 0);
-    m_main_layout->addWidget (m_icon, 0, 1);
-    m_main_layout->addWidget (m_body_collapsed, 0, 2);
+    QHBoxLayout *hlo_0 = new QHBoxLayout;
+    {
+      hlo_0->setSpacing (0);
+      hlo_0->addWidget (m_colorline);
+      hlo_0->addWidget (m_icon);
+      hlo_0->addWidget (m_body_collapsed);
+    }
+    m_main_layout->addLayout (hlo_0);
+//    m_main_layout->setSpacing (0);
+//    m_main_layout->addWidget (m_colorline, 0, 0);
+//    m_main_layout->addWidget (m_icon, 0, 1);
+//    m_main_layout->addWidget (m_body_collapsed, 0, 2);
 //    m_main_layout->addWidget (m_body_expanded,  1, 2);
 //    m_main_layout->addWidget (empty_0, 1, 0);
 //    m_main_layout->addWidget (empty_1, 1, 1);
-    m_main_layout->setColumnStretch (3, 1);
-    m_main_layout->setRowStretch (2, 2);
+//    m_main_layout->setColumnStretch (3, 1);
+//    m_main_layout->setRowStretch (2, 2);
   }
   setLayout (m_main_layout);
 }

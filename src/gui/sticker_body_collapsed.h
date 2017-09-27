@@ -20,6 +20,7 @@ public:
   ~sticker_body_collapsed ();
 
   QSize sizeHint () const override;
+  QSize minimumSizeHint () const override;
 
   frame_border_handler &borders ();
 

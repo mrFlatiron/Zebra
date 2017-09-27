@@ -26,7 +26,12 @@ sticker_body_collapsed::~sticker_body_collapsed ()
 
 QSize sticker_body_collapsed::sizeHint () const
 {
-  return QSize (300, 50);
+  return QSize (300, 80);
+}
+
+QSize sticker_body_collapsed::minimumSizeHint () const
+{
+  return sizeHint ();
 }
 
 frame_border_handler &sticker_body_collapsed::borders ()
@@ -50,7 +55,7 @@ void sticker_body_collapsed::init ()
 
 void sticker_body_collapsed::create_widgets ()
 {
-  m_title = new QLabel (title_styled ("Test1"), this);
+  m_title = new QLabel (title_styled ("Notifies the layout system that this widget has changed and may need to change geometry."), this);
   m_hashtags = new QLabel (hash_styled ("#test2"), this);
   m_hashtags->setTextFormat (Qt::RichText);
   m_hashtags->setAlignment (Qt::AlignBottom);
@@ -59,7 +64,7 @@ void sticker_body_collapsed::create_widgets ()
   m_next_button->borders ().hide_borders (vector_of (frame_border_handler::border::COUNT));
   m_next_button->set_icon ((style_settings::get_icon_path (style_settings::common_icons::r_arrow)));
   m_next_button->set_background_color (style_settings::get_color (common_colors::peach));
-//  m_next_button->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+  m_next_button->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
 void sticker_body_collapsed::set_layout ()
@@ -76,7 +81,6 @@ void sticker_body_collapsed::set_layout ()
     hlo_0->addWidget (m_next_button, 1, Qt::AlignRight);
   }
   setLayout (hlo_0);
-//  hlo_0->setContentsMargins (11, 0, 0, 0);
 }
 
 void sticker_body_collapsed::make_connections ()

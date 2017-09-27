@@ -58,7 +58,12 @@ void sticker_icon::set_background_color(const QColor &color)
 
 QSize sticker_icon::sizeHint() const
 {
-  return QSize (50, 50);
+  return QSize (60, 80);
+}
+
+QSize sticker_icon::minimumSizeHint () const
+{
+  return sizeHint ();
 }
 
 frame_border_handler &sticker_icon::borders ()
