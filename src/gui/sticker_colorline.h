@@ -6,11 +6,11 @@
 
 #include "frame_border_handler.h"
 
-enum class priority;
+enum class ticket_priority;
 
 namespace style_settings
 {
-  static QColor priority_to_color (priority type);
+  static QColor priority_to_color (ticket_priority type);
 }
 
 class sticker_colorline : public QFrame
@@ -25,7 +25,7 @@ public:
 
   void init ();
   void set_color (const QColor &color);
-  void set_color (priority type);
+  void set_color (ticket_priority type);
 
   QSize sizeHint () const override;
   QSize minimumSizeHint () const override;

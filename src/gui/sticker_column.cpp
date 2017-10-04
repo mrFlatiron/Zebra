@@ -27,6 +27,11 @@ frame_border_handler &sticker_column::borders ()
   return m_borders;
 }
 
+QSize sticker_column::minimumSizeHint () const
+{
+ return QSize (300, 100);
+}
+
 void sticker_column::init ()
 {
   m_borders.set_parent (this);

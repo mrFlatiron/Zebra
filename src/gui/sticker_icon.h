@@ -8,11 +8,11 @@
 
 #include <QToolButton>
 
-enum class task_type;
+enum class ticket_type;
 
 namespace style_settings
 {
-  QString task_type_to_icon_path (task_type type);
+  QString task_type_to_icon_path (ticket_type type);
 
   enum class common_icons;
 }

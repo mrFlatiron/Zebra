@@ -18,6 +18,8 @@ public:
   ~sticker_column ();
 
   frame_border_handler &borders ();
+
+  QSize minimumSizeHint () const;
 private:
   void init ();
   void create_widgets ();

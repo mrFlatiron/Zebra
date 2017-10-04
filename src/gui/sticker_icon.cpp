@@ -1,5 +1,5 @@
 #include "sticker_icon.h"
-#include "kernel/task_object.h"
+#include "kernel/ticket_object.h"
 #include "style_utils.h"
 
 #include <QLabel>

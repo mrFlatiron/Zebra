@@ -3,7 +3,7 @@
 #include "sticker_icon.h"
 #include "sticker_body_collapsed.h"
 #include "sticker_body_expanded.h"
-#include "kernel/task_object.h"
+#include "kernel/ticket_object.h"
 
 #include "style_utils.h"
 
@@ -61,7 +61,7 @@ void sticker_widget::resize_body()
 void sticker_widget::create_widgets ()
 {
   m_colorline = new sticker_colorline (this);
-  m_colorline->set_color (priority::mid);
+  m_colorline->set_color (ticket_priority::mid);
 
   m_icon = new sticker_icon (this);
   m_icon->set_icon (style_settings::common_icons::bug);
