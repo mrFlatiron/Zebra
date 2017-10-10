@@ -10,7 +10,7 @@ enum class ticket_priority;
 
 namespace style_settings
 {
-  static QColor priority_to_color (ticket_priority type);
+  QColor priority_to_color (ticket_priority type);
 }
 
 class sticker_colorline : public QFrame

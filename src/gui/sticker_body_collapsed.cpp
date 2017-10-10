@@ -41,6 +41,7 @@ frame_border_handler &sticker_body_collapsed::borders ()
 
 void sticker_body_collapsed::mouseDoubleClickEvent (QMouseEvent *event)
 {
+  (void)event;
   double_clicked ();
 }
 

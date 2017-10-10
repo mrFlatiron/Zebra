@@ -12,5 +12,6 @@
         <file>check_mark_grey.png</file>
         <file>r_arrow.png</file>
         <file>trash.png</file>
+        <file>plus.png</file>
     </qresource>
 </RCC>

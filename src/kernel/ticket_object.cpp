@@ -13,21 +13,25 @@ ticket_object::~ticket_object ()
 void ticket_object::set_title (const QString &str)
 {
   m_title = str;
+  data_changed ();
 }
 
 void ticket_object::set_description (const QString &str)
 {
   m_description = str;
+  data_changed ();
 }
 
-void ticket_object::set_type (const ticket_type t)
+void ticket_object::set_type (ticket_type t)
 {
   m_type = t;
+  data_changed ();
 }
 
-void ticket_object::set_priority (const ticket_priority p)
+void ticket_object::set_priority (ticket_priority p)
 {
   m_priority = p;
+  data_changed ();
 }
 
 QString ticket_object::title () const

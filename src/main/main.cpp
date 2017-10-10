@@ -1,23 +1,16 @@
-#include "sig/sigslots.h"
+#include <QApplication>
 
-class A
-{
-public:
-  sig::connector m_conn;
-  void do_smth (const char *str) {using std::cout; cout << " " << std::endl;}
-};
-
-void print_s (int i, const char *str) {using std::cout; cout << i << " " << str << std::endl;}
+#include "gui/main_window.h"
 
 
 int main(int argc, char *argv[])
 {
+ QApplication app (argc, argv);
 
-      A a;
-  using namespace std::placeholders;
-    sig::signal</*int, const char *, double*/> changed;
+ main_window w;
 
+ w.show ();
 
-    a.m_conn.connect_to (changed, std::bind (&A::do_smth, &a));
-    changed ();
+ return app.exec ();
+
 }

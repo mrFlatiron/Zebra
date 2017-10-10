@@ -35,6 +35,8 @@ QString style_settings::get_icon_path (style_settings::common_icons type)
       return ":/icons/r_arrow.png";
     case common_icons::trash:
       return ":/icons/trash.png";
+    case common_icons::plus:
+      return ":/icons/plus.png";
     case common_icons::COUNT:
       DEBUG_PAUSE ("Shouldn't happen");
     }

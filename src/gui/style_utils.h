@@ -41,6 +41,7 @@ namespace style_settings
     r_arrow,
     trash,
     check_mark,
+    plus,
     COUNT
   };
 

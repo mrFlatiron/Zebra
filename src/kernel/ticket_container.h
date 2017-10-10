@@ -3,13 +3,11 @@
 
 #include "ticket_object.h"
 
-using ticket_id = int;
-
 class ticket_container
 {
 private:
-  ticket_id m_max_id;
-  std::map<ticket_id, ticket_object> m_tickets;
+  ticket_id m_max_id = 0;
+  std::unordered_map<ticket_id, ticket_object> m_tickets;
 public:
   ticket_container ();
   ~ticket_container ();

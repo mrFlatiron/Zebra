@@ -36,8 +36,10 @@ namespace utils
   {
     if (l < r)
       return l;
-    else
+    if (r < l)
       return r;
+
+    return l;
   }
 }
 

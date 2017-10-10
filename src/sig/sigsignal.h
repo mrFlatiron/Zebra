@@ -34,7 +34,7 @@ namespace sig
       m_slots.erase (m_slots.find (conn));
     }
 
-    void operator () (Args &&... args)
+    void operator () (Args &&... args) const
     {
       for (auto c : m_connectors)
         {

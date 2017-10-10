@@ -42,7 +42,7 @@ void sticker_column::create_widgets ()
   m_scroll = new sticker_column_scroll (this);
   m_add_button = new sticker_add_button (this);
   m_add_button->set_background_color (style_settings::get_color (common_colors::mint));
-  m_add_button->set_icon (style_settings::common_icons::trash);
+  m_add_button->set_icon (style_settings::common_icons::plus);
 
 
   using borders = frame_border_handler::border;

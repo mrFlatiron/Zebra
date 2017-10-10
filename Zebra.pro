@@ -37,7 +37,11 @@ SOURCES += src/main/main.cpp\
     src/kernel/ticket_container.cpp \
     src/kernel/project_handler.cpp \
     src/sig/connector.cpp \
-    src/sig/signal_base.cpp
+    src/sig/signal_base.cpp \
+    src/gui/sticker_columns_view.cpp \
+    src/kernel/columns_handler.cpp \
+    src/kernel/hashtag_parser.cpp \
+    src/kernel/column_info.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -68,7 +72,12 @@ HEADERS  += src/gui/main_window.h \
     src/sig/connector.h \
     src/sig/sigsignal.h \
     src/sig/signal_base.h \
-    src/sig/sigslots.h
+    src/sig/sigslots.h \
+    src/gui/sticker_columns_view.h \
+    src/kernel/columns_handler.h \
+    src/kernel/ticket_typedefs.h \
+    src/kernel/hashtag_parser.h \
+    src/kernel/column_info.h
 
 INCLUDEPATH += src
 
