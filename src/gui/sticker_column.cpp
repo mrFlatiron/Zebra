@@ -8,11 +8,11 @@
 
 #include <QVBoxLayout>
 
-sticker_column::sticker_column (QWidget *parent)
+sticker_column::sticker_column (ticket_container &tickets, columns_handler &columns, column_id id, QWidget *parent)
   : QLabel (parent)
 {
   init ();
-  create_widgets ();
+  create_widgets (tickets, columns, id);
   set_layout ();
   make_connections ();
 }
@@ -29,7 +29,18 @@ frame_border_handler &sticker_column::borders ()
 
 QSize sticker_column::minimumSizeHint () const
 {
- return QSize (300, 100);
+  return QSize (300, 100);
+}
+
+void sticker_column::set_col_id (column_id id)
+{
+  m_col_id = id;
+  update_view ();
+}
+
+void sticker_column::update_view ()
+{
+  m_scroll->update_view ();
 }
 
 void sticker_column::init ()
@@ -37,9 +48,9 @@ void sticker_column::init ()
   m_borders.set_parent (this);
 }
 
-void sticker_column::create_widgets ()
+void sticker_column::create_widgets (ticket_container &tickets, columns_handler &columns, column_id id)
 {
-  m_scroll = new sticker_column_scroll (this);
+  m_scroll = new sticker_column_scroll (tickets, columns, id, this);
   m_add_button = new sticker_add_button (this);
   m_add_button->set_background_color (style_settings::get_color (common_colors::mint));
   m_add_button->set_icon (style_settings::common_icons::plus);

@@ -7,7 +7,7 @@
 class ticket_object
 {
 private:
-  ticket_id m_id;
+  ticket_id m_id = 0;
   QString m_title;
   QString m_description;
   ticket_type m_type;
@@ -27,6 +27,7 @@ public:
   ticket_priority priority () const;
 
   sig::signal<> data_changed;
+  sig::signal<> ticket_deleted;
 };
 
 #endif // TICKET_OBJECT_H

@@ -41,7 +41,10 @@ SOURCES += src/main/main.cpp\
     src/gui/sticker_columns_view.cpp \
     src/kernel/columns_handler.cpp \
     src/kernel/hashtag_parser.cpp \
-    src/kernel/column_info.cpp
+    src/kernel/column_info.cpp \
+    src/gui/sticker_display_proxy.cpp \
+    src/gui/column_display_proxy.cpp \
+    src/kernel/ticket_ptr.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -77,7 +80,10 @@ HEADERS  += src/gui/main_window.h \
     src/kernel/columns_handler.h \
     src/kernel/ticket_typedefs.h \
     src/kernel/hashtag_parser.h \
-    src/kernel/column_info.h
+    src/kernel/column_info.h \
+    src/gui/sticker_display_proxy_abstract.h \
+    src/gui/column_display_proxy.h \
+    src/kernel/ticket_ptr.h
 
 INCLUDEPATH += src
 

@@ -10,9 +10,10 @@ ticket_container::~ticket_container ()
 
 }
 
-const ticket_object &ticket_container::ticket (const ticket_id id) const
+ticket_ptr ticket_container::ticket (const ticket_id id) const
 {
-  return m_tickets.at (id);
+  auto it = m_tickets.find (id);
+  if (it ==)
 }
 
 ticket_id ticket_container::add_ticket (const ticket_object &obj)

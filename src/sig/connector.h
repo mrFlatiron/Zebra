@@ -28,6 +28,11 @@ namespace sig
 
       s.add_slot (this, std::function<void (Args&&...)> (templ::call_helper<Func> (f)));
     }
+    template<typename T, typename Func, typename... Args>
+    void connect_to (signal<Args> &s, binded_func<T, Func> &&f)
+    {
+
+    }
   };
 }
 #endif // CONNECTOR_H

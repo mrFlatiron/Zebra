@@ -2,16 +2,24 @@
 #include "sticker_widget.h"
 #include "style_utils.h"
 
+#include "kernel/ticket_container.h"
+#include "kernel/columns_handler.h"
+#include "kernel/ticket_object.h"
+
 #include <QVBoxLayout>
 #include <QScrollArea>
 
-sticker_column_internal::sticker_column_internal (QWidget *parent)
-  : QLabel (parent)
+sticker_column_internal::sticker_column_internal (columns_handler &columns, ticket_container &tickets, column_id col_id, QWidget *parent)
+  : QLabel (parent),
+    m_col_id (col_id),
+    m_columns (columns),
+    m_tickets (tickets)
 {
   init ();
   create_widgets ();
   set_layout ();
   make_connections ();
+  update_view ();
 }
 
 sticker_column_internal::~sticker_column_internal ()
@@ -27,6 +35,11 @@ frame_border_handler &sticker_column_internal::borders ()
 QSize sticker_column_internal::sizeHint () const
 {
   return QSize (400, 150);
+}
+
+void sticker_column_internal::update_view ()
+{
+
 }
 
 void sticker_column_internal::init ()

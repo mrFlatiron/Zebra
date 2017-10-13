@@ -2,6 +2,7 @@
 #define TICKET_CONTAINER_H
 
 #include "ticket_object.h"
+#include "ticket_ptr.h"
 
 class ticket_container
 {
@@ -12,7 +13,7 @@ public:
   ticket_container ();
   ~ticket_container ();
 
-  const ticket_object &ticket (const ticket_id id) const;
+  ticket_ptr ticket (const ticket_id id) const;
 
   ticket_id add_ticket (const ticket_object &obj);
 };

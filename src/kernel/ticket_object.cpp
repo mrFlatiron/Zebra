@@ -7,7 +7,8 @@ ticket_object::ticket_object ()
 
 ticket_object::~ticket_object ()
 {
-
+  if (m_id != 0)
+    ticket_deleted ();
 }
 
 void ticket_object::set_title (const QString &str)
