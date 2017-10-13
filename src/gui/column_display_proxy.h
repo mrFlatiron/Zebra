@@ -15,6 +15,8 @@ private:
 public:
   column_display_proxy (const columns_handler &columns, const ticket_container &tickets);
   ~column_display_proxy ();
+
+  std::vector<column_id> get_shown_indices ();
 };
 
 #endif // COLUMN_DISPLAY_PROXY_H

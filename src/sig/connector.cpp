@@ -11,10 +11,28 @@ namespace sig
 
   connector::~connector ()
   {
-    for (auto s : m_signals)
-      {
-        s->remove_connect (this);
-      }
+    disconnect_all ();
+  }
+
+  connector::connector (const connector &)
+  {
+
+  }
+
+  connector::connector (connector &&c)
+  {
+    c.disconnect_all ();
+  }
+
+  connector &connector::operator =(const connector &)
+  {
+    return *this;
+  }
+
+  connector &connector::operator =(connector &&c)
+  {
+    c.disconnect_all ();
+    return *this;
   }
 
   void connector::remove_signal (signal_base *ptr)
@@ -27,6 +45,15 @@ namespace sig
       }
 
     m_signals.erase (ptr);
+  }
+
+  void connector::disconnect_all ()
+  {
+    for (auto s : m_signals)
+      {
+        s->remove_connect (this);
+      }
+    m_signals.clear ();
   }
 
 }

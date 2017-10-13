@@ -34,8 +34,7 @@ QSize sticker_column::minimumSizeHint () const
 
 void sticker_column::set_col_id (column_id id)
 {
-  m_col_id = id;
-  update_view ();
+  m_scroll->set_col_id (id);
 }
 
 void sticker_column::update_view ()

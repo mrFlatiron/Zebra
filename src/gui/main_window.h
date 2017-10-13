@@ -9,7 +9,7 @@ class main_window : public QDialog
 {
   Q_OBJECT
 private:
-  std::vector<sticker_column *> m_columns;
+//  std::vector<sticker_column *> m_columns;
 public:
   main_window (QWidget *parent = 0);
   ~main_window ();

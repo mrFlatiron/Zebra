@@ -17,6 +17,12 @@ namespace sig
     connector ();
     ~connector ();
 
+    connector (const connector  &);
+    connector (connector &&c);
+
+    connector &operator = (const connector &);
+    connector &operator =(connector &&c);
+
     void remove_signal (signal_base *ptr);
 
     template<typename Func, typename... Args>
@@ -28,11 +34,13 @@ namespace sig
 
       s.add_slot (this, std::function<void (Args&&...)> (templ::call_helper<Func> (f)));
     }
-    template<typename T, typename Func, typename... Args>
-    void connect_to (signal<Args> &s, binded_func<T, Func> &&f)
-    {
+//    template<typename T, typename Func, typename... Args>
+//    void connect_to (signal<Args> &s, binded_func<T, Func> &&f)
+//    {
 
-    }
+//    }
+  private:
+    void disconnect_all ();
   };
 }
 #endif // CONNECTOR_H

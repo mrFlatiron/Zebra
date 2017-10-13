@@ -9,10 +9,17 @@ namespace sig
   }
   signal_base::~signal_base ()
   {
-    for (auto c : m_connectors)
-      {
-        c->remove_signal (this);
-      }
+    disconnect_all ();
+  }
+
+  signal_base::signal_base (const signal_base &)
+  {
+
+  }
+
+  signal_base::signal_base (signal_base &&s)
+  {
+    s.disconnect_all ();
   }
 
   bool signal_base::add_connect (connector *conn)
@@ -38,5 +45,14 @@ namespace sig
         DEBUG_PAUSE ("No such connector. Check your code");
       }
     m_connectors.erase (it);
+  }
+
+  void signal_base::disconnect_all ()
+  {
+    for (auto c : m_connectors)
+      {
+        c->remove_signal (this);
+      }
+    m_connectors.clear ();
   }
 }

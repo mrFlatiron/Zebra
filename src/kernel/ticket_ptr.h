@@ -17,14 +17,26 @@ public:
 
   ticket_ptr (ticket_object *data = nullptr);
 
+  ticket_ptr (const ticket_ptr &ptr);
+  ticket_ptr (ticket_ptr &&ptr);
+
+  ticket_ptr &operator = (const ticket_ptr &ptr);
+  ticket_ptr &operator = (ticket_ptr &&ptr);
+
+
   ticket_object *get ();
+  const ticket_object *get () const;
 
   bool is_valid () const;
   bool is_dirty () const;
+
+  sig::signal<> ticket_changed; //do you really want to know this? prefer lazy calculations.
+  sig::signal<> ticket_deleted; //the same comment
 private:
-  void set_dirty ();
+  void set_dirty () const;
   void set_deleted ();
-  void set_uptodate ();
+  void set_uptodate () const;
+  void make_connections ();
 };
 
 

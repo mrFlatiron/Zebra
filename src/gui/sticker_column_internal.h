@@ -23,12 +23,14 @@ private:
   columns_handler &m_columns;
   ticket_container &m_tickets;
 public:
-  sticker_column_internal (columns_handler &columns, ticket_container &tickets, column_id col_id, QWidget *parent = nullptr);
+  sticker_column_internal (ticket_container &tickets, columns_handler &columns, column_id col_id, QWidget *parent = nullptr);
   ~sticker_column_internal ();
 
 
   frame_border_handler &borders ();
   QSize sizeHint () const override;
+
+  void set_col_id (column_id id);
   void update_view ();
 private:
   void init ();

@@ -16,6 +16,7 @@
 #include <utility>
 #include <iostream>
 #include <limits>
+#include <atomic>
 
 #include <cstdio>
 #include <cstdlib>

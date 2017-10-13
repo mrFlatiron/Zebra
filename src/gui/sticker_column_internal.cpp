@@ -9,7 +9,7 @@
 #include <QVBoxLayout>
 #include <QScrollArea>
 
-sticker_column_internal::sticker_column_internal (columns_handler &columns, ticket_container &tickets, column_id col_id, QWidget *parent)
+sticker_column_internal::sticker_column_internal (ticket_container &tickets, columns_handler &columns, column_id col_id, QWidget *parent)
   : QLabel (parent),
     m_col_id (col_id),
     m_columns (columns),
@@ -37,6 +37,11 @@ QSize sticker_column_internal::sizeHint () const
   return QSize (400, 150);
 }
 
+void sticker_column_internal::set_col_id (column_id id)
+{
+  m_col_id = id;
+}
+
 void sticker_column_internal::update_view ()
 {
 
@@ -52,26 +57,26 @@ void sticker_column_internal::create_widgets ()
   m_vlo_0 = new QVBoxLayout;
   for (int i = 0; i < 5; i++)
     {
-      m_stickers.emplace_back (new sticker_widget (this));
-      m_stickers[i]->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-      connect (m_stickers[i], SIGNAL (body_expanded ()), this, SLOT (reset_layout ()));
-      connect (m_stickers[i], SIGNAL (body_collapsed ()), this, SLOT (reset_layout ()));
+//      m_stickers.emplace_back (new sticker_widget (this));
+//      m_stickers[i]->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+//      connect (m_stickers[i], SIGNAL (body_expanded ()), this, SLOT (reset_layout ()));
+//      connect (m_stickers[i], SIGNAL (body_collapsed ()), this, SLOT (reset_layout ()));
     }
 
 }
 
 void sticker_column_internal::set_layout ()
 {
-  {
-    m_vlo_0->setSpacing (0);
-    for (int i = 0; i < 5; i++)
-      {
-        m_vlo_0->addWidget (m_stickers[i]);
-      }
-    m_vlo_0->addStretch ();
-  }
-  m_vlo_0->setSizeConstraint (QLayout::SetMinAndMaxSize);
-  setLayout (m_vlo_0);
+//  {
+//    m_vlo_0->setSpacing (0);
+//    for (int i = 0; i < 5; i++)
+//      {
+//        m_vlo_0->addWidget (m_stickers[i]);
+//      }
+//    m_vlo_0->addStretch ();
+//  }
+//  m_vlo_0->setSizeConstraint (QLayout::SetMinAndMaxSize);
+//  setLayout (m_vlo_0);
 }
 
 void sticker_column_internal::make_connections ()

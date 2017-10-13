@@ -1,7 +1,7 @@
 #include "sticker_column_scroll.h"
 #include "sticker_column_internal.h"
 
-sticker_column_scroll::sticker_column_scroll (ticket_container &tickets, columns_handler &columns, column_id id, QWidget *parent)
+sticker_column_scroll::sticker_column_scroll (ticket_container &tickets, columns_handler &columns, column_id col_id, QWidget *parent)
   : QScrollArea (parent)
 {
   init ();
@@ -28,6 +28,11 @@ sticker_column_internal *sticker_column_scroll::internal ()
 void sticker_column_scroll::update_view ()
 {
   m_internal->update_view ();
+}
+
+void sticker_column_scroll::set_col_id (column_id id)
+{
+  m_internal->set_col_id (id);
 }
 
 void sticker_column_scroll::init ()

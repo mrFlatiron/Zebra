@@ -15,6 +15,27 @@ namespace sig
     signal () {}
     ~signal () {}
 
+    signal (const signal &)
+    {
+
+    }
+
+    signal (signal &&s)
+    {
+      s.disconnect_all ();
+    }
+
+    signal &operator = (const signal &)
+    {
+      return *this;
+    }
+
+    signal &operator = (signal &&s)
+    {
+      s.disconnect_all ();
+      return *this;
+    }
+
     void add_slot (connector *c, std::function<void (Args &&...)> slot)
     {
       bool res = signal_base::add_connect (c);

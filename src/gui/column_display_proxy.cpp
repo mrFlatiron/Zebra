@@ -14,3 +14,8 @@ column_display_proxy::~column_display_proxy ()
 {
 
 }
+
+std::vector<column_id> column_display_proxy::get_shown_indices ()
+{
+  return m_columns.column (m_id).tickets ();
+}

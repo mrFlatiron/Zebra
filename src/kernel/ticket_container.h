@@ -13,7 +13,7 @@ public:
   ticket_container ();
   ~ticket_container ();
 
-  ticket_ptr ticket (const ticket_id id) const;
+  ticket_ptr ticket (ticket_id id);
 
   ticket_id add_ticket (const ticket_object &obj);
 };
