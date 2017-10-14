@@ -26,8 +26,9 @@ public:
   ticket_type type () const;
   ticket_priority priority () const;
 
-  sig::signal<> data_changed;
-  sig::signal<> ticket_deleted;
+  //TODO: REMOVE MUTABLE. PROBABLY SIGNALS INTERNALS SHOULD BE MUTABLE
+  mutable sig::signal<> data_changed;
+  mutable sig::signal<> ticket_deleted;
 };
 
 #endif // TICKET_OBJECT_H

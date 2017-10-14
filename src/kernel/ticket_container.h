@@ -15,6 +15,8 @@ public:
 
   ticket_ptr ticket (ticket_id id);
 
+  const_ticket_ptr ticket (ticket_id id) const;
+
   ticket_id add_ticket (const ticket_object &obj);
 };
 

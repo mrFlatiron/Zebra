@@ -1,42 +1,63 @@
 #ifndef TICKET_PTR_H
 #define TICKET_PTR_H
 
-#include "kernel/ticket_typedefs.h"
-#include "sig/sigslots.h"
+#include "ticket_ptr_generic.h"
 
-class ticket_object;
+class ticket_ptr;
 
-class ticket_ptr
+class const_ticket_ptr : private ticket_ptr_generic<const ticket_object *>
 {
 private:
-  ticket_object *m_data = nullptr;
-  mutable bool m_changed = false;
-  sig::connector m_conn;
+  using base = ticket_ptr_generic<const ticket_object *>;
+  using self = const_ticket_ptr;
 public:
-  ~ticket_ptr ();
+  using base::is_dirty;
+  using base::is_valid;
+  using base::get;
+  using base::copy_state;
 
-  ticket_ptr (ticket_object *data = nullptr);
+  const_ticket_ptr (const ticket_object *data = nullptr)
+    : base (data) {}
 
-  ticket_ptr (const ticket_ptr &ptr);
-  ticket_ptr (ticket_ptr &&ptr);
+  const_ticket_ptr (const const_ticket_ptr &rhs)
+    : base (rhs) {}
 
-  ticket_ptr &operator = (const ticket_ptr &ptr);
-  ticket_ptr &operator = (ticket_ptr &&ptr);
+  const_ticket_ptr (const_ticket_ptr &&rhs)
+    : base (rhs) {}
 
+  self &operator = (const self &rhs) {base::operator = (rhs); return *this;}
+  self &operator = (self &&rhs) {base::operator = (rhs); return *this;}
+};
 
-  ticket_object *get ();
-  const ticket_object *get () const;
-
-  bool is_valid () const;
-  bool is_dirty () const;
-
-  sig::signal<> ticket_changed; //do you really want to know this? prefer lazy calculations.
-  sig::signal<> ticket_deleted; //the same comment
+class ticket_ptr : private ticket_ptr_generic<ticket_object *>
+{
 private:
-  void set_dirty () const;
-  void set_deleted ();
-  void set_uptodate () const;
-  void make_connections ();
+  using base = ticket_ptr_generic<ticket_object *>;
+  using self = ticket_ptr;
+public:
+  using base::is_dirty;
+  using base::is_valid;
+  using base::get;
+  using base::copy_state;
+
+  ticket_ptr (ticket_object *data = nullptr)
+    : base (data) {}
+
+  ticket_ptr (const ticket_ptr &rhs)
+    : base (rhs) {}
+
+  ticket_ptr (ticket_ptr &&rhs)
+    : base (rhs) {}
+
+  self &operator = (const self &rhs) {base::operator = (rhs); return *this;}
+  self &operator = (self &&rhs) {base::operator = (rhs); return *this;}
+
+  operator const_ticket_ptr ()
+  {
+    const_ticket_ptr retval (base::get ());
+    retval.copy_state (*this);
+    return retval;
+  }
 };
 
 

@@ -10,17 +10,15 @@ ticket_container::~ticket_container ()
 
 }
 
-//const ticket_ptr ticket_container::ticket (ticket_id id) const
-//{
-//  auto it = m_tickets.find (id);
-//  if (it == m_tickets.end ())
-//    {
-//      return ticket_ptr ();
-//    }
-//  const ticket_object *raw = &(it->second);
-//  const ticket_ptr tptr (raw);
-//  return tptr;
-//}
+const_ticket_ptr ticket_container::ticket (ticket_id id) const
+{
+  auto it = m_tickets.find (id);
+  if (it == m_tickets.end ())
+    {
+      return const_ticket_ptr ();
+    }
+  return const_ticket_ptr (&(it->second));
+}
 
 ticket_ptr ticket_container::ticket (const ticket_id id)
 {
