@@ -1,6 +1,8 @@
 #include "style_utils.h"
 #include <QWidget>
 
+#include "kernel/ticket_typedefs.h"
+
 QString style_settings::get_styled_string (const QString &src, styled_string obj)
 {
   switch (obj)
@@ -26,11 +28,11 @@ QString style_settings::get_icon_path (style_settings::common_icons type)
     case common_icons::check_mark:
       return ":/icons/check_mark.png";
     case common_icons::clipboard:
-      return ":/icons/clipboard.png";
+      return ":/icons/clipboard_32.png";
     case common_icons::lamp:
-      return ":/icons/lamp.png";
+      return ":/icons/lamp_32.png";
     case common_icons::question_mark:
-      return ":/icons/question_mark.png";
+      return ":/icons/question_mark_32.png";
     case common_icons::r_arrow:
       return ":/icons/r_arrow.png";
     case common_icons::trash:
@@ -83,4 +85,22 @@ void style_settings::set_background_color (QWidget *widget, const QColor &color)
 void style_settings::set_background_color (QWidget *widget, common_colors color)
 {
   set_background_color (widget, get_color (color));
+}
+
+style_settings::common_icons style_settings::type_to_icon (ticket_type p)
+{
+  switch (p)
+    {
+    case ticket_type::bug:
+      return common_icons::bug;
+    case ticket_type::feature:
+      return common_icons::lamp;
+    case ticket_type::question:
+      return common_icons::question_mark;
+    case ticket_type::regular:
+      return common_icons::clipboard;
+    case ticket_type::COUNT:
+      DEBUG_PAUSE ("Shouldn't happen");
+    }
+  return common_icons::COUNT;
 }

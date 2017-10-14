@@ -19,3 +19,13 @@ const ticket_container &project_handler::tickets () const
 {
   return m_tickets;
 }
+
+columns_handler &project_handler::columns ()
+{
+  return m_columns;
+}
+
+const columns_handler &project_handler::columns () const
+{
+  return m_columns;
+}

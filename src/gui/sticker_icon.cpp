@@ -50,6 +50,11 @@ void sticker_icon::set_icon (style_settings::common_icons type)
   set_icon (style_settings::get_icon_path (type));
 }
 
+void sticker_icon::set_icon (ticket_type t)
+{
+  set_icon (style_settings::type_to_icon (t));
+}
+
 void sticker_icon::set_background_color(const QColor &color)
 {
   m_background_color = color;

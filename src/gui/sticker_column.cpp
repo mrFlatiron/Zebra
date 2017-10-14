@@ -1,6 +1,6 @@
 #include "sticker_column.h"
 
-#include "sticker_column_scroll.h"
+#include "sticker_column_internal.h"
 #include "sticker_add_button.h"
 #include "style_utils.h"
 
@@ -34,12 +34,18 @@ QSize sticker_column::minimumSizeHint () const
 
 void sticker_column::set_col_id (column_id id)
 {
-  m_scroll->set_col_id (id);
+  m_internal->set_col_id (id);
+}
+
+void sticker_column::set_model (column_display_proxy_abstract *model)
+{
+  m_internal->set_model (model);
 }
 
 void sticker_column::update_view ()
 {
-  m_scroll->update_view ();
+  m_internal->update_view ();
+  updateGeometry ();
 }
 
 void sticker_column::init ()
@@ -49,7 +55,7 @@ void sticker_column::init ()
 
 void sticker_column::create_widgets (ticket_container &tickets, columns_handler &columns, column_id id)
 {
-  m_scroll = new sticker_column_scroll (tickets, columns, id, this);
+  m_internal = new sticker_column_internal (tickets, columns, id, this);
   m_add_button = new sticker_add_button (this);
   m_add_button->set_background_color (style_settings::get_color (common_colors::mint));
   m_add_button->set_icon (style_settings::common_icons::plus);
@@ -57,9 +63,9 @@ void sticker_column::create_widgets (ticket_container &tickets, columns_handler 
 
   using borders = frame_border_handler::border;
 
-  m_scroll->borders ().set_shape (QFrame::NoFrame);
+  m_internal->borders ().set_shape (QFrame::NoFrame);
 
-//  m_scroll->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Expanding);
+  m_internal->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Expanding);
   m_add_button->borders ().hide_borders (vector_of (borders ()));
 }
 
@@ -68,10 +74,20 @@ void sticker_column::set_layout ()
   QVBoxLayout *vlo_0 = new QVBoxLayout;
   {
     vlo_0->setSpacing (0);
-    vlo_0->addWidget (m_scroll);
+    QScrollArea *scroll = new QScrollArea (this);
+
+    scroll->setWidget (m_internal);
+    scroll->setWidgetResizable (true);
+    scroll->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOn);
+
+    vlo_0->addWidget (scroll);
     vlo_0->addWidget (m_add_button);
   }
   vlo_0->setContentsMargins (0, 0, 0, 0);
+  if (layout ())
+    {
+      delete layout ();
+    }
   setLayout (vlo_0);
 }
 

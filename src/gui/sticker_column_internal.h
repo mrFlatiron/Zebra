@@ -5,23 +5,29 @@
 #include <QScrollArea>
 #include "frame_border_handler.h"
 #include "kernel/ticket_typedefs.h"
+#include "sig/sigslots.h"
 
 class sticker_widget;
 class QScrollArea;
 class QVBoxLayout;
 class columns_handler;
 class ticket_container;
+class column_display_proxy_abstract;
 
 class sticker_column_internal : public QLabel
 {
   Q_OBJECT
 private:
   frame_border_handler m_borders;
-  QVBoxLayout *m_vlo_0;
 
-  column_id m_col_id;
+  std::vector<sticker_widget *> m_stickers;
+
+  column_id m_col_id = 0;
   columns_handler &m_columns;
   ticket_container &m_tickets;
+  column_display_proxy_abstract *m_proxy_model = nullptr;
+
+  sig::connector m_conn;
 public:
   sticker_column_internal (ticket_container &tickets, columns_handler &columns, column_id col_id, QWidget *parent = nullptr);
   ~sticker_column_internal ();
@@ -32,6 +38,7 @@ public:
 
   void set_col_id (column_id id);
   void update_view ();
+  void set_model (column_display_proxy_abstract *model);
 private:
   void init ();
   void create_widgets ();

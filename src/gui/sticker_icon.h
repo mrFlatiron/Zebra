@@ -9,6 +9,7 @@
 #include <QToolButton>
 
 enum class ticket_type;
+enum class priority;
 
 namespace style_settings
 {
@@ -32,6 +33,7 @@ public:
   void set_icon (const QString &path);
   void set_icon (const QPixmap &icon);
   void set_icon (style_settings::common_icons type);
+  void set_icon (ticket_type t);
 
   void set_background_color (const QColor &color);
 

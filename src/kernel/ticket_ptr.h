@@ -15,6 +15,8 @@ public:
   using base::is_valid;
   using base::get;
   using base::copy_state;
+  using base::ticket_changed;
+  using base::ticket_deleted;
 
   const_ticket_ptr (const ticket_object *data = nullptr)
     : base (data) {}
@@ -39,6 +41,8 @@ public:
   using base::is_valid;
   using base::get;
   using base::copy_state;
+  using base::ticket_changed;
+  using base::ticket_deleted;
 
   ticket_ptr (ticket_object *data = nullptr)
     : base (data) {}

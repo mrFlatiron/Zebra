@@ -30,3 +30,18 @@ const column_info &columns_handler::column (column_id id) const
 {
   return m_column_to_tickets.at (id);
 }
+
+std::vector<column_id> columns_handler::all_ids () const
+{
+  std::vector<column_id> retval;
+
+  for (auto &p : m_column_to_tickets)
+    retval.push_back (p.first);
+
+  return retval;
+}
+
+int columns_handler::size ()
+{
+  return isize (m_column_to_tickets);
+}

@@ -21,6 +21,9 @@ enum class common_colors
   COUNT
 };
 
+enum class ticket_priority;
+enum class ticket_type;
+
 namespace style_settings
 {
   const int collapsed_height = 80;
@@ -50,6 +53,7 @@ namespace style_settings
   QString get_styled_string (const QString &src, styled_string obj);
   QString get_icon_path (common_icons type);
   QColor get_color (common_colors color);
+  common_icons type_to_icon (ticket_type p);
 
   void set_background_color (QWidget *widget, const QColor &color);
   void set_background_color (QWidget *widget, common_colors color);

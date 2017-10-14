@@ -32,7 +32,6 @@ namespace sig
       }
     else
       {
-        DEBUG_PAUSE ("Connection is already in vector");
         return false;
       }
   }

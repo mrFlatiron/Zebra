@@ -17,6 +17,9 @@ public:
 
   column_info &column (column_id id);
   const column_info &column (column_id id) const;
+
+  std::vector<column_id> all_ids () const;
+  int size ();
 };
 
 #endif // COLUMNS_HANDLER_H

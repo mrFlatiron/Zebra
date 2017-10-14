@@ -2,6 +2,8 @@
 #define STICKER_WIDGET_H
 
 #include <QWidget>
+#include "sig/sigslots.h"
+#include "kernel/ticket_ptr.h"
 
 class sticker_colorline;
 class sticker_icon;
@@ -13,7 +15,6 @@ class QVBoxLayout;
 
 class sticker_widget : public QWidget
 {
-  Q_OBJECT
 private:
   using fbh = frame_border_handler;
 
@@ -22,20 +23,27 @@ private:
   sticker_body_collapsed *m_body_collapsed;
   sticker_body_expanded *m_body_expanded;
 
+
+  ticket_ptr m_ticket;
   bool m_is_expanded;
 
   QVBoxLayout *m_main_layout;
+
+  sig::connector m_conn;
 public:
   sticker_widget (QWidget *parent = nullptr);
   ~sticker_widget ();
   QSize sizeHint () const override;
 
   QSize minimumSizeHint () const override;
-public slots:
+
+  sig::signal<> body_expanded;
+  sig::signal<> body_collapsed;
+
   void resize_body ();
-signals:
-  void body_expanded ();
-  void body_collapsed ();
+
+  void set_ticket (ticket_ptr ticket);
+  void update_view ();
 private:
   void create_widgets ();
   void set_layout ();

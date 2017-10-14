@@ -45,6 +45,17 @@ void sticker_body_collapsed::mouseDoubleClickEvent (QMouseEvent *event)
   double_clicked ();
 }
 
+void sticker_body_collapsed::set_ticket (ticket_ptr ticket)
+{
+  m_ticket = ticket;
+  update_view ();
+}
+
+void sticker_body_collapsed::update_view ()
+{
+  m_title->setText (m_ticket.get ()->title ());
+}
+
 void sticker_body_collapsed::init ()
 {
   m_borders.set_parent (this);

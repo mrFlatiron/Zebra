@@ -29,6 +29,20 @@ QSize sticker_body_expanded::sizeHint() const
   return QSize (500, 300);
 }
 
+void sticker_body_expanded::set_ticket (ticket_ptr ticket)
+{
+  m_ticket = ticket;
+  update_view ();
+}
+
+void sticker_body_expanded::update_view ()
+{
+  m_title_lbl->setText (m_ticket.get ()->title ());
+  m_title->setText (m_ticket.get ()->title ());
+  m_desc_lbl->setText (m_ticket.get ()->description ());
+  m_desc->setText (m_ticket.get ()->description ());
+}
+
 void sticker_body_expanded::init ()
 {
   m_borders.set_parent (this);
@@ -58,7 +72,7 @@ void sticker_body_expanded::set_layout ()
   setLayout (vlo_0);
 }
 
-void sticker_body_expanded::make_connections()
+void sticker_body_expanded::make_connections ()
 {
 
 }

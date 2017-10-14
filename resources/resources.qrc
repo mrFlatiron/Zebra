@@ -13,5 +13,9 @@
         <file>r_arrow.png</file>
         <file>trash.png</file>
         <file>plus.png</file>
+        <file>check_mark_grey_32.png</file>
+        <file>clipboard_32.png</file>
+        <file>lamp_32.png</file>
+        <file>question_mark_32.png</file>
     </qresource>
 </RCC>

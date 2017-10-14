@@ -3,6 +3,7 @@
 
 #include <QFrame>
 #include "frame_border_handler.h"
+#include "kernel/ticket_ptr.h"
 
 class QTextEdit;
 class QLabel;
@@ -16,6 +17,8 @@ private:
   QTextEdit *m_title;
   QLabel *m_desc_lbl;
   QTextEdit *m_desc;
+
+  ticket_ptr m_ticket;
 public:
   sticker_body_expanded (QWidget *parent = nullptr);
   ~sticker_body_expanded ();
@@ -23,6 +26,9 @@ public:
   frame_border_handler &borders ();
 
   QSize sizeHint () const override;
+
+  void set_ticket (ticket_ptr ticket);
+  void update_view ();
 private:
   void init ();
   void create_widgets ();

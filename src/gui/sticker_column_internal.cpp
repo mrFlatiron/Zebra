@@ -6,6 +6,8 @@
 #include "kernel/columns_handler.h"
 #include "kernel/ticket_object.h"
 
+#include "column_display_proxy_abstract.h"
+
 #include <QVBoxLayout>
 #include <QScrollArea>
 
@@ -44,7 +46,34 @@ void sticker_column_internal::set_col_id (column_id id)
 
 void sticker_column_internal::update_view ()
 {
+  if (!m_proxy_model)
+    return;
 
+  m_stickers.clear ();
+
+  auto ticket_ids = m_proxy_model->get_shown_indices ();
+  for (auto id : ticket_ids)
+    {
+      m_stickers.push_back (new sticker_widget (this));
+      m_stickers.back ()->set_ticket (m_tickets.ticket (id));
+      m_stickers.back ()->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+      m_conn.connect_to (m_stickers.back ()->body_expanded, [this] () {this->reset_layout ();});
+      m_conn.connect_to (m_stickers.back ()->body_collapsed, [this] () {this->reset_layout ();});
+    }
+  set_layout ();
+  updateGeometry ();
+}
+
+void sticker_column_internal::set_model (column_display_proxy_abstract *model)
+{
+  m_proxy_model = model;
+  if (!model)
+    {
+      DEBUG_PAUSE ("Is this ok?")
+          return;
+    }
+  m_conn.connect_to (m_proxy_model->layout_changed, [this] () {this->update_view ();});
+  update_view ();
 }
 
 void sticker_column_internal::init ()
@@ -54,29 +83,26 @@ void sticker_column_internal::init ()
 
 void sticker_column_internal::create_widgets ()
 {
-  m_vlo_0 = new QVBoxLayout;
-  for (int i = 0; i < 5; i++)
-    {
-//      m_stickers.emplace_back (new sticker_widget (this));
-//      m_stickers[i]->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-//      connect (m_stickers[i], SIGNAL (body_expanded ()), this, SLOT (reset_layout ()));
-//      connect (m_stickers[i], SIGNAL (body_collapsed ()), this, SLOT (reset_layout ()));
-    }
 
 }
 
 void sticker_column_internal::set_layout ()
 {
-//  {
-//    m_vlo_0->setSpacing (0);
-//    for (int i = 0; i < 5; i++)
-//      {
-//        m_vlo_0->addWidget (m_stickers[i]);
-//      }
-//    m_vlo_0->addStretch ();
-//  }
-//  m_vlo_0->setSizeConstraint (QLayout::SetMinAndMaxSize);
-//  setLayout (m_vlo_0);
+  QVBoxLayout *vlo_0 = new QVBoxLayout;
+  {
+    vlo_0->setSpacing (0);
+    for (int i = 0; i < isize (m_stickers); i++)
+      {
+        vlo_0->addWidget (m_stickers[i]);
+      }
+    vlo_0->addStretch ();
+  }
+  vlo_0->setSizeConstraint (QLayout::SetMinAndMaxSize);
+  if (layout ())
+    {
+      delete layout ();
+    }
+  setLayout (vlo_0);
 }
 
 void sticker_column_internal::make_connections ()

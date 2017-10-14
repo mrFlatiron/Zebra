@@ -15,12 +15,14 @@ namespace sig
     signal () {}
     ~signal () {}
 
-    signal (const signal &)
+    signal (const signal &s)
+      : signal_base (s)
     {
 
     }
 
     signal (signal &&s)
+      : signal_base (std::move (s))
     {
       s.disconnect_all ();
     }
