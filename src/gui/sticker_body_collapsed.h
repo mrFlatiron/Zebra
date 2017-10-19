@@ -7,17 +7,19 @@
 #include "kernel/ticket_ptr.h"
 
 class QLabel;
-class sticker_next_button;
+class sticker_button;
 
 class sticker_body_collapsed : public QFrame
 {
 private:
   QLabel *m_title;
   QLabel *m_hashtags;
-  sticker_next_button *m_next_button;
+  sticker_button *m_next_button;
   frame_border_handler m_borders;
 
   ticket_ptr m_ticket;
+
+  sig::connector m_conn;
 public:
   sticker_body_collapsed (QWidget *parent = nullptr);
   ~sticker_body_collapsed ();
@@ -32,7 +34,7 @@ public:
   void set_ticket (ticket_ptr ticket);
   void update_view ();
   sig::signal<> double_clicked;
-
+  sig::signal<> next_button_clicked;
 private:
   void init ();
 

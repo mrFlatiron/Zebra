@@ -9,9 +9,10 @@ class project_handler
 private:
   ticket_container m_tickets;
   columns_handler m_columns;
+
+  sig::connector m_conn;
 public:
   project_handler ();
-  ~project_handler ();
 
   ticket_container &tickets ();
   const ticket_container &tickets () const;

@@ -8,6 +8,8 @@
 
 #include "column_display_proxy_abstract.h"
 
+
+
 #include <QVBoxLayout>
 #include <QScrollArea>
 
@@ -44,21 +46,28 @@ void sticker_column_internal::set_col_id (column_id id)
   m_col_id = id;
 }
 
+column_id sticker_column_internal::col_id () const
+{
+  return m_col_id;
+}
+
 void sticker_column_internal::update_view ()
 {
   if (!m_proxy_model)
     return;
 
-  m_stickers.clear ();
-
   auto ticket_ids = m_proxy_model->get_shown_indices ();
-  for (auto id : ticket_ids)
+
+  m_stickers.set_new_ids (ticket_ids);
+  for (auto id : m_stickers.values_that_need_construction ())
     {
-      m_stickers.push_back (new sticker_widget (this));
-      m_stickers.back ()->set_ticket (m_tickets.ticket (id));
-      m_stickers.back ()->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-      m_conn.connect_to (m_stickers.back ()->body_expanded, [this] () {this->reset_layout ();});
-      m_conn.connect_to (m_stickers.back ()->body_collapsed, [this] () {this->reset_layout ();});
+      m_stickers.emplace (id);
+      m_stickers[id]->set_ticket (m_tickets.ticket (id));
+      m_stickers[id]->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+      m_conn.connect_to (m_stickers[id]->body_expanded, [this] () {this->reset_layout ();});
+      m_conn.connect_to (m_stickers[id]->body_collapsed, [this] () {this->reset_layout ();});
+      m_conn.connect_to (m_stickers[id]->next_button_clicked, [this, id] ()
+      {this->transfer_to_next_requested (id);});
     }
   set_layout ();
   updateGeometry ();
@@ -76,6 +85,26 @@ void sticker_column_internal::set_model (column_display_proxy_abstract *model)
   update_view ();
 }
 
+columns_handler &sticker_column_internal::columns ()
+{
+  return m_columns;
+}
+
+const columns_handler &sticker_column_internal::columns () const
+{
+  return m_columns;
+}
+
+ticket_container &sticker_column_internal::tickets ()
+{
+  return m_tickets;
+}
+
+const ticket_container &sticker_column_internal::tickets () const
+{
+  return m_tickets;
+}
+
 void sticker_column_internal::init ()
 {
   m_borders.set_parent (this);
@@ -91,9 +120,9 @@ void sticker_column_internal::set_layout ()
   QVBoxLayout *vlo_0 = new QVBoxLayout;
   {
     vlo_0->setSpacing (0);
-    for (int i = 0; i < isize (m_stickers); i++)
+    for (auto w : m_stickers.values ())
       {
-        vlo_0->addWidget (m_stickers[i]);
+        vlo_0->addWidget (w);
       }
     vlo_0->addStretch ();
   }

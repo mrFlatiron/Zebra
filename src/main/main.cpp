@@ -41,18 +41,30 @@ int main(int argc, char *argv[])
  t4.set_type (ticket_type::question);
  t4.set_priority (ticket_priority::low);
 
- zebra.tickets ().add_ticket (t1);
- zebra.tickets ().add_ticket (t2);
- zebra.tickets ().add_ticket (t3);
- zebra.tickets ().add_ticket (t4);
+ zebra.tickets ().add_ticket (std::move (t1));
+ zebra.tickets ().add_ticket (std::move (t2));
+ zebra.tickets ().add_ticket (std::move (t3));
+ zebra.tickets ().add_ticket (std::move (t4));
+
+ auto ticket_ids = zebra.tickets ().all_ids ();
+
+ std::sort (ticket_ids.begin (), ticket_ids.end ());
+
+ int size = isize (ticket_ids);
 
  auto col = zebra.columns ().create_column ("First Column");
- zebra.columns ().column (col).add_ticket (1);
- zebra.columns ().column (col).add_ticket (3);
- zebra.columns ().column (col).add_ticket (4);
+ auto i = 0;
+ for (; i < size; i++)
+   zebra.columns ().column (col).add_ticket (ticket_ids[i]);
+
+// for (; i < size / 2; i++)
+//   zebra.columns ().column (col).add_ticket (ticket_ids[i]);
 
  col = zebra.columns ().create_column ("Second Column");
- zebra.columns ().column (col).add_ticket (2);
+
+ col = zebra.columns ().create_column ("Third Column");
+
+
 
  main_window w (zebra);
 

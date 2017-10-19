@@ -2,7 +2,6 @@
 #include "style_utils.h"
 
 #include "sticker_button.h"
-#include "sticker_next_button.h"
 
 #include "common/enum_misc.h"
 
@@ -71,12 +70,12 @@ void sticker_body_collapsed::create_widgets ()
   m_hashtags = new QLabel (hash_styled ("#test2"), this);
   m_hashtags->setTextFormat (Qt::RichText);
   m_hashtags->setAlignment (Qt::AlignBottom);
-  m_next_button = new sticker_next_button (this);
+  m_next_button = new sticker_button (this);
 
   m_next_button->borders ().hide_borders (vector_of (frame_border_handler::border::COUNT));
   m_next_button->set_icon ((style_settings::get_icon_path (style_settings::common_icons::r_arrow)));
   m_next_button->set_background_color (style_settings::get_color (common_colors::peach));
-  m_next_button->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+  m_next_button->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
 }
 
 void sticker_body_collapsed::set_layout ()
@@ -90,14 +89,15 @@ void sticker_body_collapsed::set_layout ()
       vlo_0->addWidget (m_hashtags);
     }
     hlo_0->addLayout (vlo_0);
-    hlo_0->addWidget (m_next_button, 1, Qt::AlignRight);
+    hlo_0->addStretch ();
+    hlo_0->addWidget (m_next_button, 0, Qt::AlignRight);
   }
   setLayout (hlo_0);
 }
 
 void sticker_body_collapsed::make_connections ()
 {
-
+  m_conn.connect_to (m_next_button->clicked, [this] () {this->next_button_clicked ();});
 }
 
 QString sticker_body_collapsed::hash_styled (const QString &str)

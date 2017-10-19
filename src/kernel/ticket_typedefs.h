@@ -1,8 +1,11 @@
 #ifndef TICKET_TYPEDEFS_H
 #define TICKET_TYPEDEFS_H
 
-using ticket_id = int;
-using column_id = int;
+#include "common/typesafe_id.h"
+
+MAKE_TYPESAFE_ID (ticket_id, int);
+MAKE_TYPESAFE_ID (column_id, int);
+MAKE_TYPESAFE_ID (ticket_col_id, int);
 
 enum class ticket_priority
 {

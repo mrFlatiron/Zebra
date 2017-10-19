@@ -5,6 +5,7 @@
 #include "sticker_body_expanded.h"
 #include "kernel/ticket_object.h"
 #include "kernel/ticket_ptr.h"
+#include "lazy/widget_visibility_updater.h"
 
 #include "style_utils.h"
 
@@ -62,9 +63,12 @@ void sticker_widget::resize_body ()
 void sticker_widget::set_ticket (ticket_ptr ticket)
 {
   m_ticket = ticket;
-  m_conn.connect_to (m_ticket.ticket_changed, [this] () {this->update_view ();});
   m_body_collapsed->set_ticket (ticket);
   m_body_expanded->set_ticket (ticket);
+
+  if (m_ticket.is_valid ())
+    m_conn.connect_to (m_ticket.get ()->data_changed, [this] () {this->set_dirty ();});
+
   update_view ();
 }
 
@@ -84,6 +88,8 @@ void sticker_widget::update_view ()
 
 void sticker_widget::create_widgets ()
 {
+  put_in (m_visibility_updater);
+
   m_colorline = new sticker_colorline (this);
   m_colorline->set_color (ticket_priority::mid);
 
@@ -125,5 +131,13 @@ void sticker_widget::set_layout ()
 void sticker_widget::make_connections ()
 {
   m_conn.connect_to (m_body_collapsed->double_clicked, [this] () {this->resize_body ();});
+  m_conn.connect_to (m_body_collapsed->next_button_clicked, [this] () {this->next_button_clicked ();});
+
+  m_visibility_updater->set_widget_and_updater (this, [this] () {this->update_view ();});
+}
+
+void sticker_widget::set_dirty ()
+{
+  m_visibility_updater->set_dirty ();
 }
 

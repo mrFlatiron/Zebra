@@ -34,7 +34,6 @@ namespace templ
     Func func;
     call_helper (const Func &f)
       : func (f) {}
-    ~call_helper () {}
 
     template<typename...Args>
     void operator () (Args &&... args) const

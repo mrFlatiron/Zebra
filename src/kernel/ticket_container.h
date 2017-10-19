@@ -2,22 +2,31 @@
 #define TICKET_CONTAINER_H
 
 #include "ticket_object.h"
-#include "ticket_ptr.h"
+
+class ticket_ptr;
+class const_ticket_ptr;
+
 
 class ticket_container
 {
 private:
-  ticket_id m_max_id = 0;
+  ticket_id m_max_id;
   std::unordered_map<ticket_id, ticket_object> m_tickets;
 public:
   ticket_container ();
-  ~ticket_container ();
 
   ticket_ptr ticket (ticket_id id);
 
   const_ticket_ptr ticket (ticket_id id) const;
 
-  ticket_id add_ticket (const ticket_object &obj);
+  ticket_id add_ticket (ticket_object &&obj);
+
+  std::vector<ticket_id> all_ids () const;
+
+  void erase (ticket_id id);
+
+  sig::signal<ticket_id> ticket_deleted;
+  sig::signal<ticket_id> ticket_added;
 };
 
 #endif // TICKET_CONTAINER_H

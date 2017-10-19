@@ -8,7 +8,7 @@ class enum_range
 {
 public:
   enum_range () {}
-  ~enum_range () {}
+
   enum_helper<Enum> begin () { return enum_helper<Enum> (enum_begin (Enum ())); }
   enum_helper<Enum> end   () { return enum_helper<Enum> (enum_end (Enum ()));   } //implement enum_end (Enum) or Enum::COUNT;
 };

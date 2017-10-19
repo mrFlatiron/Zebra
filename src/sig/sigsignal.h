@@ -10,7 +10,7 @@ namespace sig
   class signal : public signal_base
   {
   private:
-    std::unordered_map<connector *, std::vector<std::function<void (Args &&...)>>> m_slots;
+    mutable std::unordered_map<const connector *, std::vector<std::function<void (Args...)>>> m_slots;
   public:
     signal () {}
     ~signal () {}
@@ -24,7 +24,7 @@ namespace sig
     signal (signal &&s)
       : signal_base (std::move (s))
     {
-      s.disconnect_all ();
+
     }
 
     signal &operator = (const signal &)
@@ -38,7 +38,7 @@ namespace sig
       return *this;
     }
 
-    void add_slot (connector *c, std::function<void (Args &&...)> slot)
+    void add_slot (const connector *c, std::function<void (Args &&...)> slot) const
     {
       bool res = signal_base::add_connect (c);
       if (res)
@@ -51,20 +51,21 @@ namespace sig
         }
     }
 
-    void remove_connect (connector *conn)
+    void remove_connect (connector *conn) const
     {
       signal_base::remove_connect (conn);
       m_slots.erase (m_slots.find (conn));
     }
 
-    void operator () (Args &&... args) const
+    template<typename... SignalArgs>
+    void operator () (SignalArgs &&... args) const
     {
       for (auto c : m_connectors)
         {
           auto &vec = m_slots.at (c);
           for (auto &f : vec)
             {
-              f (std::forward<Args> (args)...);
+              f (std::forward<SignalArgs> (args)...);
             }
         }
     }

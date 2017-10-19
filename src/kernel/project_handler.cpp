@@ -2,12 +2,9 @@
 
 project_handler::project_handler()
 {
-
-}
-
-project_handler::~project_handler ()
-{
-
+  m_conn.connect_to (m_tickets.ticket_deleted,
+                     [this] (ticket_id id)
+  {this->m_columns.notify_ticket_deleted (id);});
 }
 
 ticket_container &project_handler::tickets ()

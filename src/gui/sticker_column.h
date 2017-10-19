@@ -4,9 +4,10 @@
 #include <QLabel>
 #include "frame_border_handler.h"
 #include "kernel/ticket_typedefs.h"
+#include "sig/sigslots.h"
 
 class sticker_column_internal;
-class sticker_add_button;
+class sticker_button;
 class ticket_container;
 class columns_handler;
 class column_display_proxy_abstract;
@@ -16,7 +17,10 @@ class sticker_column : public QLabel
 private:
   frame_border_handler m_borders;
   sticker_column_internal *m_internal;
-  sticker_add_button *m_add_button;
+  sticker_button *m_add_button;
+
+
+  sig::connector m_conn;
 public:
   sticker_column (ticket_container &tickets, columns_handler &columns, column_id id, QWidget *parent = nullptr);
   ~sticker_column ();
@@ -30,11 +34,19 @@ public:
   void set_model (column_display_proxy_abstract *model);
   void update_view ();
 
+  ticket_container &tickets ();
+  const ticket_container &tickets () const;
+
+  columns_handler &columns ();
+  const columns_handler &columns () const;
+
+  sig::signal<ticket_id> transfer_to_next_requested;
 private:
   void init ();
   void create_widgets (ticket_container &tickets, columns_handler &columns, column_id id);
   void set_layout ();
   void make_connections ();
+  void add_ticket ();
 
 
 };

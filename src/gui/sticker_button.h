@@ -1,36 +1,30 @@
-#ifndef STICKER_BUTTON_H
-#define STICKER_BUTTON_H
+#ifndef STICKER_ADD_BUTTON_H
+#define STICKER_ADD_BUTTON_H
 
-#include <QLabel>
-#include <QIcon>
+#include "sticker_icon.h"
+#include "sig/sigslots.h"
 
-#include "frame_border_handler.h"
-
-class QToolButton;
-class QPushButton;
-
-class sticker_button : public QLabel
+class sticker_button : public sticker_icon
 {
 private:
-  frame_border_handler m_borders;
-  QToolButton *m_button;
+  QColor m_saved_color;
+  QPixmap m_saved_pixmap;
+  bool m_cursor_in;
 public:
   sticker_button (QWidget *parent = nullptr);
   ~sticker_button ();
 
-  void set_icon (const QIcon &icon);
-  void set_background_color (const QColor &color);
-
+  void enterEvent (QEvent *event) override;
+  void leaveEvent (QEvent *event) override;
+  void mousePressEvent (QMouseEvent *ev) override;
+  void mouseReleaseEvent (QMouseEvent *ev) override;
   QSize sizeHint () const override;
 
-  frame_border_handler &borders ();
+  sig::signal<> clicked;
 private:
+  void hover_enter_animation ();
+  void hover_leave_animation ();
   void init ();
-  void create_widgets ();
-  void set_layout ();
-  void make_connections ();
-
-
 };
 
 #endif // STICKER_BUTTON_H

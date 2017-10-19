@@ -1,16 +1,9 @@
 #include "main_window.h"
 
-#include <QHBoxLayout>
-#include <QPushButton>
-#include <QFrame>
-#include <QScrollArea>
-#include <QSplitter>
-#include "sticker_widget.h"
-#include  "sticker_column.h"
-#include "common/enum_misc.h"
+#include <QVBoxLayout>
 #include "kernel/project_handler.h"
-#include "column_display_proxy.h"
-#include "common/enum_misc.h"
+#include "sticker_columns_view.h"
+#include "mw_columns_display_std.h"
 
 main_window::main_window (project_handler &zebra, QWidget *parent)
   : QDialog (parent),
@@ -35,21 +28,7 @@ QSize main_window::sizeHint () const
 
 void main_window::update_view ()
 {
-  //THIS IS A VERY BAD FUNCTION
-
-  m_columns.clear ();
-  m_models.clear ();
-
-  auto ids = m_zebra.columns ().all_ids ();
-
-  for (auto id : ids)
-    {
-      m_columns.push_back (new sticker_column (m_zebra.tickets (), m_zebra.columns (), id, this));
-      m_models.emplace_back (m_zebra.columns (), id);
-      m_columns.back ()->set_model (&(m_models.back ()));
-    }
-  set_layout ();
-  updateGeometry ();
+  m_columns_view->update_view ();
 }
 
 void main_window::init ()
@@ -63,34 +42,18 @@ void main_window::init ()
 
 void main_window::create_widgets ()
 {
-
+  m_columns_view = new sticker_columns_view (m_zebra.tickets (), m_zebra.columns (), this);
+  put_in (m_model, m_zebra.columns ());
+  m_columns_view->set_model (m_model.get ());
 }
 
 void main_window::set_layout ()
 {
-  QHBoxLayout *hlo_0 = new QHBoxLayout;
+  QVBoxLayout *vlo_0 = new QVBoxLayout;
   {
-    QSplitter *spl_0 = new QSplitter (this);
-    {
-      spl_0->setLayoutDirection (Qt::LeftToRight);
-      for (int i = 0; i < isize (m_columns); i++)
-        {
-          m_columns[i]->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
-          m_columns[i]->borders ().show_borders (vector_of (frame_border_handler::border ()));
-//          if (i != isize (m_columns) - 1)
-//            m_columns[i]->borders ().hide_borders ({frame_border_handler::border::right});
-//          m_columns[i]->borders ().hide_borders (vector_of (frame_border_handler::border ()));
-          spl_0->addWidget (m_columns[i]);
-          spl_0->setCollapsible (i, false);
-        }
-    }
-    hlo_0->addWidget (spl_0);
+    vlo_0->addWidget (m_columns_view);
   }
-  if (layout ())
-    {
-      delete layout ();
-    }
-  setLayout (hlo_0);
+  setLayout (vlo_0);
 }
 
 void main_window::make_connections()

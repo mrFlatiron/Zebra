@@ -28,9 +28,7 @@ SOURCES += src/main/main.cpp\
     src/gui/frame_border_handler.cpp \
     src/gui/sticker_button.cpp \
     src/gui/sticker_body_expanded.cpp \
-    src/gui/sticker_next_button.cpp \
     src/gui/sticker_column_internal.cpp \
-    src/gui/sticker_add_button.cpp \
     src/gui/sticker_column_scroll.cpp \
     src/gui/sticker_column.cpp \
     src/kernel/ticket_object.cpp \
@@ -42,8 +40,13 @@ SOURCES += src/main/main.cpp\
     src/kernel/columns_handler.cpp \
     src/kernel/hashtag_parser.cpp \
     src/kernel/column_info.cpp \
-    src/gui/sticker_display_proxy.cpp \
-    src/gui/column_display_proxy.cpp
+#    src/gui/sticker_display_proxy.cpp \
+    src/gui/column_display_proxy.cpp \
+    src/lazy/widget_visibility_updater.cpp \
+    src/gui/mw_columns_display_proxy_abstract.cpp \
+    src/gui/mw_columns_display_std.cpp \
+#    src/gui/helper_modules/widgets_container.cpp \
+    src/containers/special/indexed_emplacer.cpp
 #    src/kernel/ticket_ptr.cpp
 
 HEADERS  += src/gui/main_window.h \
@@ -63,9 +66,7 @@ HEADERS  += src/gui/main_window.h \
     src/gui/frame_border_handler.h \
     src/gui/sticker_button.h \
     src/gui/sticker_body_expanded.h \
-    src/gui/sticker_next_button.h \
     src/gui/sticker_column_internal.h \
-    src/gui/sticker_add_button.h \
     src/gui/sticker_column_scroll.h \
     src/gui/sticker_column.h \
     src/kernel/ticket_object.h \
@@ -84,7 +85,13 @@ HEADERS  += src/gui/main_window.h \
     src/gui/column_display_proxy.h \
     src/kernel/ticket_ptr.h \
     src/kernel/ticket_ptr_generic.h \
-    src/gui/column_display_proxy_abstract.h
+    src/gui/column_display_proxy_abstract.h \
+    src/lazy/widget_visibility_updater.h \
+    src/common/typesafe_id.h \
+    src/gui/mw_columns_display_proxy_abstract.h \
+    src/gui/mw_columns_display_std.h \
+#    src/gui/helper_modules/widgets_container.h \
+    src/containers/special/indexed_emplacer.h
 
 INCLUDEPATH += src
 

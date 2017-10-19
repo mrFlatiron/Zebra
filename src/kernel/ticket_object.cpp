@@ -11,6 +11,11 @@ ticket_object::~ticket_object ()
     ticket_deleted ();
 }
 
+void ticket_object::set_id (ticket_id id)
+{
+  m_id = id;
+}
+
 void ticket_object::set_title (const QString &str)
 {
   m_title = str;
@@ -33,6 +38,11 @@ void ticket_object::set_priority (ticket_priority p)
 {
   m_priority = p;
   data_changed ();
+}
+
+ticket_id ticket_object::id () const
+{
+  return m_id;
 }
 
 QString ticket_object::title () const

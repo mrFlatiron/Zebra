@@ -5,6 +5,7 @@
 #include "sig/sigslots.h"
 #include "kernel/ticket_ptr.h"
 
+
 class sticker_colorline;
 class sticker_icon;
 class sticker_body_collapsed;
@@ -12,6 +13,8 @@ class sticker_body_expanded;
 class frame_border_handler;
 class QGridLayout;
 class QVBoxLayout;
+
+class widget_visibility_updater;
 
 class sticker_widget : public QWidget
 {
@@ -23,6 +26,7 @@ private:
   sticker_body_collapsed *m_body_collapsed;
   sticker_body_expanded *m_body_expanded;
 
+  std::unique_ptr<widget_visibility_updater> m_visibility_updater;
 
   ticket_ptr m_ticket;
   bool m_is_expanded;
@@ -39,15 +43,16 @@ public:
 
   sig::signal<> body_expanded;
   sig::signal<> body_collapsed;
+  sig::signal<> next_button_clicked;
 
   void resize_body ();
-
   void set_ticket (ticket_ptr ticket);
   void update_view ();
 private:
   void create_widgets ();
   void set_layout ();
   void make_connections ();
+  void set_dirty ();
 };
 
 #endif // STICKER_WIDGET_H

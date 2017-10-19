@@ -6,7 +6,6 @@ class hashtag_parser
 {
 public:
   hashtag_parser ();
-  ~hashtag_parser ();
 };
 
 #endif // HASHTAG_PARSER_H

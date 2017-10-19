@@ -37,9 +37,7 @@ void sticker_body_expanded::set_ticket (ticket_ptr ticket)
 
 void sticker_body_expanded::update_view ()
 {
-  m_title_lbl->setText (m_ticket.get ()->title ());
   m_title->setText (m_ticket.get ()->title ());
-  m_desc_lbl->setText (m_ticket.get ()->description ());
   m_desc->setText (m_ticket.get ()->description ());
 }
 

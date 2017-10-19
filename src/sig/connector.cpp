@@ -21,7 +21,7 @@ namespace sig
 
   connector::connector (connector &&c)
   {
-    c.disconnect_all ();
+
   }
 
   connector &connector::operator =(const connector &)
@@ -35,7 +35,7 @@ namespace sig
     return *this;
   }
 
-  void connector::remove_signal (signal_base *ptr)
+  void connector::remove_signal (signal_base *ptr) const
   {
     auto it = m_signals.find (ptr);
 

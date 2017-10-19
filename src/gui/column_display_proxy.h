@@ -5,19 +5,19 @@
 
 class ticket_container;
 class columns_handler;
+class column_info;
 
 class column_display_proxy : public column_display_proxy_abstract
 {
 private:
-  column_id m_id;
-  const columns_handler &m_columns;
+  column_info &m_column;
+
+  sig::connector m_conn;
 public:
-  column_display_proxy (const columns_handler &columns, column_id id);
-  ~column_display_proxy ();
+  column_display_proxy (column_info &column);
 
-  std::vector<column_id> get_shown_indices ();
+  std::vector<ticket_id> get_shown_indices ();
 
-  void set_col_id (column_id id);
   column_id col_id () const;
 };
 

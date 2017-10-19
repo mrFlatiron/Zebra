@@ -1,4 +1,4 @@
-#include "sticker_next_button.h"
+#include "sticker_button.h"
 #include <QEvent>
 #include <common/enum_misc.h>
 
@@ -45,10 +45,8 @@ void sticker_next_button::mousePressEvent (QMouseEvent *ev)
 void sticker_next_button::mouseReleaseEvent(QMouseEvent *ev)
 {
   (void)ev;
-//  m_borders.hide_borders (vector_of (frame_border_handler::border ()));
   m_border_handler.set_shadow (QFrame::Plain);
   set_icon (m_saved_pixmap);
-//  m_border_handler.set_width (2, 2);
 }
 
 QSize sticker_next_button::sizeHint () const

@@ -34,10 +34,8 @@ void sticker_add_button::leaveEvent (QEvent *event)
 void sticker_add_button::mousePressEvent (QMouseEvent *ev)
 {
   (void)ev;
-//  m_borders.show_borders (vector_of (frame_border_handler::border ()));
   m_saved_pixmap = m_pixmap;
   set_icon (m_pixmap.scaled (QSize (40, 40)));
-//  m_border_handler.set_width (1, 0);
   m_border_handler.set_shadow (QFrame::Sunken);
 
 }
@@ -45,10 +43,9 @@ void sticker_add_button::mousePressEvent (QMouseEvent *ev)
 void sticker_add_button::mouseReleaseEvent(QMouseEvent *ev)
 {
   (void)ev;
-//  m_borders.hide_borders (vector_of (frame_border_handler::border ()));
   m_border_handler.set_shadow (QFrame::Plain);
   set_icon (m_saved_pixmap);
-//  m_border_handler.set_width (2, 2);
+  clicked ();
 }
 
 QSize sticker_add_button::sizeHint () const

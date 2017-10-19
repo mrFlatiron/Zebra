@@ -1,7 +1,8 @@
-#ifndef STICKER_ADD_BUTTON_H
-#define STICKER_ADD_BUTTON_H
+#ifndef STICKER_BUTTON_H
+#define STICKER_BUTTON_H
 
 #include "sticker_icon.h"
+#include "sig/sigslots.h"
 
 class sticker_add_button : public sticker_icon
 {
@@ -18,10 +19,12 @@ public:
   void mousePressEvent (QMouseEvent *ev) override;
   void mouseReleaseEvent (QMouseEvent *ev) override;
   QSize sizeHint () const override;
+
+  sig::signal<> clicked;
 private:
   void hover_enter_animation ();
   void hover_leave_animation ();
   void init ();
 };
 
-#endif // STICKER_ADD_BUTTON_H
+#endif // STICKER_BUTTON_H

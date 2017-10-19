@@ -4,8 +4,3 @@ hashtag_parser::hashtag_parser ()
 {
 
 }
-
-hashtag_parser::~hashtag_parser ()
-{
-
-}

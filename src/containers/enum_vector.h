@@ -19,11 +19,6 @@ public:
       }
   }
 
-  ~enum_vector ()
-  {
-
-  }
-
   T &operator[] (Enum e)
   {
     return m_data[enum_cast<size_t> (e)];

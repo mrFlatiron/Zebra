@@ -14,7 +14,6 @@ private:
   unsigned int m_pos;
 public:
   enum_helper (Enum init) { m_pos = static_cast<unsigned int> (init); }
-  ~enum_helper () {}
 
   enum_helper<Enum> &operator++ ()                      { m_pos++; return *this; }
   bool operator == (const enum_helper<Enum> &rhs) const { return m_pos == rhs.m_pos; }

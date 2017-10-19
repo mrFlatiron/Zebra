@@ -11,7 +11,6 @@ class enum_bitset : private std::bitset<static_cast<size_t> (Enum::COUNT)>
   using base = std::bitset<static_cast<size_t> (Enum::COUNT)>;
   public:
   enum_bitset () {}
-  ~enum_bitset () {}
 
   bool operator[] (Enum e) const {return base::operator[] (enum_cast<size_t> (e)); }
   using base::all;

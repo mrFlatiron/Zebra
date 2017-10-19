@@ -19,10 +19,10 @@ namespace sig
 
   signal_base::signal_base (signal_base &&s)
   {
-    s.disconnect_all ();
+
   }
 
-  bool signal_base::add_connect (connector *conn)
+  bool signal_base::add_connect (const connector *conn) const
   {
     if (std::find (m_connectors.begin (), m_connectors.end (), conn) ==
         m_connectors.end ())
@@ -36,7 +36,7 @@ namespace sig
       }
   }
 
-  void signal_base::remove_connect (connector *conn)
+  void signal_base::remove_connect (connector *conn) const
   {
     auto it = std::find (m_connectors.begin (), m_connectors.end (), conn);
     if (it == m_connectors.end ())
