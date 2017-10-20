@@ -39,21 +39,21 @@ void sticker_columns_view::set_model (mw_columns_display_proxy_abstract *model)
 
 void sticker_columns_view::update_view ()
 {
-  m_columns_widgets.clear ();
-  m_models.clear ();
-
   if (!m_model)
     return;
 
-  auto ids = m_model->get_shown_indices ();
 
+  m_columns_widgets.set_new_ids (m_model->get_shown_indices ());
+  m_models.set_new_ids (m_model->get_shown_indices ());
+
+  auto ids = m_columns_widgets.values_that_need_construction ();
   for (auto id : ids)
     {
-      m_columns_widgets.emplace_back (new sticker_column (tickets (), columns (), id));
-      m_models.emplace_back (new column_display_proxy (columns ().column (id)));
-      m_columns_widgets.back ()->set_model (m_models.back ().get ());
+      m_columns_widgets.emplace (id, tickets (), columns (), id);
+      m_models.emplace (id, columns ().column (id));
+      m_columns_widgets[id]->set_model (m_models[id]);
 
-      m_conn.connect_to (m_columns_widgets.back ()->transfer_to_next_requested,
+      m_conn.connect_to (m_columns_widgets[id]->transfer_to_next_requested,
                          [this, id] (ticket_id tid) {this->transfer_to_next_column (tid, id);});
     }
   set_layout ();
@@ -87,12 +87,15 @@ void sticker_columns_view::set_layout ()
     QSplitter *spl_0 = new QSplitter (this);
     {
       spl_0->setLayoutDirection (Qt::LeftToRight);
-      for (int i = 0; i < isize (m_columns_widgets); i++)
+
+      int i = 0;
+      for (auto w : m_columns_widgets.values ())
         {
-          m_columns_widgets[i]->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
-          m_columns_widgets[i]->borders ().show_borders (vector_of (frame_border_handler::border ()));
-          spl_0->addWidget (m_columns_widgets[i].get ());
+          w->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
+          w->borders ().show_borders (vector_of (frame_border_handler::border ()));
+          spl_0->addWidget (w);
           spl_0->setCollapsible (i, false);
+          i++;
         }
     }
     hlo_0->addWidget (spl_0);

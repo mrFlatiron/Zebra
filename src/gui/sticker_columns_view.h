@@ -5,6 +5,7 @@
 #include "sig/sigslots.h"
 #include "kernel/ticket_typedefs.h"
 #include <QLabel>
+#include "containers/special/indexed_emplacer.h"
 
 class mw_columns_display_proxy_abstract;
 class column_display_proxy;
@@ -20,8 +21,8 @@ private:
   ticket_container &m_tickets;
   columns_handler &m_columns;
 
-  std::vector<std::unique_ptr<sticker_column>> m_columns_widgets;
-  std::vector<std::unique_ptr<column_display_proxy>> m_models;
+  indexed_emplacer<column_id, sticker_column> m_columns_widgets;
+  indexed_emplacer<column_id, column_display_proxy> m_models;
 
   mw_columns_display_proxy_abstract *m_model = nullptr;
 
