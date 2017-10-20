@@ -52,8 +52,12 @@ void sticker_body_expanded::create_widgets ()
 {
   m_title_lbl = new QLabel ("Title", this);
   m_title =     new QTextEdit ("Real title", this);
+  style_settings::set_edits_background_color (m_title, common_colors::peach);
+  m_title->setFrameShape (QFrame::NoFrame);
   m_desc_lbl =  new QLabel ("Description", this);
   m_desc =      new QTextEdit ("Real #description", this);
+  style_settings::set_edits_background_color (m_desc, common_colors::peach);
+  m_desc->setFrameShape (QFrame::NoFrame);
 }
 
 void sticker_body_expanded::set_layout ()

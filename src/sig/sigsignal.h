@@ -60,9 +60,11 @@ namespace sig
     template<typename... SignalArgs>
     void operator () (SignalArgs &&... args) const
     {
-      for (auto c : m_connectors)
+      auto conn_copy = m_connectors;
+      for (auto c : conn_copy)
         {
-          auto &vec = m_slots.at (c);
+          auto vec = m_slots.at (c);
+          int size = isize (vec);
           for (auto &f : vec)
             {
               f (std::forward<SignalArgs> (args)...);

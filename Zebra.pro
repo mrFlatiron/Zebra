@@ -40,14 +40,11 @@ SOURCES += src/main/main.cpp\
     src/kernel/columns_handler.cpp \
     src/kernel/hashtag_parser.cpp \
     src/kernel/column_info.cpp \
-#    src/gui/sticker_display_proxy.cpp \
     src/gui/column_display_proxy.cpp \
     src/lazy/widget_visibility_updater.cpp \
     src/gui/mw_columns_display_proxy_abstract.cpp \
     src/gui/mw_columns_display_std.cpp \
-#    src/gui/helper_modules/widgets_container.cpp \
     src/containers/special/indexed_emplacer.cpp
-#    src/kernel/ticket_ptr.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -90,7 +87,6 @@ HEADERS  += src/gui/main_window.h \
     src/common/typesafe_id.h \
     src/gui/mw_columns_display_proxy_abstract.h \
     src/gui/mw_columns_display_std.h \
-#    src/gui/helper_modules/widgets_container.h \
     src/containers/special/indexed_emplacer.h
 
 INCLUDEPATH += src

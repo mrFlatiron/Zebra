@@ -82,6 +82,13 @@ void style_settings::set_background_color (QWidget *widget, const QColor &color)
   widget->setPalette (pal);
 }
 
+void style_settings::set_edits_background_color (QWidget *widget, const QColor &color)
+{
+  QPalette pal = widget->palette ();
+  pal.setBrush (QPalette::Base, QBrush (color));
+  widget->setPalette (pal);
+}
+
 void style_settings::set_background_color (QWidget *widget, common_colors color)
 {
   set_background_color (widget, get_color (color));
@@ -103,4 +110,9 @@ style_settings::common_icons style_settings::type_to_icon (ticket_type p)
       DEBUG_PAUSE ("Shouldn't happen");
     }
   return common_icons::COUNT;
+}
+
+void style_settings::set_edits_background_color(QWidget *widget, common_colors color)
+{
+  set_edits_background_color (widget, get_color (color));
 }

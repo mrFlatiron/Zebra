@@ -57,5 +57,7 @@ namespace style_settings
 
   void set_background_color (QWidget *widget, const QColor &color);
   void set_background_color (QWidget *widget, common_colors color);
+  void set_edits_background_color (QWidget *widget, const QColor &color);
+  void set_edits_background_color (QWidget *widget, common_colors color);
 }
 #endif // STYLE_UTILS_H
