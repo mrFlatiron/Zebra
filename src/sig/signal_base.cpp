@@ -1,6 +1,5 @@
 #include "signal_base.h"
 #include "connector.h"
-
 namespace sig
 {
   signal_base::signal_base ()
@@ -19,31 +18,39 @@ namespace sig
 
   signal_base::signal_base (signal_base &&s)
   {
-
+    s.disconnect_all ();
   }
 
-  bool signal_base::add_connect (const connector *conn) const
+ int signal_base::add_connect (const connector *conn) const
   {
-    if (std::find (m_connectors.begin (), m_connectors.end (), conn) ==
-        m_connectors.end ())
-      {
+   int pos = 0;
+   int size = isize (m_connectors);
+   for (; pos < size; pos++)
+     if (m_connectors[pos] == conn)
+       break;
+
+   if (pos == size)
         m_connectors.push_back (conn);
-        return true;
-      }
-    else
-      {
-        return false;
-      }
-  }
 
-  void signal_base::remove_connect (connector *conn) const
+   return pos;
+ }
+
+  int signal_base::remove_connect (connector *conn) const
   {
-    auto it = std::find (m_connectors.begin (), m_connectors.end (), conn);
-    if (it == m_connectors.end ())
+    int pos = 0;
+    int size = isize (m_connectors);
+    for (; pos < size; pos++)
+      if (m_connectors[pos] == conn)
+        break;
+
+    if (pos == size)
       {
         DEBUG_PAUSE ("No such connector. Check your code");
       }
-    m_connectors.erase (it);
+    else
+      m_connectors.erase (m_connectors.begin () + pos);
+
+    return pos;
   }
 
   void signal_base::disconnect_all ()

@@ -21,7 +21,7 @@ namespace sig
 
   connector::connector (connector &&c)
   {
-
+    c.disconnect_all ();
   }
 
   connector &connector::operator =(const connector &)

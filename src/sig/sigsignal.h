@@ -10,7 +10,7 @@ namespace sig
   class signal : public signal_base
   {
   private:
-    mutable std::unordered_map<const connector *, std::vector<std::function<void (Args...)>>> m_slots;
+    mutable std::vector<std::vector<std::function<void (Args...)>>> m_slots;
   public:
     signal () {}
     ~signal () {}
@@ -40,31 +40,37 @@ namespace sig
 
     void add_slot (const connector *c, std::function<void (Args &&...)> slot) const
     {
-      bool res = signal_base::add_connect (c);
-      if (res)
+      int pos = signal_base::add_connect (c);
+      if (pos == isize (m_slots))
         {
-          m_slots.insert ({c, {slot}});
+          m_slots.push_back ({slot});
         }
       else
         {
-          (*m_slots.find (c)).second.push_back (slot);
+          m_slots[pos].push_back (slot);
         }
     }
 
-    void remove_connect (connector *conn) const
+    int remove_connect (connector *conn) const
     {
-      signal_base::remove_connect (conn);
-      m_slots.erase (m_slots.find (conn));
+      int pos = signal_base::remove_connect (conn);
+      if (pos == isize (m_slots))
+        {
+          DEBUG_PAUSE ("Shouldn't happen");
+        }
+      m_slots.erase (m_slots.begin () + pos);
+      return pos;
     }
 
     template<typename... SignalArgs>
     void operator () (SignalArgs &&... args) const
     {
-      auto conn_copy = m_connectors;
-      for (auto c : conn_copy)
+      //TODO: check for disconnection
+      int size_conn = isize (m_connectors);
+      auto copy_slots = m_slots;
+      for (auto i = 0; i < size_conn; i++)
         {
-          auto vec = m_slots.at (c);
-          int size = isize (vec);
+          auto vec = copy_slots[i];
           for (auto &f : vec)
             {
               f (std::forward<SignalArgs> (args)...);

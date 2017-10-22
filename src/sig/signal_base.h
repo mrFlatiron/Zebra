@@ -17,9 +17,9 @@ namespace sig
     signal_base (const signal_base &);
     signal_base (signal_base &&);
 
-    bool add_connect (const connector * conn) const;
+    int add_connect (const connector * conn) const;
 
-    virtual void remove_connect (connector *conn) const;
+    virtual int remove_connect(connector *conn) const;
   private:
     void disconnect_all ();
   };
