@@ -19,6 +19,8 @@ namespace sig
 
     int add_connect (const connector * conn) const;
 
+    int add_pos (const connector *conn) const;
+
     virtual int remove_connect(connector *conn) const;
   private:
     void disconnect_all ();

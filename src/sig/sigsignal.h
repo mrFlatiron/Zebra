@@ -7,10 +7,28 @@ namespace sig
 {
 
   template<typename... Args>
+  struct deferred_info
+  {
+    std::vector<const connector *> conns_to_add;
+    std::vector<std::vector<std::function<void (Args...)>>> slots_to_add;
+    std::vector<size_t> deleted_slots;
+
+    void invalidate ()
+    {
+      conns_to_add.clear ();
+      slots_to_add.clear ();
+      deleted_slots.clear ();
+    }
+  };
+
+  template<typename... Args>
   class signal : public signal_base
   {
   private:
     mutable std::vector<std::vector<std::function<void (Args...)>>> m_slots;
+    mutable bool m_is_emitting = false;
+    mutable std::vector<int> m_count_to_execute;
+    mutable deferred_info m_deferred;
   public:
     signal () {}
     ~signal () {}
@@ -40,14 +58,24 @@ namespace sig
 
     void add_slot (const connector *c, std::function<void (Args &&...)> slot) const
     {
-      int pos = signal_base::add_connect (c);
-      if (pos == isize (m_slots))
+
+      if (!m_is_emitting)
         {
-          m_slots.push_back ({slot});
+          int pos = signal_base::add_pos (c);
+          if (pos == isize (m_slots))
+            {
+              m_slots.push_back ({slot});
+              m_count_to_execute.push_back (1);
+            }
+          else
+            {
+              m_slots[pos].push_back (slot);
+              m_count_to_execute[pos]++;
+            }
         }
       else
         {
-          m_slots[pos].push_back (slot);
+
         }
     }
 

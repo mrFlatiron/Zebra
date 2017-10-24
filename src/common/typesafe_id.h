@@ -12,7 +12,7 @@ private:
 public:
   typesafe_id_generic () : m_id () {}
 
-  self operator++ (int) {m_id++; return *this;}
+  self operator++ (int) {self temp = *this; m_id++; return temp;}
   self operator++ ()    {++m_id; return *this;}
   explicit operator index_t () const {return static_cast<index_t> (m_id);}
   bool operator == (self rhs) const {return m_id == rhs.m_id;}

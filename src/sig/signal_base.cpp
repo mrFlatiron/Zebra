@@ -23,14 +23,22 @@ namespace sig
 
  int signal_base::add_connect (const connector *conn) const
   {
+   int pos = add_pos (conn);
+
+   if (pos == size)
+     m_connectors.push_back (conn);
+
+   return pos;
+ }
+
+ int signal_base::add_pos (const connector *conn) const
+ {
    int pos = 0;
    int size = isize (m_connectors);
+
    for (; pos < size; pos++)
      if (m_connectors[pos] == conn)
        break;
-
-   if (pos == size)
-        m_connectors.push_back (conn);
 
    return pos;
  }
