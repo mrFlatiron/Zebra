@@ -6,7 +6,7 @@ class indexed_emplacer
 {
 private:
   std::unordered_map<index_t, std::unique_ptr<T>> m_vals;
-  std::unordered_set<index_t> m_old_ids;
+//  std::unordered_set<index_t> m_old_ids;
   std::vector<index_t> m_cur_ids;
 public:
   indexed_emplacer () {};
@@ -14,24 +14,24 @@ public:
 
   void set_new_ids (const std::vector<index_t> &new_ids)
   {
-    for (auto id : m_cur_ids)
-      m_old_ids.insert (id);
+//    for (auto id : m_cur_ids)
+//      m_old_ids.insert (id);
 
     m_cur_ids = new_ids;
 
-    auto remove_condition = [this] (auto &it) -> bool
-    {
-        return std::find (m_cur_ids.begin (), m_cur_ids.end (), it->first) == m_cur_ids.end ();
-    };
+//    auto remove_condition = [this] (auto &it) -> bool
+//    {
+//        return std::find (m_cur_ids.begin (), m_cur_ids.end (), it->first) == m_cur_ids.end ();
+//    };
 
-    auto it = m_vals.begin ();
-    while (it != m_vals.end ())
-    {
-      if (remove_condition (it))
-        it = m_vals.erase (it);
-      else
-        it++;
-    }
+//    auto it = m_vals.begin ();
+//    while (it != m_vals.end ())
+//    {
+//      if (remove_condition (it))
+//        it = m_vals.erase (it);
+//      else
+//        it++;
+//    }
 
   }
 
@@ -40,8 +40,14 @@ public:
     std::vector<index_t> retval;
     for (auto id : m_cur_ids)
       {
-        if (m_old_ids.find (id) == m_old_ids.end ())
+        auto it = m_vals.find (id);
+        if (it == m_vals.end ())
           retval.push_back (id);
+        else
+          {
+            if (!it->second)
+              retval.push_back (id);
+          }
       }
     return retval;
   }
@@ -52,12 +58,31 @@ public:
     m_vals[id].reset (new T (std::forward<Args> (args)...));
   }
 
+
+
   std::vector<T *> values () const
   {
     std::vector<T *> retval;
     for (auto id : m_cur_ids)
       {
         retval.push_back (m_vals.at (id).get ());
+      }
+    return retval;
+  }
+
+  std::vector<T *> unused_values () const
+  {
+    std::vector<T *> retval;
+
+    auto condition = [this] (auto &p) -> bool
+    {
+        return std::find (m_cur_ids.begin (), m_cur_ids.end (), p.first) == m_cur_ids.end ();
+      };
+
+    for (auto &p : m_vals)
+      {
+        if (condition (p))
+          retval.push_back (p.second.get ());
       }
     return retval;
   }

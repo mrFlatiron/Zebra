@@ -55,8 +55,6 @@ private:
   void create_widgets ();
   void set_layout ();
   void make_connections ();
-private slots:
-  void reset_layout ();
 };
 
 #endif // STICKER_COLUMN_INTERNAL_H

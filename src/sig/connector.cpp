@@ -35,13 +35,14 @@ namespace sig
     return *this;
   }
 
-  void connector::remove_signal (signal_base *ptr) const
+  void connector::remove_signal (const signal_base *ptr) const
   {
     auto it = m_signals.find (ptr);
 
     if (it == m_signals.end ())
       {
         DEBUG_PAUSE ("No signal found");
+        return;
       }
 
     m_signals.erase (ptr);

@@ -8,6 +8,9 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QDrag>
+#include <QMouseEvent>
+#include <QMimeData>
 
 sticker_body_collapsed::sticker_body_collapsed (QWidget *parent)
   : QFrame (parent)

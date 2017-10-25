@@ -23,10 +23,10 @@ namespace sig
     connector &operator = (const connector &);
     connector &operator =(connector &&c);
 
-    void remove_signal (signal_base *ptr) const;
+    void remove_signal (const signal_base *ptr) const;
 
     template<typename Func, typename... Args>
-    void connect_to (const signal<Args...> &s, Func f) const
+    void connect_to (const signal<Args...> &s, Func f)
     {
       auto s_ptr = &s;
       if (m_signals.find (s_ptr) == m_signals.end ())

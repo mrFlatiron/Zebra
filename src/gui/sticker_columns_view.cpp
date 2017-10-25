@@ -91,11 +91,16 @@ void sticker_columns_view::set_layout ()
       int i = 0;
       for (auto w : m_columns_widgets.values ())
         {
+          w->show ();
           w->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
           w->borders ().show_borders (vector_of (frame_border_handler::border ()));
           spl_0->addWidget (w);
           spl_0->setCollapsible (i, false);
           i++;
+        }
+      for (auto w : m_columns_widgets.unused_values ())
+        {
+          w->hide ();
         }
     }
     hlo_0->addWidget (spl_0);

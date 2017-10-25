@@ -64,8 +64,8 @@ void sticker_column_internal::update_view ()
       m_stickers.emplace (id);
       m_stickers[id]->set_ticket (m_tickets.ticket (id));
       m_stickers[id]->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-      m_conn.connect_to (m_stickers[id]->body_expanded, [this] () {this->reset_layout ();});
-      m_conn.connect_to (m_stickers[id]->body_collapsed, [this] () {this->reset_layout ();});
+      m_conn.connect_to (m_stickers[id]->body_expanded, [this] () {this->updateGeometry ();});
+      m_conn.connect_to (m_stickers[id]->body_collapsed, [this] () {this->updateGeometry ();});
       m_conn.connect_to (m_stickers[id]->next_button_clicked, [this, id] ()
       {this->transfer_to_next_requested (id);});
     }
@@ -122,7 +122,12 @@ void sticker_column_internal::set_layout ()
     vlo_0->setSpacing (0);
     for (auto w : m_stickers.values ())
       {
+        w->show ();
         vlo_0->addWidget (w);
+      }
+    for (auto w : m_stickers.unused_values ())
+      {
+        w->hide ();
       }
     vlo_0->addStretch ();
   }
@@ -132,14 +137,11 @@ void sticker_column_internal::set_layout ()
       delete layout ();
     }
   setLayout (vlo_0);
+
+
 }
 
 void sticker_column_internal::make_connections ()
 {
 
-}
-
-void sticker_column_internal::reset_layout ()
-{
-  updateGeometry ();
 }
