@@ -76,6 +76,11 @@ const columns_handler &sticker_column::columns () const
   return m_internal->columns ();
 }
 
+void sticker_column::set_is_last (bool val)
+{
+  m_internal->set_is_last (val);
+}
+
 void sticker_column::init ()
 {
   m_borders.set_parent (this);
@@ -124,6 +129,10 @@ void sticker_column::make_connections ()
   m_conn.connect_to (m_add_button->clicked, [this] () {this->add_ticket ();});
   m_conn.connect_to (m_internal->transfer_to_next_requested, [this] (ticket_id tid)
   {this->transfer_to_next_requested (tid);});
+  m_conn.connect_to (m_internal->deletion_requested, [this] (ticket_id tid)
+  {
+    this->deletion_requested (tid);
+  });
 }
 
 void sticker_column::add_ticket ()

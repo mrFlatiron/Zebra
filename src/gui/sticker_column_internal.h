@@ -28,6 +28,7 @@ private:
   ticket_container &m_tickets;
   column_display_proxy_abstract *m_proxy_model = nullptr;
 
+  bool m_is_last = false;
 
   sig::connector m_conn;
 public:
@@ -49,7 +50,10 @@ public:
   ticket_container &tickets ();
   const ticket_container &tickets () const;
 
+  void set_is_last (bool val);
+
   sig::signal<ticket_id> transfer_to_next_requested;
+  sig::signal<ticket_id> deletion_requested;
 private:
   void init ();
   void create_widgets ();

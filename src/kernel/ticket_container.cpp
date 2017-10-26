@@ -53,5 +53,5 @@ void ticket_container::erase (ticket_id id)
     }
   m_tickets.erase (it);
 
-  ticket_deleted (std::move (id));
+  ticket_deleted (id);
 }

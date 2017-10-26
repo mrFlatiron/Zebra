@@ -31,6 +31,7 @@ private:
   ticket_ptr m_ticket;
   bool m_is_expanded;
 
+
   QVBoxLayout *m_main_layout;
 
   sig::connector m_conn;
@@ -48,6 +49,9 @@ public:
   void resize_body ();
   void set_ticket (ticket_ptr ticket);
   void update_view ();
+
+  void set_next_is_deletion (bool val);
+  bool next_is_deletion () const;
 private:
   void create_widgets ();
   void set_layout ();

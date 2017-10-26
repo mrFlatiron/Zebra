@@ -96,6 +96,11 @@ public:
   {
     return m_cur_ids.size ();
   }
+
+  const std::vector<index_t> &current_indices_ref ()
+  {
+    return m_cur_ids;
+  }
 };
 
 #endif // INDEXED_EMPLACER_H

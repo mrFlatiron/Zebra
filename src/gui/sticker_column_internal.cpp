@@ -67,7 +67,13 @@ void sticker_column_internal::update_view ()
       m_conn.connect_to (m_stickers[id]->body_expanded, [this] () {this->updateGeometry ();});
       m_conn.connect_to (m_stickers[id]->body_collapsed, [this] () {this->updateGeometry ();});
       m_conn.connect_to (m_stickers[id]->next_button_clicked, [this, id] ()
-      {this->transfer_to_next_requested (id);});
+      {
+          if (m_stickers[id]->next_is_deletion ())
+            this->deletion_requested (id);
+          else
+            this->transfer_to_next_requested (id);
+        });
+      m_stickers[id]->set_next_is_deletion (m_is_last);
     }
   set_layout ();
   updateGeometry ();
@@ -103,6 +109,13 @@ ticket_container &sticker_column_internal::tickets ()
 const ticket_container &sticker_column_internal::tickets () const
 {
   return m_tickets;
+}
+
+void sticker_column_internal::set_is_last (bool val)
+{
+  m_is_last = val;
+  for (auto w : m_stickers.values ())
+    w->set_next_is_deletion (val);
 }
 
 void sticker_column_internal::init ()

@@ -36,7 +36,10 @@ void sticker_button::mousePressEvent (QMouseEvent *ev)
   (void)ev;
 //  m_borders.show_borders (vector_of (frame_border_handler::border ()));
   m_saved_pixmap = m_pixmap;
-  set_icon (m_pixmap.scaled (QSize (40, 40)));
+  QSize init_size = m_pixmap.size ();
+  QSize scaled_size = QSize (static_cast<double> (init_size.width ()) * 0.8,
+                             static_cast<double> (init_size.height ()) * 0.8);
+  set_icon (m_pixmap.scaled (scaled_size));
 //  m_border_handler.set_width (1, 0);
   m_border_handler.set_shadow (QFrame::Sunken);
 

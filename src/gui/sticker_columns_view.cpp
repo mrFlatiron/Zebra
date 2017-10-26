@@ -55,6 +55,12 @@ void sticker_columns_view::update_view ()
 
       m_conn.connect_to (m_columns_widgets[id]->transfer_to_next_requested,
                          [this, id] (ticket_id tid) {this->transfer_to_next_column (tid, id);});
+      m_conn.connect_to (m_columns_widgets[id]->deletion_requested,
+                         [this] (ticket_id tid) {this->delete_ticket (tid);});
+      if (id == m_columns_widgets.current_indices_ref ().back ())
+        m_columns_widgets[id]->set_is_last (true);
+      else
+        m_columns_widgets[id]->set_is_last (false);
     }
   set_layout ();
   updateGeometry ();
@@ -131,4 +137,9 @@ void sticker_columns_view::transfer_to_next_column (ticket_id tid, column_id fro
           m_columns.transfer_ticket (tid, from, ids[i + 1]);
         }
     }
+}
+
+void sticker_columns_view::delete_ticket (ticket_id tid)
+{
+  m_tickets.erase (tid);
 }

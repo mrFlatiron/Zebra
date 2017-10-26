@@ -40,7 +40,10 @@ public:
   columns_handler &columns ();
   const columns_handler &columns () const;
 
+  void set_is_last (bool val);
+
   sig::signal<ticket_id> transfer_to_next_requested;
+  sig::signal<ticket_id> deletion_requested;
 private:
   void init ();
   void create_widgets (ticket_container &tickets, columns_handler &columns, column_id id);

@@ -67,7 +67,10 @@ void sticker_widget::set_ticket (ticket_ptr ticket)
   m_body_expanded->set_ticket (ticket);
 
   if (m_ticket.is_valid ())
-    m_conn.connect_to (m_ticket.get ()->data_changed, [this] () {this->set_dirty ();});
+    {
+      m_conn.connect_to (m_ticket.get ()->data_changed, [this] () {this->set_dirty ();});
+      m_conn.connect_to (m_ticket.get ()->ticket_deleted, [this] () {this->set_dirty ();});
+    }
 
   update_view ();
 }
@@ -76,14 +79,23 @@ void sticker_widget::update_view ()
 {
   if (!m_ticket.is_valid ())
     {
-      DEBUG_PAUSE ("Check");
-      //TODO: do something here
+      this->hide ();
       return;
     }
   m_colorline->set_color (m_ticket.get ()->priority ());
   m_icon->set_icon (m_ticket.get ()->type ());
   m_body_expanded->update_view ();
   m_body_collapsed->update_view ();
+}
+
+void sticker_widget::set_next_is_deletion (bool val)
+{
+  m_body_collapsed->set_next_is_deletion (val);
+}
+
+bool sticker_widget::next_is_deletion () const
+{
+  return m_body_collapsed->next_is_deletion ();
 }
 
 void sticker_widget::create_widgets ()

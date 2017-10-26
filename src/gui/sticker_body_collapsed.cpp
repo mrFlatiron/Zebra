@@ -53,9 +53,25 @@ void sticker_body_collapsed::set_ticket (ticket_ptr ticket)
   update_view ();
 }
 
+void sticker_body_collapsed::set_next_is_deletion (bool val)
+{
+  m_next_is_deletion = val;
+  update_view ();
+}
+
+bool sticker_body_collapsed::next_is_deletion () const
+{
+  return m_next_is_deletion;
+}
+
 void sticker_body_collapsed::update_view ()
 {
   m_title->setText (m_ticket.get ()->title ());
+  if (!m_next_is_deletion)
+    m_next_button->set_icon (style_settings::common_icons::r_arrow);
+  else
+    m_next_button->set_icon (style_settings::common_icons::trash);
+  update ();
 }
 
 void sticker_body_collapsed::init ()

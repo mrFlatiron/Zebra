@@ -19,6 +19,8 @@ private:
 
   ticket_ptr m_ticket;
 
+  bool m_next_is_deletion = true; //arrow or trash bin
+
   sig::connector m_conn;
 public:
   sticker_body_collapsed (QWidget *parent = nullptr);
@@ -32,6 +34,9 @@ public:
   void mouseDoubleClickEvent (QMouseEvent *event) override;
 
   void set_ticket (ticket_ptr ticket);
+  void set_next_is_deletion (bool val);
+  bool next_is_deletion () const;
+
   void update_view ();
   sig::signal<> double_clicked;
   sig::signal<> next_button_clicked;
