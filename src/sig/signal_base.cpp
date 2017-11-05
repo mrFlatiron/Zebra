@@ -36,7 +36,7 @@ namespace sig
     auto it = m_connectors.find (conn);
     if (it == m_connectors.end ())
       {
-        DEBUG_PAUSE ("No such connector");
+        return;
       }
 
     m_connectors.erase (it);

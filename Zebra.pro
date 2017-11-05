@@ -87,7 +87,9 @@ HEADERS  += src/gui/main_window.h \
     src/common/typesafe_id.h \
     src/gui/mw_columns_display_proxy_abstract.h \
     src/gui/mw_columns_display_std.h \
-    src/containers/special/indexed_emplacer.h
+    src/containers/special/indexed_emplacer.h \
+    src/common/cow/cow_control_block.h \
+    src/sig/signal_deferred.h
 
 INCLUDEPATH += src
 

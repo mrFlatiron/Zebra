@@ -21,7 +21,7 @@ namespace sig
 
 
     virtual void remove_connect (connector *conn) const;
-  private:
+  protected:
     void disconnect_all ();
   };
 
