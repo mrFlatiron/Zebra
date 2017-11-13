@@ -88,9 +88,17 @@ HEADERS  += src/gui/main_window.h \
     src/gui/mw_columns_display_proxy_abstract.h \
     src/gui/mw_columns_display_std.h \
     src/containers/special/indexed_emplacer.h \
-    src/common/cow/cow_control_block.h \
-    src/sig/signal_deferred.h
+#    src/common/cow/cow_control_block.h \
+    src/sig/signal_deferred.h \
+    src/saveload/enum_sql.h \
+    src/saveload/sql/enum_sql_table.h \
+    src/saveload/sql/enum_sql_index.h \
+    src/saveload/sql/enum_sql.h \
+    src/saveload/sql/enum_sql_driver.h
 
 INCLUDEPATH += src
+INCLUDEPATH += src/libs
 
 DISTFILES +=
+
+LIBS += -Llibs/sqlite3 -lsqlite3

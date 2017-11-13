@@ -82,9 +82,10 @@ namespace sig
     {
       apply_deferred ();
       auto slots_copy = m_slots;
+      auto this_ptr = this;
       for (auto &f : slots_copy)
         {
-          if (m_deferred.get_deferred (this)->is_conn_deleted (f.first))
+          if (m_deferred.get_deferred (this_ptr)->is_conn_deleted (f.first))
             continue;
 
           f.second (std::forward<SignalArgs> (args)...);

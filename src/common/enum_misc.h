@@ -4,7 +4,7 @@
 #include "enum_range.h"
 
 template<typename Enum, typename = use_if_enum<Enum>, typename = decltype (enum_to_string (Enum ()))>
-Enum string_to_enum (const char *string)
+Enum string_to_enum (std::string string)
 {
   for (Enum e : enum_range<Enum> ())
     {
