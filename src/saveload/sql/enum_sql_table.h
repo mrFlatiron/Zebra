@@ -2,6 +2,8 @@
 #define ENUM_SQL_TABLE_H
 
 #include "common/enum_misc.h"
+#include "enum_sql_insert_stmt.h"
+#include "enum_sql_select_stmt.h"
 
 enum class sql_insert_policy
 {
@@ -10,6 +12,16 @@ enum class sql_insert_policy
   ignore,
   abort,
   fail,
+  COUNT
+};
+
+enum class sql_data_type
+{
+  INTEGER,
+  REAL,
+  TEXT,
+  BLOB,
+  Null,
   COUNT
 };
 
@@ -34,6 +46,27 @@ std::string enum_to_string (sql_insert_policy e)
   return "";
 }
 
+std::string enum_to_string (sql_data_type t)
+{
+  switch (t)
+    {
+    case sql_data_type::INTEGER:
+      return "INTEGER";
+    case sql_data_type::REAL:
+      return "REAL";
+    case sql_data_type::TEXT:
+      return "TEXT";
+    case sql_data_type::BLOB:
+      return "BLOB";
+    case sql_data_type::Null:
+      return "NULL";
+    case sql_data_type::COUNT:
+      DEBUG_PAUSE("Shouldn't happen");
+      return "";
+    }
+  return "";
+}
+
 template<typename Enum, typename = use_if_enum<Enum>>
 class enum_sql_table
 {
@@ -41,7 +74,7 @@ public:
   enum_sql_table () = default;
   virtual ~enum_sql_table () = default;
 public:
-  virtual std::string column_type (Enum)  const    = 0;
+  virtual sql_data_type column_type (Enum)  const    = 0;
   virtual std::string column_name (Enum)  const    = 0;
   virtual std::string table_name ()       const    = 0;
 
@@ -51,7 +84,7 @@ public:
   virtual bool is_skipped (Enum)          const {return false;}
 
 public:
-  std::string select_stmt (const std::vector<Enum> &cols) const
+  enum_sql_select_stmt select_stmt (const std::vector<Enum> &cols) const
   {
     std::string cols_to_select;
 
@@ -71,10 +104,12 @@ public:
     stmt.append ("FROM ");
     stmt.append (full_table_name ());
 
-    return stmt;
+    enum_sql_select_stmt<Enum> retval (cols);
+    retval.set_stmt (stmt);
+    return retval;
   }
 
-  std::string drop_stmt () const
+  auto_sql_stmt drop_stmt () const
   {
     std::string stmt = "DROP TABLE ";
     stmt.append (full_table_name ());
@@ -82,7 +117,7 @@ public:
     return stmt;
   }
 
-  std::string insert_stmt (const std::vector<Enum> &cols, sql_insert_policy policy) const
+  enum_sql_insert_stmt<Enum> insert_stmt (const std::vector<Enum> &cols, sql_insert_policy policy) const
   {
     std::string stmt = "INSERT OR ";
     stmt.append (enum_to_string (policy));
@@ -110,7 +145,7 @@ public:
     return stmt;
   }
 
-  std::string create_stmt () const
+  auto_sql_stmt create_stmt () const
   {
     std::string stmt = "CREATE TABLE ";
     stmt.append (full_table_name ());
@@ -133,7 +168,7 @@ public:
     stmt.append (")");
     return stmt;
   }
-  std::string set_sync_pragma_stmt (bool is_on) const
+  auto_sql_stmt set_sync_pragma_stmt (bool is_on) const
   {
     std::string stmt = "PRAGMA ";
     stmt.append (schema_name ());
@@ -163,7 +198,7 @@ protected:
     std::string def;
     def.append (column_name (e));
     def.append (" ");
-    def.append (column_type (e));
+    def.append (enum_to_string (column_type (e)));
     if (!table_constr (e).empty ())
       def.append (" ");
     def.append (table_constr (e));
