@@ -11,7 +11,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Zebra
 TEMPLATE = app
 CONFIG += precompile_header
-CONFIG += c++14
 
 RESOURCES += resources/resources.qrc
 
@@ -44,7 +43,9 @@ SOURCES += src/main/main.cpp\
     src/lazy/widget_visibility_updater.cpp \
     src/gui/mw_columns_display_proxy_abstract.cpp \
     src/gui/mw_columns_display_std.cpp \
-    src/containers/special/indexed_emplacer.cpp
+    src/containers/special/indexed_emplacer.cpp \
+    src/common/byte_array_t.cpp \
+    src/common/any_t.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -88,13 +89,8 @@ HEADERS  += src/gui/main_window.h \
     src/gui/mw_columns_display_proxy_abstract.h \
     src/gui/mw_columns_display_std.h \
     src/containers/special/indexed_emplacer.h \
-#    src/common/cow/cow_control_block.h \
     src/sig/signal_deferred.h \
-    src/saveload/enum_sql.h \
-    src/saveload/sql/enum_sql_table.h \
-    src/saveload/sql/enum_sql_index.h \
-    src/saveload/sql/enum_sql.h \
-    src/saveload/sql/enum_sql_driver.h
+    src/kernel/debug_utils.h
 
 INCLUDEPATH += src
 INCLUDEPATH += src/libs
@@ -102,3 +98,5 @@ INCLUDEPATH += src/libs
 DISTFILES +=
 
 LIBS += -Llibs/sqlite3 -lsqlite3
+
+QMAKE_CXXFLAGS = -std=c++17

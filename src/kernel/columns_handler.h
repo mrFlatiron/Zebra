@@ -3,7 +3,6 @@
 
 #include "column_info.h"
 
-
 class columns_handler
 {
 private:

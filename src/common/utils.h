@@ -29,18 +29,23 @@ void put_in (std::unique_ptr<T> &something, Args&&... args)
   something = make_unique<T> (std::forward<Args> (args)...);
 }
 
-namespace utils
+template<typename K, typename V, class C>
+V find_default_kv (const C &container, const K &to_find, V &&default_v)
 {
-  template<typename T>
-  T min (const T &l, const T &r)
-  {
-    if (l < r)
-      return l;
-    if (r < l)
-      return r;
+  auto it = container.find (to_find);
+  if (it == container.end ())
+    return std::forward<V> (default_v);
 
-    return l;
-  }
+  return it->second;
 }
 
+template<typename K, class C>
+K find_default_k (const C &container, const K &to_find, K &&default_k)
+{
+  auto it = container.find (to_find);
+  if (it == container.end ())
+    return std::forward<K> (default_k);
+
+  return *it;
+}
 #endif // UTILS_H

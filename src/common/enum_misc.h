@@ -8,9 +8,10 @@ Enum string_to_enum (std::string string)
 {
   for (Enum e : enum_range<Enum> ())
     {
-      if (!strcmp (enum_to_string (e), string))
+      if (!strcmp (enum_to_string (e).c_str (), string.c_str ()))
         return e;
     }
+  DEBUG_PAUSE ("Failed to find");
   return enum_end (Enum ()); //implement enum_end (Enum) or Enum::COUNT;
 }
 

@@ -5,6 +5,17 @@
 
 #include "sig/sigslots.h"
 
+
+
+enum class column_info_fields
+{
+  column_id,
+  max_entry_id,
+  ticket_ids,
+  name,
+  COUNT
+};
+
 class column_info
 {
 private:
@@ -34,5 +45,7 @@ public:
   sig::signal<ticket_id> ticket_removed_from_column;
   sig::signal<ticket_id> ticket_added_to_column;
 };
+
+std::string enum_to_string (column_info_fields e);
 
 #endif // COLUMN_INFO_H

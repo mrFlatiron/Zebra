@@ -20,4 +20,6 @@
 
 #endif //__GNUC>__
 
+#define DEBUG_ASSERT(assertion) (if (!(assertion)) DEBUG_PAUSE (""););
+#define ASSERT_RETURN(assertion, retval) if (!(assertion)) {DEBUG_PAUSE (""); return retval;}
 #endif // DEBUG_UTILS_H

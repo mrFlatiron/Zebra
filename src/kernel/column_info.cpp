@@ -75,3 +75,23 @@ ticket_col_id column_info::ticket_internal_id (ticket_id id) const
 {
   return m_ticket_ids.at (id);
 }
+
+std::string enum_to_string (column_info_fields e)
+{
+  switch (e)
+    {
+    case column_info_fields::column_id:
+      return "column_id";
+    case column_info_fields::max_entry_id:
+      return "max_entry_id";
+    case column_info_fields::name:
+      return "column_name";
+    case column_info_fields::ticket_ids:
+      return "ticket_ids";
+    case column_info_fields::COUNT:
+      DEBUG_PAUSE ("Shouldn't happen");
+      return "";
+    }
+  return "";
+}
+

@@ -32,13 +32,8 @@ namespace sig
       if (m_signals.find (s_ptr) == m_signals.end ())
         m_signals.insert (static_cast<const signal_base *> (&s));
 
-      s.add_slot (this, std::function<void (Args&&...)> (templ::call_helper<Func> (f)));
+      s.add_slot (this, std::function<void (Args&&...)> (templ::call_helper<Func> (std::move (f))));
     }
-//    template<typename T, typename Func, typename... Args>
-//    void connect_to (signal<Args> &s, binded_func<T, Func> &&f)
-//    {
-
-//    }
   private:
     void disconnect_all ();
   };
