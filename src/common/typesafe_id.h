@@ -12,6 +12,8 @@ private:
 public:
   typesafe_id_generic () : m_id () {}
 
+  explicit typesafe_id_generic (index_t id) : m_id (id) {}
+
   self operator++ (int) {self temp = *this; m_id++; return temp;}
   self operator++ ()    {++m_id; return *this;}
   explicit operator index_t () const {return static_cast<index_t> (m_id);}
@@ -47,6 +49,11 @@ namespace std
 
 #define MAKE_TYPESAFE_ID(NEWIDNAME, base) \
   class NEWIDNAME##_maketypesafeid_internal {}; \
+  using NEWIDNAME = typesafe_id_generic<base, NEWIDNAME##_maketypesafeid_internal>
+
+#define FORWARD_DECL_ID(NEWIDNAME, base) \
+  template<typename, typename> \
+  class NEWIDNAME##_maketypesafeid_internal; \
   using NEWIDNAME = typesafe_id_generic<base, NEWIDNAME##_maketypesafeid_internal>
 
 #endif // TYPESAFE_ID_H

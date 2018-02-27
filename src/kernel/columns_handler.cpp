@@ -1,4 +1,5 @@
 #include "columns_handler.h"
+#include "common/work/work.h"
 
 columns_handler::columns_handler ()
 {
@@ -55,4 +56,11 @@ void columns_handler::transfer_ticket (ticket_id tid, column_id from, column_id 
   m_column_to_tickets[from].remove_ticket (tid);
   m_column_to_tickets[to].add_ticket (tid);
   ticket_transfered (tid, from, to);
+}
+
+bool columns_handler::worker_process (work::xml_worker &worker)
+{
+  work::process (worker, m_max_id, "max_id");
+  work::process (worker, m_column_to_tickets, "column_to_tickets");
+  return worker.is_ok ();
 }

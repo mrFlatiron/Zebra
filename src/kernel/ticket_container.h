@@ -5,6 +5,7 @@
 
 class ticket_ptr;
 class const_ticket_ptr;
+namespace work {class xml_worker;}
 
 
 class ticket_container
@@ -24,6 +25,8 @@ public:
   std::vector<ticket_id> all_ids () const;
 
   void erase (ticket_id id);
+
+  bool worker_process (work::xml_worker &worker);
 
   sig::signal<ticket_id> ticket_deleted;
   sig::signal<ticket_id> ticket_added;

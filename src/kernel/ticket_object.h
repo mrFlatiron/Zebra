@@ -3,6 +3,12 @@
 
 #include "sig/sigslots.h"
 #include "ticket_typedefs.h"
+//namespace work {class xml_worker;}
+
+namespace work
+{
+  class xml_worker;
+}
 
 class ticket_object
 {
@@ -27,6 +33,8 @@ public:
   QString description () const;
   ticket_type type () const;
   ticket_priority priority () const;
+
+  bool worker_process (work::xml_worker &worker);
 
   sig::signal<> data_changed;
   sig::signal<> ticket_deleted;

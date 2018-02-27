@@ -24,4 +24,40 @@ enum class ticket_type
   COUNT
 };
 
+static inline std::string enum_to_string (ticket_priority p)
+{
+  switch (p)
+    {
+    case ticket_priority::low:
+      return "low";
+    case ticket_priority::mid:
+      return "mid";
+    case ticket_priority::high:
+      return "high";
+    case ticket_priority::COUNT:
+      ASSERT_RETURN (false, "");
+    }
+
+  ASSERT_RETURN (false, "");
+}
+
+static inline std::string enum_to_string (ticket_type t)
+{
+  switch (t)
+    {
+    case ticket_type::feature:
+      return "feature";
+    case ticket_type::bug:
+      return "bug";
+    case ticket_type::question:
+      return "question";
+    case ticket_type::regular:
+      return "regular";
+    case ticket_type::COUNT:
+      ASSERT_RETURN (false, "");
+    }
+
+  ASSERT_RETURN (false , "");
+}
+
 #endif // TICKET_TYPEDEFS_H

@@ -8,6 +8,7 @@ class QWidget;
 
 enum class common_colors
 {
+  white,
   peach,
   cream,
   mint,

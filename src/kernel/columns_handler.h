@@ -3,6 +3,8 @@
 
 #include "column_info.h"
 
+namespace work {class xml_worker;}
+
 class columns_handler
 {
 private:
@@ -24,6 +26,8 @@ public:
   void transfer_ticket (ticket_id tid, column_id from, column_id to);
 
   sig::signal<ticket_id, column_id/*from*/, column_id/*to*/> ticket_transfered;
+
+  bool worker_process (work::xml_worker &worker);
 };
 
 #endif // COLUMNS_HANDLER_H

@@ -1,4 +1,5 @@
 #include "column_info.h"
+#include "common/work/work.h"
 
 column_info::column_info ()
 {
@@ -74,6 +75,16 @@ bool column_info::try_remove_ticket (ticket_id tid)
 ticket_col_id column_info::ticket_internal_id (ticket_id id) const
 {
   return m_ticket_ids.at (id);
+}
+
+bool column_info::worker_process (work::xml_worker &worker)
+{
+  work::process (worker, m_id, "id");
+  work::process (worker, m_max_entry_id, "max_entry_id");
+  work::process (worker, m_ticket_ids, "ticket_ids");
+  work::process (worker, m_name, "name");
+
+  return worker.is_ok ();
 }
 
 std::string enum_to_string (column_info_fields e)

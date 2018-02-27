@@ -50,6 +50,7 @@ void sticker_body_collapsed::mouseDoubleClickEvent (QMouseEvent *event)
 void sticker_body_collapsed::set_ticket (ticket_ptr ticket)
 {
   m_ticket = ticket;
+  m_conn.connect_to (m_ticket.get ()->data_changed, [this] {this->update_view ();});
   update_view ();
 }
 
@@ -117,6 +118,7 @@ void sticker_body_collapsed::set_layout ()
 void sticker_body_collapsed::make_connections ()
 {
   m_conn.connect_to (m_next_button->clicked, [this] () {this->next_button_clicked ();});
+
 }
 
 QString sticker_body_collapsed::hash_styled (const QString &str)

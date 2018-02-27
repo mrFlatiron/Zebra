@@ -6,6 +6,7 @@
 #include "sig/sigslots.h"
 
 
+namespace work {class xml_worker;}
 
 enum class column_info_fields
 {
@@ -44,6 +45,8 @@ public:
 
   sig::signal<ticket_id> ticket_removed_from_column;
   sig::signal<ticket_id> ticket_added_to_column;
+
+  bool worker_process (work::xml_worker &worker);
 };
 
 std::string enum_to_string (column_info_fields e);

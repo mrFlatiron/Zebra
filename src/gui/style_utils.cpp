@@ -49,6 +49,8 @@ QColor style_settings::get_color (common_colors color)
 {
   switch (color)
     {
+    case common_colors::white:
+      return QColor (255, 255, 255);
     case common_colors::peach:
       return QColor (248, 203, 173);
     case common_colors::cream:

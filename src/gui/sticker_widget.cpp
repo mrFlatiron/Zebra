@@ -142,6 +142,7 @@ void sticker_widget::set_layout ()
 
 void sticker_widget::make_connections ()
 {
+  m_conn.connect_to (m_body_expanded->apply_clicked, [this] {this->resize_body ();});
   m_conn.connect_to (m_body_collapsed->double_clicked, [this] () {this->resize_body ();});
   m_conn.connect_to (m_body_collapsed->next_button_clicked, [this] () {this->next_button_clicked ();});
 

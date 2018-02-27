@@ -1,6 +1,8 @@
 #include "ticket_container.h"
 #include "ticket_ptr.h"
 
+#include "common/work/work.h"
+
 ticket_container::ticket_container ()
 {
 
@@ -54,4 +56,11 @@ void ticket_container::erase (ticket_id id)
   m_tickets.erase (it);
 
   ticket_deleted (id);
+}
+
+bool ticket_container::worker_process (work::xml_worker &worker)
+{
+  work::process (worker, m_max_id, "max_id");
+  work::process (worker, m_tickets, "tickets");
+  return worker.is_ok ();
 }

@@ -4,6 +4,8 @@
 #include <QLabel>
 #include <QTextEdit>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QPushButton>
 
 sticker_body_expanded::sticker_body_expanded (QWidget *parent)
   : QFrame (parent)
@@ -50,14 +52,16 @@ void sticker_body_expanded::init ()
 
 void sticker_body_expanded::create_widgets ()
 {
-  m_title_lbl = new QLabel ("Title", this);
-  m_title =     new QTextEdit ("Real title", this);
-  style_settings::set_edits_background_color (m_title, common_colors::peach);
+  m_title_lbl = new QLabel ("Title");
+  m_title =     new QTextEdit ("Real title");
+  style_settings::set_edits_background_color (m_title, common_colors::white);
   m_title->setFrameShape (QFrame::NoFrame);
-  m_desc_lbl =  new QLabel ("Description", this);
-  m_desc =      new QTextEdit ("Real #description", this);
-  style_settings::set_edits_background_color (m_desc, common_colors::peach);
+  m_desc_lbl =  new QLabel ("Description");
+  m_desc =      new QTextEdit ("Real #description");
+  style_settings::set_edits_background_color (m_desc, common_colors::white);
   m_desc->setFrameShape (QFrame::NoFrame);
+
+  m_apply_pb = new QPushButton ("Apply");
 }
 
 void sticker_body_expanded::set_layout ()
@@ -70,11 +74,25 @@ void sticker_body_expanded::set_layout ()
     vlo_0->addWidget (m_desc_lbl, 1, Qt::AlignLeft);
     vlo_0->addWidget (m_desc, 4);
     m_desc->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Preferred);
+
+    QHBoxLayout *hlo_1 = new QHBoxLayout;
+    {
+      hlo_1->addStretch ();
+      hlo_1->addWidget (m_apply_pb);
+    }
+    vlo_0->addLayout (hlo_1);
   }
   setLayout (vlo_0);
 }
 
 void sticker_body_expanded::make_connections ()
 {
+  connect (m_apply_pb, SIGNAL (clicked ()), this, SLOT (on_apply ()));
+}
 
+void sticker_body_expanded::on_apply ()
+{
+  m_ticket.get ()->set_title (m_title->toPlainText ());
+  m_ticket.get ()->set_description (m_desc->toPlainText ());
+  apply_clicked ();
 }

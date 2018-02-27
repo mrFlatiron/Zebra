@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2017-09-16T19:09:06
-#
-#-------------------------------------------------
-
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -11,6 +5,22 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = Zebra
 TEMPLATE = app
 CONFIG += precompile_header
+
+CONFIG -= c++11
+CONFIG -= app_bundle
+
+QMAKE_CXXFLAGS = `xml2-config --cflags`
+QMAKE_CXXFLAGS += -std=c++17 -Wall
+QMAKE_CXXFLAGS_DEBUG += -DDEBUG
+
+QMAKE_LIBDIR = /usr/local/lib64
+
+QMAKE_CXX = /usr/local/bin/g++
+QMAKE_LINK = /usr/local/bin/g++
+
+LIBS = `xml2-config --libs`
+LIBS += -lpthread
+LIBS += -Llibs/sqlite3 -lsqlite3
 
 RESOURCES += resources/resources.qrc
 
@@ -44,8 +54,6 @@ SOURCES += src/main/main.cpp\
     src/gui/mw_columns_display_proxy_abstract.cpp \
     src/gui/mw_columns_display_std.cpp \
     src/containers/special/indexed_emplacer.cpp \
-    src/common/byte_array_t.cpp \
-    src/common/any_t.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -90,13 +98,19 @@ HEADERS  += src/gui/main_window.h \
     src/gui/mw_columns_display_std.h \
     src/containers/special/indexed_emplacer.h \
     src/sig/signal_deferred.h \
-    src/kernel/debug_utils.h
+    src/kernel/debug_utils.h \
+    src/common/work/internal/enum_helper.h \
+    src/common/work/internal/enum_misc.h \
+    src/common/work/internal/enum_range.h \
+    src/common/work/internal/template_utils.h \
+    src/common/work/std_containers_impls.h \
+    src/common/work/work.h \
+    src/common/work/workers.h \
+    src/common/work/xml_worker.h \
+    src/common/work/worker_process_impls.h
 
 INCLUDEPATH += src
 INCLUDEPATH += src/libs
 
 DISTFILES +=
 
-LIBS += -Llibs/sqlite3 -lsqlite3
-
-QMAKE_CXXFLAGS = -std=c++17

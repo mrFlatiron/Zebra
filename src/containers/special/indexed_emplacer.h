@@ -6,7 +6,6 @@ class indexed_emplacer
 {
 private:
   std::unordered_map<index_t, std::unique_ptr<T>> m_vals;
-//  std::unordered_set<index_t> m_old_ids;
   std::vector<index_t> m_cur_ids;
 public:
   indexed_emplacer () {};
@@ -14,25 +13,7 @@ public:
 
   void set_new_ids (const std::vector<index_t> &new_ids)
   {
-//    for (auto id : m_cur_ids)
-//      m_old_ids.insert (id);
-
     m_cur_ids = new_ids;
-
-//    auto remove_condition = [this] (auto &it) -> bool
-//    {
-//        return std::find (m_cur_ids.begin (), m_cur_ids.end (), it->first) == m_cur_ids.end ();
-//    };
-
-//    auto it = m_vals.begin ();
-//    while (it != m_vals.end ())
-//    {
-//      if (remove_condition (it))
-//        it = m_vals.erase (it);
-//      else
-//        it++;
-//    }
-
   }
 
   std::vector<index_t> values_that_need_construction () const
