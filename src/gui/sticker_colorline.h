@@ -5,10 +5,11 @@
 #include <QColor>
 
 #include "frame_border_handler.h"
+#include "sig/sigsignal.h"
 
 enum class ticket_priority;
 
-namespace style_settings
+namespace style_utils
 {
   QColor priority_to_color (ticket_priority type);
 }
@@ -31,6 +32,10 @@ public:
   QSize minimumSizeHint () const override;
 
   frame_border_handler &borders ();
+
+  void mouseReleaseEvent (QMouseEvent *ev) override;
+
+  sig::signal<> right_clicked;
 };
 
 #endif // STICKER_COLORLINE_H

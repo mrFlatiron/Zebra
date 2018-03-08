@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "sig/sigslots.h"
 #include "kernel/ticket_ptr.h"
+#include "containers/enum_vector.h"
 
 
 class sticker_colorline;
@@ -13,16 +14,23 @@ class sticker_body_expanded;
 class frame_border_handler;
 class QGridLayout;
 class QVBoxLayout;
+class QMenu;
+class QAction;
 
 class widget_visibility_updater;
 
 class sticker_widget : public QWidget
 {
+  Q_OBJECT
 private:
   using fbh = frame_border_handler;
 
   sticker_colorline *m_colorline;
   sticker_icon *m_icon;
+  QMenu *m_ticket_type_menu;
+  QMenu *m_priority_menu;
+  enum_vector<ticket_type, QAction *> m_ticket_type_actions;
+  enum_vector<ticket_priority, QAction *> m_priority_actions;
   sticker_body_collapsed *m_body_collapsed;
   sticker_body_expanded *m_body_expanded;
 
@@ -45,6 +53,7 @@ public:
   sig::signal<> body_expanded;
   sig::signal<> body_collapsed;
   sig::signal<> next_button_clicked;
+  sig::signal<> prev_button_clicked;
 
   void resize_body ();
   void set_ticket (ticket_ptr ticket);
@@ -52,11 +61,16 @@ public:
 
   void set_next_is_deletion (bool val);
   bool next_is_deletion () const;
+
+  void set_prev_button_disabled (bool val = true);
+  bool is_prev_button_disabled () const;
 private:
   void create_widgets ();
   void set_layout ();
   void make_connections ();
   void set_dirty ();
+  Q_SLOT void change_icon_via_menu (QAction *action);
+  Q_SLOT void change_colorline_via_menu (QAction *action);
 };
 
 #endif // STICKER_WIDGET_H

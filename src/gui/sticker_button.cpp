@@ -60,6 +60,9 @@ QSize sticker_button::sizeHint () const
 
 void sticker_button::hover_enter_animation ()
 {
+  if (!isEnabled ())
+    return;
+
   m_saved_color = m_background_color;
   set_background_color (QColor (m_background_color.red ()   / 2,
                                 m_background_color.green () / 2,
@@ -68,6 +71,9 @@ void sticker_button::hover_enter_animation ()
 
 void sticker_button::hover_leave_animation ()
 {
+  if (!isEnabled ())
+    return;
+
   set_background_color (m_saved_color);
 }
 

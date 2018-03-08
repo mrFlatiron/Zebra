@@ -8,8 +8,8 @@ private:
   std::unordered_map<index_t, std::unique_ptr<T>> m_vals;
   std::vector<index_t> m_cur_ids;
 public:
-  indexed_emplacer () {};
-  ~indexed_emplacer () {};
+  indexed_emplacer () = default;
+  ~indexed_emplacer () = default;
 
   void set_new_ids (const std::vector<index_t> &new_ids)
   {

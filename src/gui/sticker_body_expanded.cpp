@@ -47,18 +47,18 @@ void sticker_body_expanded::init ()
 {
   m_borders.set_parent (this);
   setAutoFillBackground (true);
-  style_settings::set_background_color (this, common_colors::peach);
+  style_utils::set_background_color (this, common_colors::peach);
 }
 
 void sticker_body_expanded::create_widgets ()
 {
   m_title_lbl = new QLabel ("Title");
   m_title =     new QTextEdit ("Real title");
-  style_settings::set_edits_background_color (m_title, common_colors::white);
+  style_utils::set_edits_background_color (m_title, common_colors::white);
   m_title->setFrameShape (QFrame::NoFrame);
   m_desc_lbl =  new QLabel ("Description");
   m_desc =      new QTextEdit ("Real #description");
-  style_settings::set_edits_background_color (m_desc, common_colors::white);
+  style_utils::set_edits_background_color (m_desc, common_colors::white);
   m_desc->setFrameShape (QFrame::NoFrame);
 
   m_apply_pb = new QPushButton ("Apply");

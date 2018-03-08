@@ -3,7 +3,7 @@
 
 #include "kernel/ticket_typedefs.h"
 
-QString style_settings::get_styled_string (const QString &src, styled_string obj)
+QString style_utils::get_styled_string (const QString &src, styled_string obj)
 {
   switch (obj)
     {
@@ -19,7 +19,7 @@ QString style_settings::get_styled_string (const QString &src, styled_string obj
   return "";
 }
 
-QString style_settings::get_icon_path (style_settings::common_icons type)
+QString style_utils::get_icon_path (style_utils::common_icons type)
 {
   switch (type)
     {
@@ -35,6 +35,8 @@ QString style_settings::get_icon_path (style_settings::common_icons type)
       return ":/icons/question_mark_32.png";
     case common_icons::r_arrow:
       return ":/icons/r_arrow.png";
+    case common_icons::l_arrow:
+      return ":/icons/l_arrow.png";
     case common_icons::trash:
       return ":/icons/trash.png";
     case common_icons::plus:
@@ -45,7 +47,7 @@ QString style_settings::get_icon_path (style_settings::common_icons type)
   return "";
 }
 
-QColor style_settings::get_color (common_colors color)
+QColor style_utils::get_color (common_colors color)
 {
   switch (color)
     {
@@ -77,26 +79,26 @@ QColor style_settings::get_color (common_colors color)
   return QColor ();
 }
 
-void style_settings::set_background_color (QWidget *widget, const QColor &color)
+void style_utils::set_background_color (QWidget *widget, const QColor &color)
 {
   QPalette pal = widget->palette ();
   pal.setBrush (widget->backgroundRole (), QBrush (color));
   widget->setPalette (pal);
 }
 
-void style_settings::set_edits_background_color (QWidget *widget, const QColor &color)
+void style_utils::set_edits_background_color (QWidget *widget, const QColor &color)
 {
   QPalette pal = widget->palette ();
   pal.setBrush (QPalette::Base, QBrush (color));
   widget->setPalette (pal);
 }
 
-void style_settings::set_background_color (QWidget *widget, common_colors color)
+void style_utils::set_background_color (QWidget *widget, common_colors color)
 {
   set_background_color (widget, get_color (color));
 }
 
-style_settings::common_icons style_settings::type_to_icon (ticket_type p)
+style_utils::common_icons style_utils::type_to_icon (ticket_type p)
 {
   switch (p)
     {
@@ -114,7 +116,7 @@ style_settings::common_icons style_settings::type_to_icon (ticket_type p)
   return common_icons::COUNT;
 }
 
-void style_settings::set_edits_background_color(QWidget *widget, common_colors color)
+void style_utils::set_edits_background_color(QWidget *widget, common_colors color)
 {
   set_edits_background_color (widget, get_color (color));
 }

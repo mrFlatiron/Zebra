@@ -23,7 +23,7 @@ public:
   ~main_window ();
   QSize sizeHint () const override;
 
-  void update_view (); //THIS IS A VERY BAD FUNCTION
+  void update_view ();
 
 private:
   void init ();

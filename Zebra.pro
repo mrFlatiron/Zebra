@@ -38,7 +38,6 @@ SOURCES += src/main/main.cpp\
     src/gui/sticker_button.cpp \
     src/gui/sticker_body_expanded.cpp \
     src/gui/sticker_column_internal.cpp \
-    src/gui/sticker_column_scroll.cpp \
     src/gui/sticker_column.cpp \
     src/kernel/ticket_object.cpp \
     src/kernel/ticket_container.cpp \
@@ -73,7 +72,6 @@ HEADERS  += src/gui/main_window.h \
     src/gui/sticker_button.h \
     src/gui/sticker_body_expanded.h \
     src/gui/sticker_column_internal.h \
-    src/gui/sticker_column_scroll.h \
     src/gui/sticker_column.h \
     src/kernel/ticket_object.h \
     src/kernel/ticket_container.h \
@@ -107,7 +105,8 @@ HEADERS  += src/gui/main_window.h \
     src/common/work/work.h \
     src/common/work/workers.h \
     src/common/work/xml_worker.h \
-    src/common/work/worker_process_impls.h
+    src/common/work/worker_process_impls.h \
+    src/gui/utils/frame_borders.h
 
 INCLUDEPATH += src
 INCLUDEPATH += src/libs

@@ -29,6 +29,7 @@ private:
   column_display_proxy_abstract *m_proxy_model = nullptr;
 
   bool m_is_last = false;
+  bool m_is_first = false;
 
   sig::connector m_conn;
 public:
@@ -50,9 +51,11 @@ public:
   ticket_container &tickets ();
   const ticket_container &tickets () const;
 
-  void set_is_last (bool val);
+  void set_is_last (bool val = true);
+  void set_is_first (bool val = true);
 
   sig::signal<ticket_id> transfer_to_next_requested;
+  sig::signal<ticket_id> transfer_to_prev_requested;
   sig::signal<ticket_id> deletion_requested;
 private:
   void init ();

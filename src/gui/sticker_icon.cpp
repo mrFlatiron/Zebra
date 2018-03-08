@@ -3,6 +3,7 @@
 #include "style_utils.h"
 
 #include <QLabel>
+#include <QMouseEvent>
 
 sticker_icon::sticker_icon (QWidget *parent)
   : QLabel (parent)
@@ -20,7 +21,7 @@ void sticker_icon::init ()
   setAutoFillBackground (true);
   m_border_handler.set_parent (this);
   m_background_color = QColor (Qt::white);
-  set_icon (style_settings::common_icons::clipboard);
+  set_icon (style_utils::common_icons::clipboard);
 }
 
 void sticker_icon::apply ()
@@ -45,14 +46,14 @@ void sticker_icon::set_icon (const QPixmap &icon)
   apply ();
 }
 
-void sticker_icon::set_icon (style_settings::common_icons type)
+void sticker_icon::set_icon (style_utils::common_icons type)
 {
-  set_icon (style_settings::get_icon_path (type));
+  set_icon (style_utils::get_icon_path (type));
 }
 
 void sticker_icon::set_icon (ticket_type t)
 {
-  set_icon (style_settings::type_to_icon (t));
+  set_icon (style_utils::type_to_icon (t));
 }
 
 void sticker_icon::set_background_color(const QColor &color)
@@ -63,7 +64,7 @@ void sticker_icon::set_background_color(const QColor &color)
 
 QSize sticker_icon::sizeHint() const
 {
-  return QSize (60, style_settings::collapsed_height);
+  return QSize (60, style_utils::collapsed_height);
 }
 
 QSize sticker_icon::minimumSizeHint () const
@@ -74,6 +75,14 @@ QSize sticker_icon::minimumSizeHint () const
 frame_border_handler &sticker_icon::borders ()
 {
   return m_border_handler;
+}
+
+void sticker_icon::mouseReleaseEvent (QMouseEvent *ev)
+{
+  if (ev->button () != Qt::RightButton)
+    return;
+
+  right_clicked ();
 }
 
 

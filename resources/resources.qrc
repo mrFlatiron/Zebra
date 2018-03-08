@@ -17,5 +17,6 @@
         <file>clipboard_32.png</file>
         <file>lamp_32.png</file>
         <file>question_mark_32.png</file>
+        <file>l_arrow.png</file>
     </qresource>
 </RCC>

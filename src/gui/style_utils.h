@@ -25,7 +25,7 @@ enum class common_colors
 enum class ticket_priority;
 enum class ticket_type;
 
-namespace style_settings
+namespace style_utils
 {
   const int collapsed_height = 80;
 
@@ -43,6 +43,7 @@ namespace style_settings
     clipboard,
     question_mark,
     r_arrow,
+    l_arrow,
     trash,
     check_mark,
     plus,

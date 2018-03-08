@@ -73,7 +73,12 @@ void sticker_column_internal::update_view ()
           else
             this->transfer_to_next_requested (id);
         });
+      m_conn.connect_to (m_stickers[id]->prev_button_clicked, [this, id] ()
+      {
+          this->transfer_to_prev_requested (id);
+        });
       m_stickers[id]->set_next_is_deletion (m_is_last);
+      m_stickers[id]->set_prev_button_disabled (m_is_first);
     }
   set_layout ();
   updateGeometry ();
@@ -116,6 +121,13 @@ void sticker_column_internal::set_is_last (bool val)
   m_is_last = val;
   for (auto w : m_stickers.values ())
     w->set_next_is_deletion (val);
+}
+
+void sticker_column_internal::set_is_first (bool val)
+{
+  m_is_first = val;
+  for (auto w : m_stickers.values ())
+    w->set_prev_button_disabled (val);
 }
 
 void sticker_column_internal::init ()

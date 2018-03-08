@@ -46,6 +46,7 @@ private:
   void set_layout ();
   void make_connections ();
   void transfer_to_next_column (ticket_id tid, column_id from);
+  void transfer_to_prev_column (ticket_id tid, column_id from);
   void delete_ticket (ticket_id tid);
 };
 

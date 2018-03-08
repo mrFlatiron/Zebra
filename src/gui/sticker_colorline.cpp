@@ -2,6 +2,8 @@
 #include "kernel/ticket_object.h"
 #include "style_utils.h"
 
+#include <QMouseEvent>
+
 sticker_colorline::sticker_colorline (QWidget *parent)
   : QFrame (parent)
 {
@@ -30,12 +32,12 @@ void sticker_colorline::set_color (const QColor &color)
 
 void sticker_colorline::set_color (ticket_priority type)
 {
-  set_color (style_settings::priority_to_color (type));
+  set_color (style_utils::priority_to_color (type));
 }
 
 QSize sticker_colorline::sizeHint () const
 {
-  return QSize (15, style_settings::collapsed_height);
+  return QSize (15, style_utils::collapsed_height);
 }
 
 QSize sticker_colorline::minimumSizeHint () const
@@ -48,16 +50,24 @@ frame_border_handler &sticker_colorline::borders ()
   return m_borders;
 }
 
-QColor style_settings::priority_to_color (ticket_priority type)
+void sticker_colorline::mouseReleaseEvent (QMouseEvent *ev)
+{
+  if (ev->button () != Qt::RightButton)
+    return;
+
+  right_clicked ();
+}
+
+QColor style_utils::priority_to_color (ticket_priority type)
 {
   switch (type)
     {
     case ticket_priority::low:
-      return style_settings::get_color (common_colors::green);
+      return style_utils::get_color (common_colors::green);
     case ticket_priority::mid:
-      return style_settings::get_color (common_colors::yellow);
+      return style_utils::get_color (common_colors::yellow);
     case ticket_priority::high:
-      return style_settings::get_color (common_colors::red);
+      return style_utils::get_color (common_colors::red);
     case ticket_priority::COUNT:
       DEBUG_PAUSE ("Shouldn't happen");
     }

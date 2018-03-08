@@ -5,13 +5,14 @@
 #include <QLabel>
 #include <QColor>
 #include "frame_border_handler.h"
+#include "sig/sigsignal.h"
 
 #include <QToolButton>
 
 enum class ticket_type;
 enum class priority;
 
-namespace style_settings
+namespace style_utils
 {
   QString task_type_to_icon_path (ticket_type type);
 
@@ -32,7 +33,7 @@ public:
 
   void set_icon (const QString &path);
   void set_icon (const QPixmap &icon);
-  void set_icon (style_settings::common_icons type);
+  void set_icon (style_utils::common_icons type);
   void set_icon (ticket_type t);
 
   void set_background_color (const QColor &color);
@@ -42,6 +43,9 @@ public:
 
   frame_border_handler &borders ();
 
+  sig::signal<> right_clicked;
+
+  void mouseReleaseEvent (QMouseEvent *ev) override;
 private:
   void init ();
   void apply ();
