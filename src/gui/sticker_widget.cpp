@@ -9,6 +9,7 @@
 
 
 #include "style_utils.h"
+#include "gui/utils/frame_borders.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -46,16 +47,15 @@ void sticker_widget::resize_body ()
   if (!m_is_expanded)
     {
       m_body_expanded->show ();
-      m_main_layout->addWidget (m_body_expanded);
-      m_body_collapsed->borders ().hide_borders ({fbh::border::bottom});
+      frame_borders::set_visible_borders (m_body_collapsed, {frame_border::left,
+                                          frame_border::top, frame_border::right });
       m_is_expanded = true;
       body_expanded ();
     }
   else
     {
       m_body_expanded->hide ();
-      m_main_layout->removeWidget (m_body_expanded);
-      m_body_collapsed->borders ().show_borders ({fbh::border::bottom});
+      frame_borders::set_visible_borders (m_body_collapsed, vector_of (frame_border ()));
       m_is_expanded = false;
       body_collapsed ();
     }
@@ -74,7 +74,7 @@ void sticker_widget::set_ticket (ticket_ptr ticket)
       m_conn.connect_to (m_ticket.get ()->ticket_deleted, [this] () {this->set_dirty ();});
     }
 
-  update_view ();
+  m_visibility_updater->update ();
 }
 
 void sticker_widget::update_view ()
@@ -134,6 +134,16 @@ void sticker_widget::create_widgets ()
   m_body_collapsed = new sticker_body_collapsed;
   m_body_expanded = new sticker_body_expanded;
 
+  frame_borders::set_shape (m_body_collapsed, QFrame::Box);
+  frame_borders::set_shape (m_body_expanded, QFrame::Box);
+  frame_borders::set_shape (m_icon, QFrame::Box);
+  frame_borders::set_shape (m_colorline, QFrame::Box);
+
+  frame_borders::set_width (m_body_collapsed);
+  frame_borders::set_width (m_body_expanded);
+  frame_borders::set_width (m_icon);
+  frame_borders::set_width (m_colorline);
+
   m_is_expanded = false;
 
   m_visibility_updater->set_widget_and_updater (this, [this] {this->update_view ();});
@@ -142,9 +152,9 @@ void sticker_widget::create_widgets ()
 void sticker_widget::set_layout ()
 {
 
-  m_colorline->borders ().hide_borders      ({fbh::border::right});
-  m_icon->borders ().hide_borders           ({fbh::border::right});
-  m_body_expanded->borders ().hide_borders  ({fbh::border::top});
+  frame_borders::set_invisible_borders (m_colorline, {frame_border::right});
+  frame_borders::set_invisible_borders (m_icon, {frame_border::right});
+  frame_borders::set_invisible_borders (m_body_expanded, {frame_border::top});
   m_body_expanded->hide ();
 
   m_main_layout = new QVBoxLayout;
@@ -159,6 +169,7 @@ void sticker_widget::set_layout ()
 
     }
     m_main_layout->addLayout (hlo_0);
+    m_main_layout->addWidget (m_body_expanded);
     m_main_layout->addStretch ();
 
   }
@@ -168,9 +179,17 @@ void sticker_widget::set_layout ()
 void sticker_widget::make_connections ()
 {
   m_conn.connect_to (m_body_expanded->apply_clicked, [this] {this->resize_body ();});
-  m_conn.connect_to (m_body_collapsed->double_clicked, [this] () {this->resize_body ();});
-  m_conn.connect_to (m_body_collapsed->next_button_clicked, [this] () {this->next_button_clicked ();});
-  m_conn.connect_to (m_body_collapsed->prev_button_clicked, [this] () {this->prev_button_clicked ();});
+  m_conn.connect_to (m_body_collapsed->double_clicked, [this] {this->resize_body ();});
+  m_conn.connect_to (m_body_collapsed->next_button_clicked, [this]
+  {
+      m_body_expanded->apply ();
+      this->next_button_clicked ();
+    });
+  m_conn.connect_to (m_body_collapsed->prev_button_clicked, [this]
+  {
+      m_body_expanded->apply ();
+      this->prev_button_clicked ();
+    });
   m_visibility_updater->set_widget_and_updater (this, [this] () {this->update_view ();});
 
   m_conn.connect_to (m_icon->right_clicked, [this]
@@ -199,6 +218,8 @@ void sticker_widget::change_icon_via_menu (QAction *action)
       if (action == m_ticket_type_actions[e])
         m_ticket.get ()->set_type (e);
     }
+  m_body_expanded->apply ();
+  m_visibility_updater->update ();
 }
 
 void sticker_widget::change_colorline_via_menu (QAction *action)
@@ -208,5 +229,7 @@ void sticker_widget::change_colorline_via_menu (QAction *action)
       if (action == m_priority_actions[e])
         m_ticket.get ()->set_priority (e);
     }
+  m_body_expanded->apply ();
+  m_visibility_updater->update ();
 }
 

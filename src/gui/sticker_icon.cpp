@@ -19,7 +19,7 @@ sticker_icon::~sticker_icon ()
 void sticker_icon::init ()
 {
   setAutoFillBackground (true);
-  m_border_handler.set_parent (this);
+//  m_border_handler.set_parent (this);
   m_background_color = QColor (Qt::white);
   set_icon (style_utils::common_icons::clipboard);
 }
@@ -70,11 +70,6 @@ QSize sticker_icon::sizeHint() const
 QSize sticker_icon::minimumSizeHint () const
 {
   return sizeHint ();
-}
-
-frame_border_handler &sticker_icon::borders ()
-{
-  return m_border_handler;
 }
 
 void sticker_icon::mouseReleaseEvent (QMouseEvent *ev)

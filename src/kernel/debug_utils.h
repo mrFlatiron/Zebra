@@ -4,13 +4,21 @@
 #ifdef __GNUC__
 
   #include <csignal>
-  #define DEBUG_PAUSE(reason) (std::raise (SIGTRAP));
+
+  #ifdef DEBUG
+    #define DEBUG_PAUSE(reason) (std::raise (SIGTRAP));
+  #else
+    #define DEBUG_PAUSE(reason)
+  #endif
 
 #else
 
   #ifdef __WIN32__
-
-    #define DEBUG_PAUSE(reason) (__debugbreak ());
+    #ifdef DEBUG
+      #define DEBUG_PAUSE(reason) (__debugbreak ());
+    #else
+      #define DEBUG_PAUSE(reason)
+    #endif
 
   #else
 

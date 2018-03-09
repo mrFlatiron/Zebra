@@ -31,11 +31,6 @@ sticker_column_internal::~sticker_column_internal ()
 
 }
 
-frame_border_handler &sticker_column_internal::borders ()
-{
-  return m_borders;
-}
-
 QSize sticker_column_internal::sizeHint () const
 {
   return QSize (400, 150);
@@ -132,7 +127,6 @@ void sticker_column_internal::set_is_first (bool val)
 
 void sticker_column_internal::init ()
 {
-  m_borders.set_parent (this);
 }
 
 void sticker_column_internal::create_widgets ()

@@ -6,6 +6,10 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QLineEdit>
+
+#include "sticker_button.h"
+#include "utils/frame_borders.h"
 
 sticker_body_expanded::sticker_body_expanded (QWidget *parent)
   : QFrame (parent)
@@ -21,11 +25,6 @@ sticker_body_expanded::~sticker_body_expanded ()
 
 }
 
-frame_border_handler &sticker_body_expanded::borders ()
-{
-  return m_borders;
-}
-
 QSize sticker_body_expanded::sizeHint() const
 {
   return QSize (500, 300);
@@ -34,7 +33,6 @@ QSize sticker_body_expanded::sizeHint() const
 void sticker_body_expanded::set_ticket (ticket_ptr ticket)
 {
   m_ticket = ticket;
-  update_view ();
 }
 
 void sticker_body_expanded::update_view ()
@@ -45,7 +43,7 @@ void sticker_body_expanded::update_view ()
 
 void sticker_body_expanded::init ()
 {
-  m_borders.set_parent (this);
+//  m_borders.set_parent (this);
   setAutoFillBackground (true);
   style_utils::set_background_color (this, common_colors::peach);
 }
@@ -53,15 +51,23 @@ void sticker_body_expanded::init ()
 void sticker_body_expanded::create_widgets ()
 {
   m_title_lbl = new QLabel ("Title");
-  m_title =     new QTextEdit ("Real title");
+  m_title =     new QLineEdit;
+  m_title->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Minimum);
   style_utils::set_edits_background_color (m_title, common_colors::white);
-  m_title->setFrameShape (QFrame::NoFrame);
+//  m_title->setFrameShape (QFrame::NoFrame);
   m_desc_lbl =  new QLabel ("Description");
-  m_desc =      new QTextEdit ("Real #description");
+  m_desc =      new QTextEdit;
   style_utils::set_edits_background_color (m_desc, common_colors::white);
   m_desc->setFrameShape (QFrame::NoFrame);
 
-  m_apply_pb = new QPushButton ("Apply");
+  m_apply_pb = new sticker_button;
+  m_apply_pb->set_icon (style_utils::common_icons::check_mark);
+  frame_borders::set_shape (m_apply_pb, QFrame::Box);
+  frame_borders::set_width (m_apply_pb);
+  frame_borders::set_visible_borders (m_apply_pb, {});
+  m_apply_pb->set_background_color (style_utils::get_color (common_colors::peach));
+  m_apply_pb->setMaximumHeight (45);
+  m_apply_pb->setMaximumWidth (45);
 }
 
 void sticker_body_expanded::set_layout ()
@@ -87,12 +93,17 @@ void sticker_body_expanded::set_layout ()
 
 void sticker_body_expanded::make_connections ()
 {
-  connect (m_apply_pb, SIGNAL (clicked ()), this, SLOT (on_apply ()));
+  m_conn.connect_to (m_apply_pb->clicked, [this] {this->on_apply_clicked ();});
 }
 
-void sticker_body_expanded::on_apply ()
+void sticker_body_expanded::on_apply_clicked ()
 {
-  m_ticket.get ()->set_title (m_title->toPlainText ());
-  m_ticket.get ()->set_description (m_desc->toPlainText ());
+  apply ();
   apply_clicked ();
+}
+
+void sticker_body_expanded::apply ()
+{
+  m_ticket.get ()->set_title (m_title->text ());
+  m_ticket.get ()->set_description (m_desc->toPlainText ());
 }

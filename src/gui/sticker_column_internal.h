@@ -3,7 +3,6 @@
 
 #include <QLabel>
 #include <QScrollArea>
-#include "frame_border_handler.h"
 #include "kernel/ticket_typedefs.h"
 #include "sig/sigslots.h"
 #include "containers/special/indexed_emplacer.h"
@@ -19,8 +18,6 @@ class sticker_column_internal : public QLabel
 {
   Q_OBJECT
 private:
-  frame_border_handler m_borders;
-
   indexed_emplacer<ticket_id, sticker_widget> m_stickers;
 
   column_id m_col_id;
@@ -37,7 +34,6 @@ public:
   ~sticker_column_internal ();
 
 
-  frame_border_handler &borders ();
   QSize sizeHint () const override;
 
   void set_col_id (column_id id);

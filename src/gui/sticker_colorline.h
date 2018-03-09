@@ -4,7 +4,6 @@
 #include <QFrame>
 #include <QColor>
 
-#include "frame_border_handler.h"
 #include "sig/sigsignal.h"
 
 enum class ticket_priority;
@@ -18,8 +17,6 @@ class sticker_colorline : public QFrame
 {
 private:
   QColor m_color;
-
-  frame_border_handler m_borders;
 public:
   sticker_colorline (QWidget *parent = nullptr);
   ~sticker_colorline ();
@@ -30,8 +27,6 @@ public:
 
   QSize sizeHint () const override;
   QSize minimumSizeHint () const override;
-
-  frame_border_handler &borders ();
 
   void mouseReleaseEvent (QMouseEvent *ev) override;
 

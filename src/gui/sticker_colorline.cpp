@@ -17,7 +17,7 @@ sticker_colorline::~sticker_colorline ()
 
 void sticker_colorline::init ()
 {
-  m_borders.set_parent (this);
+//  m_borders.set_parent (this);
   set_color (ticket_priority::mid);
 }
 
@@ -43,11 +43,6 @@ QSize sticker_colorline::sizeHint () const
 QSize sticker_colorline::minimumSizeHint () const
 {
   return sizeHint ();
-}
-
-frame_border_handler &sticker_colorline::borders ()
-{
-  return m_borders;
 }
 
 void sticker_colorline::mouseReleaseEvent (QMouseEvent *ev)

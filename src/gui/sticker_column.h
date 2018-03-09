@@ -2,7 +2,6 @@
 #define STICKER_COLUMN_H
 
 #include <QLabel>
-#include "frame_border_handler.h"
 #include "kernel/ticket_typedefs.h"
 #include "sig/sigslots.h"
 
@@ -15,7 +14,6 @@ class column_display_proxy_abstract;
 class sticker_column : public QLabel
 {
 private:
-  frame_border_handler m_borders;
   sticker_column_internal *m_internal;
   sticker_button *m_add_button;
 
@@ -25,7 +23,6 @@ public:
   sticker_column (ticket_container &tickets, columns_handler &columns, column_id id, QWidget *parent = nullptr);
   ~sticker_column ();
 
-  frame_border_handler &borders ();
   QSize minimumSizeHint () const;
 
   void set_col_id (column_id id);

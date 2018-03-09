@@ -4,7 +4,6 @@
 #include <QPixmap>
 #include <QLabel>
 #include <QColor>
-#include "frame_border_handler.h"
 #include "sig/sigsignal.h"
 
 #include <QToolButton>
@@ -24,7 +23,6 @@ class sticker_icon : public QLabel
 protected:
   QPixmap m_pixmap;
 
-  frame_border_handler m_border_handler;
   QColor m_background_color;
 public:
   sticker_icon (QWidget *parent = nullptr);
@@ -40,8 +38,6 @@ public:
 
   QSize sizeHint () const override;
   QSize minimumSizeHint () const override;
-
-  frame_border_handler &borders ();
 
   sig::signal<> right_clicked;
 

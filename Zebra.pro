@@ -10,7 +10,7 @@ CONFIG -= c++11
 CONFIG -= app_bundle
 
 QMAKE_CXXFLAGS = `xml2-config --cflags`
-QMAKE_CXXFLAGS += -std=c++17 -Wall
+QMAKE_CXXFLAGS += -std=c++17 -Wall -Wno-class-memaccess
 QMAKE_CXXFLAGS_DEBUG += -DDEBUG
 
 QMAKE_LIBDIR = /usr/local/lib64
@@ -34,7 +34,6 @@ SOURCES += src/main/main.cpp\
     src/gui/sticker_icon.cpp \
     src/gui/sticker_body_collapsed.cpp \
     src/gui/style_utils.cpp \
-    src/gui/frame_border_handler.cpp \
     src/gui/sticker_button.cpp \
     src/gui/sticker_body_expanded.cpp \
     src/gui/sticker_column_internal.cpp \
@@ -53,6 +52,7 @@ SOURCES += src/main/main.cpp\
     src/gui/mw_columns_display_proxy_abstract.cpp \
     src/gui/mw_columns_display_std.cpp \
     src/containers/special/indexed_emplacer.cpp \
+    src/gui/utils/frame_borders.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -68,7 +68,6 @@ HEADERS  += src/gui/main_window.h \
     src/gui/sticker_icon.h \
     src/gui/sticker_body_collapsed.h \
     src/gui/style_utils.h \
-    src/gui/frame_border_handler.h \
     src/gui/sticker_button.h \
     src/gui/sticker_body_expanded.h \
     src/gui/sticker_column_internal.h \

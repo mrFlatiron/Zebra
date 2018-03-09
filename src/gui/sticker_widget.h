@@ -11,7 +11,6 @@ class sticker_colorline;
 class sticker_icon;
 class sticker_body_collapsed;
 class sticker_body_expanded;
-class frame_border_handler;
 class QGridLayout;
 class QVBoxLayout;
 class QMenu;
@@ -23,8 +22,6 @@ class sticker_widget : public QWidget
 {
   Q_OBJECT
 private:
-  using fbh = frame_border_handler;
-
   sticker_colorline *m_colorline;
   sticker_icon *m_icon;
   QMenu *m_ticket_type_menu;

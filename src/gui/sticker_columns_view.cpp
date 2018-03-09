@@ -5,6 +5,7 @@
 #include "kernel/columns_handler.h"
 #include "kernel/column_info.h"
 #include "sticker_column.h"
+#include "utils/frame_borders.h"
 
 #include <QHBoxLayout>
 #include <QSplitter>
@@ -24,11 +25,6 @@ sticker_columns_view::sticker_columns_view (ticket_container &tickets, columns_h
 sticker_columns_view::~sticker_columns_view()
 {
 
-}
-
-frame_border_handler &sticker_columns_view::borders ()
-{
-  return m_borders;
 }
 
 void sticker_columns_view::set_model (mw_columns_display_proxy_abstract *model)
@@ -79,7 +75,7 @@ columns_handler &sticker_columns_view::columns ()
 
 void sticker_columns_view::init ()
 {
-  m_borders.set_parent (this);
+//  m_borders.set_parent (this);
 }
 
 void sticker_columns_view::create_widgets ()
@@ -100,7 +96,7 @@ void sticker_columns_view::set_layout ()
         {
           w->show ();
           w->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
-          w->borders ().show_borders (vector_of (frame_border_handler::border ()));
+          frame_borders::set_invisible_borders (w, {});
           spl_0->addWidget (w);
           spl_0->setCollapsible (i, false);
           i++;

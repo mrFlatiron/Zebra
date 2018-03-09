@@ -2,7 +2,6 @@
 #define STICKER_BODY_COLLAPSED_H
 
 #include <QFrame>
-#include "frame_border_handler.h"
 #include "sig/sigslots.h"
 #include "kernel/ticket_ptr.h"
 
@@ -16,7 +15,6 @@ private:
   QLabel *m_hashtags;
   sticker_button *m_next_button;
   sticker_button *m_prev_button;
-  frame_border_handler m_borders;
 
   ticket_ptr m_ticket;
 
@@ -30,8 +28,6 @@ public:
 
   QSize sizeHint () const override;
   QSize minimumSizeHint () const override;
-
-  frame_border_handler &borders ();
 
   void mouseDoubleClickEvent (QMouseEvent *event) override;
 

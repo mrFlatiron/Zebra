@@ -1,5 +1,6 @@
 #include "sticker_body_collapsed.h"
 #include "style_utils.h"
+#include "gui/utils/frame_borders.h"
 
 #include "sticker_button.h"
 
@@ -36,11 +37,6 @@ QSize sticker_body_collapsed::minimumSizeHint () const
   return sizeHint ();
 }
 
-frame_border_handler &sticker_body_collapsed::borders ()
-{
-  return m_borders;
-}
-
 void sticker_body_collapsed::mouseDoubleClickEvent (QMouseEvent *event)
 {
   (void)event;
@@ -50,8 +46,6 @@ void sticker_body_collapsed::mouseDoubleClickEvent (QMouseEvent *event)
 void sticker_body_collapsed::set_ticket (ticket_ptr ticket)
 {
   m_ticket = ticket;
-  m_conn.connect_to (m_ticket.get ()->data_changed, [this] {this->update_view ();});
-  update_view ();
 }
 
 void sticker_body_collapsed::set_next_is_deletion (bool val)
@@ -90,7 +84,7 @@ void sticker_body_collapsed::update_view ()
 
 void sticker_body_collapsed::init ()
 {
-  m_borders.set_parent (this);
+//  m_borders.set_parent (this);
   setAutoFillBackground (true);
   QPalette pal = palette ();
   pal.setBrush (backgroundRole (), QBrush (style_utils::get_color (common_colors::peach)));
@@ -103,16 +97,21 @@ void sticker_body_collapsed::create_widgets ()
   m_hashtags = new QLabel (hash_styled ("#test2"));
   m_hashtags->setTextFormat (Qt::RichText);
   m_hashtags->setAlignment (Qt::AlignBottom);
+
   m_next_button = new sticker_button;
   m_prev_button = new sticker_button;
 
-  m_next_button->borders ().hide_borders (vector_of (frame_border_handler::border ()));
+//  frame_borders::set_shape (m_next_button, QFrame::Box);
+//  frame_borders::set_width (m_next_button);
+  frame_borders::set_visible_borders (m_next_button, {});
   m_next_button->set_icon ((style_utils::get_icon_path (style_utils::common_icons::r_arrow)));
   m_next_button->set_background_color (style_utils::get_color (common_colors::peach));
   m_next_button->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
   m_next_button->setMaximumWidth (35);
 
-  m_prev_button->borders ().hide_borders (vector_of (frame_border_handler::border ()));
+  frame_borders::set_visible_borders (m_prev_button, {});
+//  frame_borders::set_shape (m_prev_button, QFrame::Box);
+//  frame_borders::set_width (m_prev_button);
   m_prev_button->set_icon ((style_utils::get_icon_path (style_utils::common_icons::l_arrow)));
   m_prev_button->set_background_color (style_utils::get_color (common_colors::peach));
   m_prev_button->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);

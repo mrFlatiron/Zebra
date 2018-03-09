@@ -43,13 +43,15 @@ bool widget_visibility_updater::is_dirty () const
 
 void widget_visibility_updater::set_dirty ()
 {
-  if (m_widget_to_watch->isVisible ())
-    {
-      m_updater_func ();
-      return;
-    }
-
   m_is_dirty = true;
+}
+
+void widget_visibility_updater::update ()
+{
+  if (is_dirty ())
+    m_updater_func ();
+
+  set_uptodate ();
 }
 
 void widget_visibility_updater::set_uptodate ()

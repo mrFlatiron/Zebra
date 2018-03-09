@@ -40,29 +40,11 @@ namespace work
     template<typename T>
     inline constexpr bool is_primitive_v = is_primitive<T>::value;
 
-    struct priority_tag {};
+    template<size_t Priority>
+    struct priority_tag : public priority_tag<Priority - 1> {};
 
-    using priority_tag_1 = priority_tag;
-
-    struct priority_tag_2
-    {
-      priority_tag_2 (const priority_tag_1 &) {}
-    };
-
-    struct priority_tag_3
-    {
-      priority_tag_3 (const priority_tag_2 &) {}
-    };
-
-    struct priority_tag_4
-    {
-      priority_tag_4 (const priority_tag_3 &) {}
-    };
-
-    struct priority_tag_5
-    {
-      priority_tag_5 (const priority_tag_4 &) {}
-    };
+    template<>
+    struct priority_tag<0> {};
 
     template<typename T, typename... Args>
     void put_in (std::unique_ptr<T> &something, Args&&... args)

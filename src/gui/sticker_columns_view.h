@@ -1,7 +1,6 @@
 #ifndef STICKER_COLUMNS_VIEW_H
 #define STICKER_COLUMNS_VIEW_H
 
-#include "frame_border_handler.h"
 #include "sig/sigslots.h"
 #include "kernel/ticket_typedefs.h"
 #include <QLabel>
@@ -16,8 +15,6 @@ class columns_handler;
 class sticker_columns_view : public QLabel
 {
 private:
-  frame_border_handler m_borders;
-
   ticket_container &m_tickets;
   columns_handler &m_columns;
 
@@ -33,7 +30,6 @@ public:
                         QWidget *parent = nullptr);
   ~sticker_columns_view ();
 
-  frame_border_handler &borders ();
   void set_model (mw_columns_display_proxy_abstract *model);
 
   void update_view ();

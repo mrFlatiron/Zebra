@@ -40,23 +40,23 @@ namespace work
   namespace detail
   {
     template<typename T, typename Worker, typename = decltype (work::declref<Worker> ().process_base (work::declref<T> ()))>
-    is_base_for_worker tag_creator_impl (work::priority_tag_1) {return is_base_for_worker ();}
+    is_base_for_worker tag_creator_impl (const work::priority_tag<3>&) {return is_base_for_worker ();}
 
     template<typename T, typename Worker, typename = decltype (worker_process (work::declref<Worker> (), work::declref<T> ()))>
-    has_free_func      tag_creator_impl (work::priority_tag_2) {return has_free_func ();}
+    has_free_func      tag_creator_impl (const work::priority_tag<2>&) {return has_free_func ();}
 
     template<typename T, typename Worker, typename = decltype (work::declref<T> ().worker_process (work::declref<Worker> ()))>
-    has_member_func    tag_creator_impl (work::priority_tag_2) {return has_member_func ();}
+    has_member_func    tag_creator_impl (const work::priority_tag<1>&) {return has_member_func ();}
 
     template<typename T, typename Worker>
-    has_no_func        tag_creator_impl (work::priority_tag_3) {return has_no_func ();}
+    has_no_func        tag_creator_impl (const work::priority_tag<0>&) {return has_no_func ();}
 
   }
 
   template<typename T, typename Worker>
   struct tag_creator
   {
-    using tag = decltype (detail::tag_creator_impl<T, Worker> (work::priority_tag ()));
+    using tag = decltype (detail::tag_creator_impl<T, Worker> (work::priority_tag<3> ()));
   };
 
   template<typename T, typename Worker>

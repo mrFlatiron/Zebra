@@ -6,6 +6,7 @@
 #include "kernel/ticket_object.h"
 #include "kernel/ticket_container.h"
 #include "kernel/columns_handler.h"
+#include "utils/frame_borders.h"
 
 #include "common/enum_misc.h"
 
@@ -23,11 +24,6 @@ sticker_column::sticker_column (ticket_container &tickets, columns_handler &colu
 sticker_column::~sticker_column ()
 {
 
-}
-
-frame_border_handler &sticker_column::borders ()
-{
-  return m_borders;
 }
 
 QSize sticker_column::minimumSizeHint () const
@@ -88,7 +84,6 @@ void sticker_column::set_is_first (bool val)
 
 void sticker_column::init ()
 {
-  m_borders.set_parent (this);
 }
 
 void sticker_column::create_widgets (ticket_container &tickets, columns_handler &columns, column_id id)
@@ -99,12 +94,9 @@ void sticker_column::create_widgets (ticket_container &tickets, columns_handler 
   m_add_button->set_icon (style_utils::common_icons::plus);
 
 
-  using borders = frame_border_handler::border;
-
-  m_internal->borders ().set_shape (QFrame::NoFrame);
-
   m_internal->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Expanding);
-  m_add_button->borders ().hide_borders (vector_of (borders ()));
+  frame_borders::set_shape (this, QFrame::Box);
+  frame_borders::set_invisible_borders (this, {});
 }
 
 void sticker_column::set_layout ()
