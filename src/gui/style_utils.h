@@ -12,6 +12,7 @@ enum class common_colors
   peach,
   cream,
   mint,
+  white_blue,
   lightblue,
   lilac,
   cloud,

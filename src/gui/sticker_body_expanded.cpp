@@ -45,7 +45,7 @@ void sticker_body_expanded::init ()
 {
 //  m_borders.set_parent (this);
   setAutoFillBackground (true);
-  style_utils::set_background_color (this, common_colors::lightblue);
+  style_utils::set_background_color (this, common_colors::white_blue);
 }
 
 void sticker_body_expanded::create_widgets ()
@@ -65,7 +65,7 @@ void sticker_body_expanded::create_widgets ()
   frame_borders::set_shape (m_apply_pb, QFrame::Box);
   frame_borders::set_width (m_apply_pb);
   frame_borders::set_visible_borders (m_apply_pb, {});
-  m_apply_pb->set_background_color (style_utils::get_color (common_colors::lightblue));
+  m_apply_pb->set_background_color (style_utils::get_color (common_colors::white_blue));
   m_apply_pb->setMaximumHeight (45);
   m_apply_pb->setMaximumWidth (45);
 }

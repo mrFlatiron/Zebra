@@ -87,7 +87,7 @@ void sticker_body_collapsed::init ()
 //  m_borders.set_parent (this);
   setAutoFillBackground (true);
   QPalette pal = palette ();
-  pal.setBrush (backgroundRole (), QBrush (style_utils::get_color (common_colors::lightblue)));
+  pal.setBrush (backgroundRole (), QBrush (style_utils::get_color (common_colors::white_blue)));
   setPalette (pal);
 }
 
@@ -103,13 +103,13 @@ void sticker_body_collapsed::create_widgets ()
 
   frame_borders::set_visible_borders (m_next_button, {});
   m_next_button->set_icon ((style_utils::get_icon_path (style_utils::common_icons::r_arrow)));
-  m_next_button->set_background_color (style_utils::get_color (common_colors::lightblue));
+  m_next_button->set_background_color (style_utils::get_color (common_colors::white_blue));
   m_next_button->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
   m_next_button->setMaximumWidth (35);
 
   frame_borders::set_visible_borders (m_prev_button, {});
   m_prev_button->set_icon ((style_utils::get_icon_path (style_utils::common_icons::l_arrow)));
-  m_prev_button->set_background_color (style_utils::get_color (common_colors::lightblue));
+  m_prev_button->set_background_color (style_utils::get_color (common_colors::white_blue));
   m_prev_button->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
   m_prev_button->setMaximumWidth (35);
 }

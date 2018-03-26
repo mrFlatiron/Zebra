@@ -56,7 +56,8 @@ SOURCES += src/main/main.cpp\
     src/kernel/settings_proifle.cpp \
     src/kernel/zebra_settings.cpp \
     src/kernel/user_settings.cpp \
-    src/gui/test_widget.cpp
+    src/gui/test_widget.cpp \
+    src/kernel/user_profile.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -113,7 +114,8 @@ HEADERS  += src/gui/main_window.h \
     src/kernel/zebra_settings.h \
     src/kernel/user_profile.h \
     src/kernel/user_settings.h \
-    src/gui/test_widget.h
+    src/gui/test_widget.h \
+    src/kernel/settings_typedefs.h
 
 INCLUDEPATH += src
 INCLUDEPATH += src/libs

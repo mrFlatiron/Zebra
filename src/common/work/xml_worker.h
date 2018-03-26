@@ -26,7 +26,9 @@ namespace work
     {
       xmlNodePtr cur_node = node->children;
       for (cur_node = node->children; cur_node; cur_node = cur_node->next)
-        if (cur_node->type == XML_ELEMENT_NODE && !xmlStrcmp (reinterpret_cast<const unsigned char *> (name), cur_node->name))
+        if (cur_node->type == XML_ELEMENT_NODE &&
+//            cur_node->parent == node &&
+            !xmlStrcmp (reinterpret_cast<const unsigned char *> (name), cur_node->name))
           break;
 
       return cur_node;
@@ -93,6 +95,12 @@ namespace work
     {
       if (!m_doc)
         return;
+
+      if (!m_current_node)
+        {
+          m_is_ok = false;
+          return;
+        }
 
       switch (m_action)
         {

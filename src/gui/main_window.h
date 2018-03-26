@@ -5,11 +5,11 @@
 
 class ticket_container;
 class column_handler;
-class project_handler;
 class sticker_column;
 class column_display_proxy;
 class sticker_columns_view;
 class mw_columns_display_std;
+class zebra_settings;
 
 class main_window : public QDialog
 {
@@ -17,9 +17,9 @@ class main_window : public QDialog
 private:
   sticker_columns_view *m_columns_view;
   std::unique_ptr<mw_columns_display_std> m_model;
-  project_handler &m_zebra;
+  zebra_settings &m_zebra;
 public:
-  main_window (project_handler &zebra, QWidget *parent = 0);
+  main_window (zebra_settings &zebra, QWidget *parent = 0);
   ~main_window ();
   QSize sizeHint () const override;
 

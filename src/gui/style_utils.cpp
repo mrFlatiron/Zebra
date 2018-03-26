@@ -59,6 +59,8 @@ QColor style_utils::get_color (common_colors color)
       return QColor (255, 230, 153);
     case common_colors::mint:
       return QColor (197, 224, 180);
+    case common_colors::white_blue:
+      return QColor (212, 225, 244);
     case common_colors::lightblue:
       return QColor (189, 215, 238);
     case common_colors::lilac:

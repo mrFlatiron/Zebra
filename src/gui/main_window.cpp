@@ -1,11 +1,11 @@
 #include "main_window.h"
 
 #include <QVBoxLayout>
-#include "kernel/project_handler.h"
+#include "kernel/zebra_settings.h"
 #include "sticker_columns_view.h"
 #include "mw_columns_display_std.h"
 
-main_window::main_window (project_handler &zebra, QWidget *parent)
+main_window::main_window (zebra_settings &zebra, QWidget *parent)
   : QDialog (parent),
     m_zebra (zebra)
 {
@@ -42,8 +42,8 @@ void main_window::init ()
 
 void main_window::create_widgets ()
 {
-  m_columns_view = new sticker_columns_view (m_zebra.tickets (), m_zebra.columns (), this);
-  put_in (m_model, m_zebra.columns ());
+  m_columns_view = new sticker_columns_view (m_zebra.current_profile ()->settings ().tickets (), m_zebra.current_profile ()->settings ().columns (), this);
+  put_in (m_model, m_zebra.current_profile ()->settings ().columns ());
   m_columns_view->set_model (m_model.get ());
 }
 
