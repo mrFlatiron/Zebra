@@ -54,7 +54,6 @@ public:
   sig::signal<ticket_id> transfer_to_prev_requested;
   sig::signal<ticket_id> deletion_requested;
 private:
-  void init ();
   void create_widgets ();
   void set_layout ();
   void make_connections ();

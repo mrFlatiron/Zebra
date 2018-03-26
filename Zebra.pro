@@ -52,7 +52,11 @@ SOURCES += src/main/main.cpp\
     src/gui/mw_columns_display_proxy_abstract.cpp \
     src/gui/mw_columns_display_std.cpp \
     src/containers/special/indexed_emplacer.cpp \
-    src/gui/utils/frame_borders.cpp
+    src/gui/utils/frame_borders.cpp \
+    src/kernel/settings_proifle.cpp \
+    src/kernel/zebra_settings.cpp \
+    src/kernel/user_settings.cpp \
+    src/gui/test_widget.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -105,7 +109,11 @@ HEADERS  += src/gui/main_window.h \
     src/common/work/workers.h \
     src/common/work/xml_worker.h \
     src/common/work/worker_process_impls.h \
-    src/gui/utils/frame_borders.h
+    src/gui/utils/frame_borders.h \
+    src/kernel/zebra_settings.h \
+    src/kernel/user_profile.h \
+    src/kernel/user_settings.h \
+    src/gui/test_widget.h
 
 INCLUDEPATH += src
 INCLUDEPATH += src/libs

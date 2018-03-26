@@ -2,6 +2,7 @@
 #define STICKER_WIDGET_H
 
 #include <QWidget>
+#include <QFrame>
 #include "sig/sigslots.h"
 #include "kernel/ticket_ptr.h"
 #include "containers/enum_vector.h"
@@ -18,7 +19,7 @@ class QAction;
 
 class widget_visibility_updater;
 
-class sticker_widget : public QWidget
+class sticker_widget : public QFrame
 {
   Q_OBJECT
 private:

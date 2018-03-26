@@ -53,6 +53,8 @@ void columns_handler::notify_ticket_deleted (ticket_id tid)
 
 void columns_handler::transfer_ticket (ticket_id tid, column_id from, column_id to)
 {
+  printf ("Transfering ticket: tid = %d  from = %d  to = %d\n", static_cast<int> (tid), static_cast<int> (from), static_cast<int> (to));
+  fflush (stdout);
   m_column_to_tickets[from].remove_ticket (tid);
   m_column_to_tickets[to].add_ticket (tid);
   ticket_transfered (tid, from, to);

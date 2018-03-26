@@ -31,10 +31,14 @@ void column_info::add_ticket (ticket_id id)
   auto it = m_ticket_ids.find (id);
   if (it != m_ticket_ids.end ())
     {
+      {
+        work::xml_worker debug (work::action_t::save);
+        work::process (debug, m_ticket_ids, "debug_add");
+      }
       DEBUG_PAUSE ("Already in this column");
       return;
     }
-  m_ticket_ids.insert (std::make_pair (id, m_max_entry_id));
+  m_ticket_ids.emplace (id, m_max_entry_id);
   ticket_added_to_column (id);
 }
 
@@ -43,6 +47,10 @@ void column_info::remove_ticket (ticket_id id)
   auto it = m_ticket_ids.find (id);
   if (it == m_ticket_ids.end ())
     {
+      {
+        work::xml_worker debug (work::action_t::save);
+        work::process (debug, m_ticket_ids, "debug_remove");
+      }
       DEBUG_PAUSE ("Not in this column");
       return;
     }

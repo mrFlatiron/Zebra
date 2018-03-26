@@ -6,10 +6,12 @@
 #include "kernel/columns_handler.h"
 #include "kernel/ticket_object.h"
 
+#include "utils/frame_borders.h"
+
 #include "column_display_proxy_abstract.h"
 
 
-
+#include <QLineEdit>
 #include <QVBoxLayout>
 #include <QScrollArea>
 
@@ -19,7 +21,6 @@ sticker_column_internal::sticker_column_internal (ticket_container &tickets, col
     m_columns (columns),
     m_tickets (tickets)
 {
-  init ();
   create_widgets ();
   set_layout ();
   make_connections ();
@@ -51,12 +52,15 @@ void sticker_column_internal::update_view ()
   if (!m_proxy_model)
     return;
 
+  printf ("Updating view column_id = %d\n", static_cast<int> (m_col_id));
+  fflush (stdout);
+
   auto ticket_ids = m_proxy_model->get_shown_indices ();
 
   m_stickers.set_new_ids (ticket_ids);
   for (auto id : m_stickers.values_that_need_construction ())
     {
-      m_stickers.emplace (id);
+      m_stickers.emplace (id, this);
       m_stickers[id]->set_ticket (m_tickets.ticket (id));
       m_stickers[id]->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
       m_conn.connect_to (m_stickers[id]->body_expanded, [this] () {this->updateGeometry ();});
@@ -125,10 +129,6 @@ void sticker_column_internal::set_is_first (bool val)
     w->set_prev_button_disabled (val);
 }
 
-void sticker_column_internal::init ()
-{
-}
-
 void sticker_column_internal::create_widgets ()
 {
 
@@ -136,28 +136,55 @@ void sticker_column_internal::create_widgets ()
 
 void sticker_column_internal::set_layout ()
 {
-  QVBoxLayout *vlo_0 = new QVBoxLayout;
+  QVBoxLayout *vlo_0 = nullptr;
+  if (!layout ())
+    vlo_0 = new QVBoxLayout;
+  else
+    vlo_0 = static_cast<QVBoxLayout *> (layout ());
+
   {
     vlo_0->setSpacing (0);
+    vlo_0->setMargin (0);
+
+//    for (auto w : m_stickers.values ())
+//      {
+//        w->show ();
+//        vlo_0->addWidget (w, Qt::AlignTop);
+//      }
+//    for (auto w : m_stickers.unused_values ())
+//      w->hide ();
+
     for (auto w : m_stickers.values ())
       {
-        w->show ();
-        vlo_0->addWidget (w);
+        vlo_0->removeWidget (w);
       }
+
     for (auto w : m_stickers.unused_values ())
       {
+        vlo_0->removeWidget (w);
         w->hide ();
       }
-    vlo_0->addStretch ();
+
+    for (auto w : m_stickers.values ())
+      {
+        vlo_0->addWidget (w);
+        frame_borders::set_visible_borders (w, {frame_border::top, frame_border::right});
+        w->show ();
+      }
+
+    if (m_stickers.size ())
+      {
+        frame_borders::set_visible_borders (m_stickers.values ().front (), {frame_border::right});
+        frame_borders::set_invisible_borders (m_stickers.values ().back (), {frame_border::left});
+      }
+
+    vlo_0->update ();
   }
-  vlo_0->setSizeConstraint (QLayout::SetMinAndMaxSize);
-  if (layout ())
-    {
-      delete layout ();
-    }
-  setLayout (vlo_0);
+  if (!layout ())
+    vlo_0->setSizeConstraint (QLayout::SetMinAndMaxSize);
 
-
+  if (vlo_0 != layout ())
+    setLayout (vlo_0);
 }
 
 void sticker_column_internal::make_connections ()

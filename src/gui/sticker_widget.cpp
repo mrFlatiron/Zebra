@@ -17,7 +17,7 @@
 #include <QMenu>
 
 sticker_widget::sticker_widget (QWidget *parent)
-  : QWidget (parent)
+  : QFrame (parent)
 {
   create_widgets ();
   set_layout ();
@@ -46,20 +46,27 @@ void sticker_widget::resize_body ()
 {
   if (!m_is_expanded)
     {
+      frame_borders::set_visible_borders (m_colorline, {frame_border::right, frame_border::bottom});
+      frame_borders::set_visible_borders (m_icon, {frame_border::right, frame_border::bottom});
+      frame_borders::set_visible_borders (m_body_collapsed, {});
+      frame_borders::set_visible_borders (m_body_expanded, {});
+
       m_body_expanded->show ();
-      frame_borders::set_visible_borders (m_body_collapsed, {frame_border::left,
-                                          frame_border::top, frame_border::right });
       m_is_expanded = true;
       body_expanded ();
     }
   else
     {
+      frame_borders::set_visible_borders (m_colorline, {frame_border::right});
+      frame_borders::set_visible_borders (m_icon, {frame_border::right});
+      frame_borders::set_visible_borders (m_body_collapsed, {});
+      frame_borders::set_visible_borders (m_body_expanded, {});
+
       m_body_expanded->hide ();
-      frame_borders::set_visible_borders (m_body_collapsed, vector_of (frame_border ()));
       m_is_expanded = false;
       body_collapsed ();
     }
-
+  updateGeometry ();
 }
 
 void sticker_widget::set_ticket (ticket_ptr ticket)
@@ -151,15 +158,19 @@ void sticker_widget::create_widgets ()
 
 void sticker_widget::set_layout ()
 {
-
-  frame_borders::set_invisible_borders (m_colorline, {frame_border::right});
-  frame_borders::set_invisible_borders (m_icon, {frame_border::right});
-  frame_borders::set_invisible_borders (m_body_expanded, {frame_border::top});
+  frame_borders::set_shape (this, QFrame::Box);
+  frame_borders::set_width (this);
+  frame_borders::set_invisible_borders (this, {});
+  frame_borders::set_visible_borders (m_colorline, {frame_border::right});
+  frame_borders::set_visible_borders (m_icon, {frame_border::right});
+  frame_borders::set_visible_borders (m_body_collapsed, {});
+  frame_borders::set_visible_borders (m_body_expanded, {frame_border::top});
   m_body_expanded->hide ();
 
   m_main_layout = new QVBoxLayout;
   {
     m_main_layout->setSpacing (0);
+    m_main_layout->setMargin (0);
     QHBoxLayout *hlo_0 = new QHBoxLayout;
     {
       hlo_0->setSpacing (0);

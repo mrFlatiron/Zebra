@@ -20,7 +20,7 @@ class frame_borders
 public:
   static void set_visible_borders (QFrame *frame, const std::vector<frame_border> &borders);
   static void set_invisible_borders (QFrame *frame, const std::vector<frame_border> &borders);
-  static void set_width (QFrame *frame, int line_width = 1, int mid_line_width = 1);
+  static void set_width (QFrame *frame, int line_width = 1, int mid_line_width = 0);
   static void set_shape (QFrame *frame, QFrame::Shape shape);
   static void set_shadow (QFrame *frame, QFrame::Shadow shadow);
   static void set_mid_width (QFrame *frame, int mid_width);
