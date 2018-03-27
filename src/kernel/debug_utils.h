@@ -30,4 +30,7 @@
 
 #define DEBUG_ASSERT(assertion) (if (!(assertion)) DEBUG_PAUSE (""););
 #define ASSERT_RETURN(assertion, retval) if (!(assertion)) {DEBUG_PAUSE (""); return retval;}
+
+template<typename... Args>
+void FIX_UNUSED (Args &&...) {}
 #endif // DEBUG_UTILS_H

@@ -11,12 +11,16 @@ class ticket_container;
 class columns_handler;
 class column_display_proxy_abstract;
 
+class QToolBar;
+
 class sticker_column : public QLabel
 {
 private:
   sticker_column_internal *m_internal;
   sticker_button *m_add_button;
-
+  QLabel         *m_colname_label;
+  QToolBar *m_tool_bar_left_aligned;
+  QToolBar *m_tool_bar_right_aligned;
 
   sig::connector m_conn;
 public:
@@ -49,7 +53,7 @@ private:
   void set_layout ();
   void make_connections ();
   void add_ticket ();
-
+  void delete_column ();
 
 };
 

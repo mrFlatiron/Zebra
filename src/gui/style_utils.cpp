@@ -41,6 +41,14 @@ QString style_utils::get_icon_path (style_utils::common_icons type)
       return ":/icons/trash.png";
     case common_icons::plus:
       return ":/icons/plus.png";
+    case common_icons::black_plus:
+      return ":/icons/plus-2-16.png";
+    case common_icons::collapse_left:
+      return ":/icons/collapse-left-16.png";
+    case common_icons::settings:
+      return ":/icons/settings-4-16.png";
+    case common_icons::x_mark:
+      return ":/icons/x-mark-3-16.png";
     case common_icons::COUNT:
       DEBUG_PAUSE ("Shouldn't happen");
     }

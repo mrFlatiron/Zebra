@@ -172,7 +172,12 @@ void sticker_column_internal::set_layout ()
         w->show ();
       }
 
-    if (m_stickers.size ())
+    if (m_stickers.values ().size () == 1)
+      {
+        frame_borders::set_visible_borders (m_stickers.values ().front (), {frame_border::right, frame_border::bottom});
+      }
+
+    if (m_stickers.values ().size () > 1)
       {
         frame_borders::set_visible_borders (m_stickers.values ().front (), {frame_border::right});
         frame_borders::set_invisible_borders (m_stickers.values ().back (), {frame_border::left});

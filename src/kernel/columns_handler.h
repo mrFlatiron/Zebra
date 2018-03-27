@@ -15,6 +15,8 @@ public:
 
   column_id create_column (const QString &name);
 
+  void delete_column (column_id id);
+
   column_info &column (column_id id);
   const column_info &column (column_id id) const;
 
@@ -25,7 +27,9 @@ public:
 
   void transfer_ticket (ticket_id tid, column_id from, column_id to);
 
+
   sig::signal<ticket_id, column_id/*from*/, column_id/*to*/> ticket_transfered;
+  sig::signal<column_id> column_deleted;
 
   bool worker_process (work::xml_worker &worker);
 };

@@ -11,6 +11,11 @@
 #include "common/enum_misc.h"
 
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QLabel>
+
+#include <QToolBar>
 
 sticker_column::sticker_column (ticket_container &tickets, columns_handler &columns, column_id id, QWidget *parent)
   : QLabel (parent)
@@ -88,8 +93,24 @@ void sticker_column::init ()
 
 void sticker_column::create_widgets (ticket_container &tickets, columns_handler &columns, column_id id)
 {
-  m_internal = new sticker_column_internal (tickets, columns, id, this);
-  m_add_button = new sticker_button (this);
+  m_colname_label = new QLabel (columns.column (id).name ());
+
+  m_tool_bar_left_aligned = new QToolBar;
+  m_tool_bar_right_aligned = new QToolBar;
+
+  m_tool_bar_left_aligned->setOrientation (Qt::Horizontal);
+  m_tool_bar_right_aligned->setOrientation (Qt::Horizontal);
+
+  m_tool_bar_left_aligned->addAction (QIcon (style_utils::get_icon_path (style_utils::common_icons::collapse_left)), "Hide");
+
+  m_tool_bar_right_aligned->addAction (QIcon (style_utils::get_icon_path (style_utils::common_icons::settings)), "Settings");
+  m_tool_bar_right_aligned->addSeparator ();
+  m_tool_bar_right_aligned->addAction (QIcon (style_utils::get_icon_path (style_utils::common_icons::black_plus)), "Add ticket", [this] () {this->add_ticket ();});
+  m_tool_bar_right_aligned->addSeparator ();
+  m_tool_bar_right_aligned->addAction (QIcon (style_utils::get_icon_path (style_utils::common_icons::x_mark)), "Delete column", [this] () {delete_column ();});
+
+  m_internal = new sticker_column_internal (tickets, columns, id);
+  m_add_button = new sticker_button;
   m_add_button->set_background_color (style_utils::get_color (common_colors::mint));
   m_add_button->set_icon (style_utils::common_icons::plus);
 
@@ -110,8 +131,17 @@ void sticker_column::set_layout ()
     scroll->setWidgetResizable (true);
     scroll->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOn);
 
+    QHBoxLayout *hlo_0 = new QHBoxLayout;
+    {
+      hlo_0->addWidget (m_tool_bar_left_aligned, Qt::AlignLeft);
+      hlo_0->addWidget (m_colname_label, Qt::AlignLeft);
+      hlo_0->addWidget (m_tool_bar_right_aligned);
+//      hlo_0->addWidget (new QLineEdit, Qt::AlignRight);
+    }
+    vlo_0->addLayout (hlo_0);
+
     vlo_0->addWidget (scroll);
-    vlo_0->addWidget (m_add_button);
+//    vlo_0->addWidget (m_add_button);
   }
   vlo_0->setContentsMargins (0, 0, 0, 0);
   if (layout ())
@@ -139,4 +169,13 @@ void sticker_column::add_ticket ()
   ticket_object new_ticket;
   auto tid = tickets ().add_ticket (std::move (new_ticket));
   columns ().column (col_id ()).add_ticket (tid);
+}
+
+void sticker_column::delete_column ()
+{
+  //TEMPCODE_BEGIN
+  if (columns ().column (col_id ()).tickets ().size ())
+    return;
+  //TEMPCODE_END
+  columns ().delete_column (col_id ());
 }

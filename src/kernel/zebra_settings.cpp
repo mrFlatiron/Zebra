@@ -32,6 +32,15 @@ user_profile *zebra_settings::profile (user_profile_id id)
   return &(it->second);
 }
 
+void zebra_settings::change_profile (user_profile_id id)
+{
+  auto it = m_profiles.find (id);
+  ASSERT_RETURN (it != m_profiles.end (), );
+
+  m_current_id = id;
+  settings_changed ();
+}
+
 bool zebra_settings::load (const QString &save_file_name)
 {
   std::string save_file_full_path = QString("%1/%2").arg (m_working_dir, save_file_name).toUtf8 ().data ();

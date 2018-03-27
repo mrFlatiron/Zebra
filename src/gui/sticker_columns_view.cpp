@@ -29,7 +29,9 @@ sticker_columns_view::~sticker_columns_view()
 
 void sticker_columns_view::set_model (mw_columns_display_proxy_abstract *model)
 {
+  m_conn.disconnect_all ();
   m_model = model;
+  m_conn.connect_to (model->layout_changed, [this] {update_view ();});
   update_view ();
 }
 
@@ -54,7 +56,7 @@ void sticker_columns_view::update_view ()
       m_conn.connect_to (m_columns_widgets[id]->transfer_to_prev_requested,
                          [this, id] (ticket_id tid) {this->transfer_to_prev_column (tid, id);});
       m_conn.connect_to (m_columns_widgets[id]->deletion_requested,
-                         [this] (ticket_id tid) {this->delete_ticket (tid);});
+                         [this, id] (ticket_id tid) {this->delete_ticket (tid, id);});
       m_columns_widgets[id]->set_is_last (id == m_columns_widgets.current_indices_ref ().back ());
 
       m_columns_widgets[id]->set_is_first (id == m_columns_widgets.current_indices_ref ().front ());
@@ -85,34 +87,39 @@ void sticker_columns_view::create_widgets ()
 
 void sticker_columns_view::set_layout ()
 {
-  QHBoxLayout *hlo_0 = new QHBoxLayout;
-  {
-    QSplitter *spl_0 = new QSplitter (this);
-    {
-      spl_0->setLayoutDirection (Qt::LeftToRight);
+  if (!m_hlo_0)
+    m_hlo_0 = new QHBoxLayout;
 
-      int i = 0;
-      for (auto w : m_columns_widgets.values ())
-        {
-          w->show ();
-          w->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
-          frame_borders::set_invisible_borders (w, {});
-          spl_0->addWidget (w);
-          spl_0->setCollapsible (i, false);
-          i++;
-        }
-      for (auto w : m_columns_widgets.unused_values ())
-        {
-          w->hide ();
-        }
-    }
-    hlo_0->addWidget (spl_0);
-  }
-  if (layout ())
+  if (!m_spl_0)
     {
-      delete layout ();
+      m_spl_0 = new QSplitter;
+      m_hlo_0->addWidget (m_spl_0);
+      setLayout (m_hlo_0);
     }
-  setLayout (hlo_0);
+
+  m_spl_0->setLayoutDirection (Qt::LeftToRight);
+
+
+  for (auto w : m_columns_widgets.unused_values ())
+    w->hide ();
+
+  int i = 0;
+
+  for (auto w : m_columns_widgets.values ())
+    {
+      w->show ();
+      w->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
+      frame_borders::set_invisible_borders (w, {});
+      m_spl_0->insertWidget (i, w);
+      m_spl_0->setCollapsible (i, false);
+      i++;
+    }
+
+  if (m_columns_widgets.values ().size ())
+    {
+      m_columns_widgets.values ().front ()->set_is_first ();
+      m_columns_widgets.values ().back ()->set_is_last ();
+    }
 }
 
 void sticker_columns_view::make_connections ()
@@ -153,7 +160,8 @@ void sticker_columns_view::transfer_to_prev_column (ticket_id tid, column_id fro
 
 }
 
-void sticker_columns_view::delete_ticket (ticket_id tid)
+void sticker_columns_view::delete_ticket (ticket_id tid, column_id cur_col_id)
 {
   m_tickets.erase (tid);
+  m_columns.column (cur_col_id).remove_ticket (tid);
 }

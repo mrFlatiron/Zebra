@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/icons">
         <file>lamp.png</file>
-        <file>bug.png</file>
         <file>clipboard.png</file>
         <file>question_mark.png</file>
         <file>bug_64.png</file>
@@ -18,5 +17,9 @@
         <file>lamp_32.png</file>
         <file>question_mark_32.png</file>
         <file>l_arrow.png</file>
+        <file>collapse-left-16.png</file>
+        <file>plus-2-16.png</file>
+        <file>settings-4-16.png</file>
+        <file>x-mark-3-16.png</file>
     </qresource>
 </RCC>

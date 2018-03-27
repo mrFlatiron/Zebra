@@ -10,12 +10,15 @@ class column_display_proxy;
 class sticker_columns_view;
 class mw_columns_display_std;
 class zebra_settings;
+class main_settings_window;
+class QMenuBar;
 
 class main_window : public QDialog
 {
-  Q_OBJECT
 private:
+  QMenuBar *m_main_mb;
   sticker_columns_view *m_columns_view;
+  main_settings_window *m_settings_window = nullptr;
   std::unique_ptr<mw_columns_display_std> m_model;
   zebra_settings &m_zebra;
 public:
@@ -30,6 +33,8 @@ private:
   void create_widgets ();
   void set_layout ();
   void make_connections ();
+
+  void open_settings_window ();
 };
 
 #endif // MAIN_WINDOW_H

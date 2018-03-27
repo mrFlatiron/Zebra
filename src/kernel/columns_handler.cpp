@@ -18,6 +18,15 @@ column_id columns_handler::create_column (const QString &name)
   return m_max_id;
 }
 
+void columns_handler::delete_column (column_id id)
+{
+  auto it = m_column_to_tickets.find (id);
+  ASSERT_RETURN (it != m_column_to_tickets.end (), );
+
+  m_column_to_tickets.erase (it);
+  column_deleted (id);
+}
+
 column_info &columns_handler::column (column_id id)
 {
   return m_column_to_tickets[id];

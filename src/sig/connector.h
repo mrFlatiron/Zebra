@@ -34,7 +34,6 @@ namespace sig
 
       s.add_slot (this, std::function<void (Args&&...)> (templ::call_helper<Func> (std::move (f))));
     }
-  private:
     void disconnect_all ();
   };
 }

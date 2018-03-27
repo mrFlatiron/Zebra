@@ -15,6 +15,7 @@ public:
   widget_visibility_updater ();
   ~widget_visibility_updater ();
 
+  widget_visibility_updater (QWidget *widget, const std::function<void ()> &updater);
   void set_widget_and_updater (QWidget *widget,const std::function<void ()> &updater);
 
   bool eventFilter (QObject *watched, QEvent *event) override;

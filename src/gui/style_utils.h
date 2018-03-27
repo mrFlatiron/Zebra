@@ -48,6 +48,10 @@ namespace style_utils
     trash,
     check_mark,
     plus,
+    collapse_left,
+    settings,
+    black_plus,
+    x_mark,
     COUNT
   };
 

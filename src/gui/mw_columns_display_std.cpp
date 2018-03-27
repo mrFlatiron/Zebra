@@ -4,7 +4,7 @@
 mw_columns_display_std::mw_columns_display_std (columns_handler &columns)
   : m_columns (columns)
 {
-
+  m_conn.connect_to (columns.column_deleted, [this] {layout_changed ();});
 }
 
 mw_columns_display_std::~mw_columns_display_std ()

@@ -57,7 +57,9 @@ SOURCES += src/main/main.cpp\
     src/kernel/zebra_settings.cpp \
     src/kernel/user_settings.cpp \
     src/gui/test_widget.cpp \
-    src/kernel/user_profile.cpp
+    src/kernel/user_profile.cpp \
+    src/gui/main_settings_window.cpp \
+    src/gui/model_view/zebra_table_model.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -115,10 +117,14 @@ HEADERS  += src/gui/main_window.h \
     src/kernel/user_profile.h \
     src/kernel/user_settings.h \
     src/gui/test_widget.h \
-    src/kernel/settings_typedefs.h
+    src/kernel/settings_typedefs.h \
+    src/gui/main_settings_window.h \
+    src/gui/model_view/zebra_table_model.h
 
 INCLUDEPATH += src
 INCLUDEPATH += src/libs
 
-DISTFILES +=
+DISTFILES += \
+    resources/bug.png \
+    resources/collapse-left-16.png
 

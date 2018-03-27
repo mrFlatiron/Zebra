@@ -12,6 +12,11 @@ widget_visibility_updater::~widget_visibility_updater ()
 
 }
 
+widget_visibility_updater::widget_visibility_updater (QWidget *widget, const std::function<void ()> &updater)
+{
+  set_widget_and_updater (widget, updater);
+}
+
 void widget_visibility_updater::set_widget_and_updater (QWidget *widget, const std::function<void ()> &updater)
 {
   m_widget_to_watch = widget;
