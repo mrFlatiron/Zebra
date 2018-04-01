@@ -12,6 +12,8 @@
 #include <QDrag>
 #include <QMouseEvent>
 #include <QMimeData>
+#include <QToolButton>
+#include <QToolBar>
 
 sticker_body_collapsed::sticker_body_collapsed (QWidget *parent)
   : QFrame (parent)
@@ -73,18 +75,19 @@ bool sticker_body_collapsed::is_prev_button_disabled () const
 void sticker_body_collapsed::update_view ()
 {
   m_title->setText (m_ticket.get ()->title ());
-  if (!m_next_is_deletion)
-    m_next_button->set_icon (style_utils::common_icons::r_arrow);
-  else
-    m_next_button->set_icon (style_utils::common_icons::trash);
+//  if (!m_next_is_deletion)
+//    m_next_button->set_icon (style_utils::common_icons::r_arrow);
+//    m_next_button->setIcon (QIcon (style_utils::get_icon_path (style_utils::common_icons::x_mark)));
+//  else
+//    m_next_button->set_icon (style_utils::common_icons::trash);
+//    m_next_button->setIcon (QIcon (style_utils::get_icon_path (style_utils::common_icons::x_mark)));
 
-  m_prev_button->setDisabled (m_prev_button_disabled);
+//  m_prev_button->setDisabled (m_prev_button_disabled);
   update ();
 }
 
 void sticker_body_collapsed::init ()
 {
-//  m_borders.set_parent (this);
   setAutoFillBackground (true);
   QPalette pal = palette ();
   pal.setBrush (backgroundRole (), QBrush (style_utils::get_color (common_colors::white_blue)));
@@ -98,44 +101,55 @@ void sticker_body_collapsed::create_widgets ()
   m_hashtags->setTextFormat (Qt::RichText);
   m_hashtags->setAlignment (Qt::AlignBottom);
 
-  m_next_button = new sticker_button;
-  m_prev_button = new sticker_button;
+  m_tb = new QToolBar;
+  m_tb->setOrientation (Qt::Vertical);
+//  m_next_button = new  QToolButton;
 
-  frame_borders::set_visible_borders (m_next_button, {});
-  m_next_button->set_icon ((style_utils::get_icon_path (style_utils::common_icons::r_arrow)));
-  m_next_button->set_background_color (style_utils::get_color (common_colors::white_blue));
-  m_next_button->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-  m_next_button->setMaximumWidth (35);
+//  m_prev_button = new sticker_button;
 
-  frame_borders::set_visible_borders (m_prev_button, {});
-  m_prev_button->set_icon ((style_utils::get_icon_path (style_utils::common_icons::l_arrow)));
-  m_prev_button->set_background_color (style_utils::get_color (common_colors::white_blue));
-  m_prev_button->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
-  m_prev_button->setMaximumWidth (35);
+//  frame_borders::set_visible_borders (m_next_button, {});
+//  m_next_button->set_icon ((style_utils::get_icon_path (style_utils::common_icons::r_arrow)));
+//  m_next_button->set_background_color (style_utils::get_color (common_colors::white_blue));
+//  m_next_button->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+//  m_next_button->setMaximumWidth (35);
+
+//  frame_borders::set_visible_borders (m_prev_button, {});
+//  m_prev_button->set_icon ((style_utils::get_icon_path (style_utils::common_icons::l_arrow)));
+//  m_prev_button->set_background_color (style_utils::get_color (common_colors::white_blue));
+//  m_prev_button->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Fixed);
+//  m_prev_button->setMaximumWidth (35);
 }
 
 void sticker_body_collapsed::set_layout ()
 {
   QHBoxLayout *hlo_0 = new QHBoxLayout;
   {
+    hlo_0->setContentsMargins (11, 0, 0, 0);
     hlo_0->setSpacing (0);
     QVBoxLayout *vlo_0 = new QVBoxLayout;
     {
       vlo_0->addWidget (m_title);
       vlo_0->addWidget (m_hashtags);
+      vlo_0->setContentsMargins (0, 0, 11, 11);
     }
     hlo_0->addLayout (vlo_0);
     hlo_0->addStretch ();
-    hlo_0->addWidget (m_prev_button, 0, Qt::AlignRight);
-    hlo_0->addWidget (m_next_button, 0, Qt::AlignRight);
+//    hlo_0->addWidget (m_prev_button, 0, Qt::AlignRight);
+    m_tb->setIconSize (QSize (15, 15));
+    m_tb->addAction (QIcon (style_utils::get_icon_path (style_utils::common_icons::l_arrow)), "[] {}", [this] {prev_button_clicked ();});
+    m_tb->addAction (QIcon (style_utils::get_icon_path (style_utils::common_icons::r_arrow)), "[] {}", [this] {next_button_clicked ();});
+    m_tb->addAction (QIcon (style_utils::get_icon_path (style_utils::common_icons::x_mark)), "[] {}", [this] {m_ticket.erase ();});
+    hlo_0->addWidget (m_tb);
+//    hlo_0->addWidget (m_next_button, 0, Qt::AlignRight);
   }
   setLayout (hlo_0);
 }
 
 void sticker_body_collapsed::make_connections ()
 {
-  m_conn.connect_to (m_next_button->clicked, [this] () {this->next_button_clicked ();});
-  m_conn.connect_to (m_prev_button->clicked, [this] () {this->prev_button_clicked ();});
+//  m_conn.connect_to (m_next_button->clicked, [this] () {this->next_button_clicked ();});
+//  connect (m_next_button, &QToolButton::clicked, [this] {next_button_clicked ();});
+//  m_conn.connect_to (m_prev_button->clicked, [this] () {this->prev_button_clicked ();});
 }
 
 QString sticker_body_collapsed::hash_styled (const QString &str)

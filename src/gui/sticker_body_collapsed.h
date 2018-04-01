@@ -7,13 +7,17 @@
 
 class QLabel;
 class sticker_button;
+class QToolButton;
+class QToolBar;
 
 class sticker_body_collapsed : public QFrame
 {
 private:
   QLabel *m_title;
   QLabel *m_hashtags;
-  sticker_button *m_next_button;
+//  sticker_button *m_next_button;
+  QToolBar *m_tb = nullptr;
+  QToolButton *m_next_button;
   sticker_button *m_prev_button;
 
   ticket_ptr m_ticket;

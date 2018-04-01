@@ -21,5 +21,10 @@
         <file>plus-2-16.png</file>
         <file>settings-4-16.png</file>
         <file>x-mark-3-16.png</file>
+        <file>arrow-d-27-16.png</file>
+        <file>arrow-l-27-16.png</file>
+        <file>arrow-r-27-16.png</file>
+        <file>arrow-u-27-16.png</file>
+        <file>ok-32.png</file>
     </qresource>
 </RCC>

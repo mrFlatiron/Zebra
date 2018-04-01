@@ -5,6 +5,7 @@
 #include "internal/template_utils.h"
 
 #include <libxml/tree.h>
+#include <libxml/xmlsave.h>
 #include <vector>
 #include <cstdio>
 #include <string_view>
@@ -27,7 +28,7 @@ namespace work
       xmlNodePtr cur_node = node->children;
       for (cur_node = node->children; cur_node; cur_node = cur_node->next)
         if (cur_node->type == XML_ELEMENT_NODE &&
-//            cur_node->parent == node &&
+            cur_node->parent == node &&
             !xmlStrcmp (reinterpret_cast<const unsigned char *> (name), cur_node->name))
           break;
 
@@ -37,10 +38,7 @@ namespace work
     const char *get_node_content (xmlNodePtr node)
     {
       if (!node->children || !node->children->content)
-        {
-          m_is_ok = false;
-          return nullptr;
-        }
+        return nullptr;
 
       return reinterpret_cast<const char *> (node->children->content);
     }
@@ -197,8 +195,8 @@ namespace work
                   auto content_ptr = get_node_content (node);
                   if (!content_ptr)
                     {
-                      m_is_ok = false;
-                      return false;
+                      //It is ok for empty strings.
+                      return "";
                     }
                   obj = static_cast<T> (std::string (content_ptr));
                 }
@@ -247,8 +245,14 @@ namespace work
           {
           case action_t::save:
             if (m_doc)
-              if (xmlSaveFormatFileEnc (m_file_name.c_str (), m_doc, "UTF-8", 1))
-                return false;
+              {
+                auto save_context = xmlSaveToFilename (m_file_name.c_str (), "UTF-8", XML_SAVE_FORMAT | XML_SAVE_NO_EMPTY);
+                auto bytes_written = xmlSaveDoc (save_context, m_doc);
+                xmlSaveClose (save_context);
+                ASSERT_RETURN (bytes_written != -1, false);
+
+                return true;
+              }
             break;
           case action_t::load:
             break;

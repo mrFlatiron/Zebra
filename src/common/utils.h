@@ -48,4 +48,18 @@ K find_default_k (const C &container, const K &to_find, K &&default_k)
 
   return *it;
 }
+
+template<typename K, typename V, template<typename...> typename C, typename... Args>
+std::vector<K> container_keys (const C<K, V, Args...> &container)
+{
+  std::vector<K> retval (container.size ());
+  size_t i = 0;
+  for (const auto &p : container)
+    {
+      retval[i] = p.first;
+      i++;
+    }
+
+  return retval;
+}
 #endif // UTILS_H

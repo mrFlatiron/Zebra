@@ -59,7 +59,8 @@ SOURCES += src/main/main.cpp\
     src/gui/test_widget.cpp \
     src/kernel/user_profile.cpp \
     src/gui/main_settings_window.cpp \
-    src/gui/model_view/zebra_table_model.cpp
+    src/gui/model_view/zebra_table_model.cpp \
+    src/gui/user_profile_table_model.cpp
 
 HEADERS  += src/gui/main_window.h \
     src/common/enum_helper.h \
@@ -119,7 +120,9 @@ HEADERS  += src/gui/main_window.h \
     src/gui/test_widget.h \
     src/kernel/settings_typedefs.h \
     src/gui/main_settings_window.h \
-    src/gui/model_view/zebra_table_model.h
+    src/gui/model_view/zebra_table_model.h \
+    src/gui/model_view/zebra_table_model_adapter.h \
+    src/gui/user_profile_table_model.h
 
 INCLUDEPATH += src
 INCLUDEPATH += src/libs

@@ -10,7 +10,7 @@ private:
   ticket_container m_tickets;
   columns_handler m_columns;
 
-  sig::connector m_conn;
+//  sig::connector m_conn;
 
 public:
   user_settings ();

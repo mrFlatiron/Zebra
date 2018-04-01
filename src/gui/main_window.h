@@ -12,11 +12,12 @@ class mw_columns_display_std;
 class zebra_settings;
 class main_settings_window;
 class QMenuBar;
+class QToolBar;
 
 class main_window : public QDialog
 {
 private:
-  QMenuBar *m_main_mb;
+  QToolBar *m_main_mb;
   sticker_columns_view *m_columns_view;
   main_settings_window *m_settings_window = nullptr;
   std::unique_ptr<mw_columns_display_std> m_model;

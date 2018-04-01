@@ -1,7 +1,7 @@
 #include "main_window.h"
 
 #include <QVBoxLayout>
-#include <QMenuBar>
+#include <QToolBar>
 
 #include "kernel/zebra_settings.h"
 #include "sticker_columns_view.h"
@@ -45,7 +45,7 @@ void main_window::init ()
 
 void main_window::create_widgets ()
 {
-  m_main_mb = new QMenuBar;
+  m_main_mb = new QToolBar;
   auto settings = m_main_mb->addAction ("Settings");
   connect (settings, &QAction::triggered, this, &main_window::open_settings_window);
 

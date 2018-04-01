@@ -21,6 +21,7 @@ user_profile_id zebra_settings::create_new_profile ()
 
   m_profiles.emplace (m_current_id, user_profile (m_current_id));
 
+  connect_current_profile ();
   return m_current_id;
 }
 
@@ -39,6 +40,11 @@ void zebra_settings::change_profile (user_profile_id id)
 
   m_current_id = id;
   settings_changed ();
+}
+
+std::vector<user_profile_id> zebra_settings::profile_ids () const
+{
+  return container_keys (m_profiles);
 }
 
 bool zebra_settings::load (const QString &save_file_name)
@@ -63,5 +69,30 @@ bool zebra_settings::worker_process (work::xml_worker &worker)
   work::process (worker, m_max_id, "max_id");
   work::process (worker, m_working_dir, "working_dir");
   work::process (worker, m_profiles, "profiles");
+  work::process (worker, m_current_id, "current_id");
+
+  if (worker.action () == work::action_t::load)
+    make_connections_after_load ();
+
   return worker.is_ok ();
+}
+
+void zebra_settings::connect_current_profile ()
+{
+  auto cur_id_for_lambda = m_current_id;
+
+  m_conn.connect_to (m_profiles[m_current_id].settings ().tickets ().ticket_deleted,
+                     [this, cur_id_for_lambda] (ticket_id id)
+  {m_profiles[cur_id_for_lambda].settings ().columns ().notify_ticket_deleted (id);});
+}
+
+void zebra_settings::make_connections_after_load ()
+{
+  for (auto &p : m_profiles)
+    {
+      auto id_for_lambda = p.first;
+      m_conn.connect_to (m_profiles[id_for_lambda].settings ().tickets ().ticket_deleted,
+                         [this, id_for_lambda] (ticket_id id)
+      {m_profiles[id_for_lambda].settings ().columns ().notify_ticket_deleted (id);});
+    }
 }

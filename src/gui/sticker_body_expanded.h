@@ -9,6 +9,8 @@ class QLabel;
 class QPushButton;
 class QLineEdit;
 class sticker_button;
+class QToolButton;
+class QToolBar;
 
 class sticker_body_expanded : public QFrame
 {
@@ -18,7 +20,9 @@ private:
   QLabel *m_desc_lbl;
   QTextEdit *m_desc;
 
-  sticker_button *m_apply_pb;
+//  sticker_button *m_apply_pb;
+  QToolButton *m_apply_pb;
+  QToolBar *m_apply_toolbar;
 
   ticket_ptr m_ticket;
 

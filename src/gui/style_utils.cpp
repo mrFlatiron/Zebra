@@ -26,7 +26,7 @@ QString style_utils::get_icon_path (style_utils::common_icons type)
     case common_icons::bug:
       return ":/icons/bug3_32.png";
     case common_icons::check_mark:
-      return ":/icons/check_mark.png";
+      return ":/icons/ok-32.png";
     case common_icons::clipboard:
       return ":/icons/clipboard_32.png";
     case common_icons::lamp:
@@ -34,9 +34,9 @@ QString style_utils::get_icon_path (style_utils::common_icons type)
     case common_icons::question_mark:
       return ":/icons/question_mark_32.png";
     case common_icons::r_arrow:
-      return ":/icons/r_arrow.png";
+      return ":/icons/arrow-r-27-16.png";
     case common_icons::l_arrow:
-      return ":/icons/l_arrow.png";
+      return ":/icons/arrow-l-27-16.png";
     case common_icons::trash:
       return ":/icons/trash.png";
     case common_icons::plus:
